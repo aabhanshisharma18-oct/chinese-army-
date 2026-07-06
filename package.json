@@ -1,0 +1,35 @@
+{
+  "name": "pla-command-atlas",
+  "version": "1.0.0",
+  "description": "Chinese Army / PLA details platform with premium front-end experience",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "excel:import": "node scripts/excel-to-json.js"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "20.3.25",
+    "@angular/common": "20.3.25",
+    "@angular/compiler": "20.3.25",
+    "@angular/core": "20.3.25",
+    "@angular/forms": "20.3.25",
+    "@angular/platform-browser": "20.3.25",
+    "@angular/platform-browser-dynamic": "20.3.25",
+    "@angular/router": "20.3.25",
+    "rxjs": "^7.8.0",
+    "tslib": "^2.6.0",
+    "xlsx": "^0.18.5",
+    "zone.js": "^0.14.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "20.3.25",
+    "@angular/cli": "20.3.25",
+    "@angular/compiler-cli": "20.3.25",
+    "@types/node": "^20.0.0",
+    "typescript": "~5.8.0"
+  }
+}

@@ -1,0 +1,111 @@
+<!-- PLA Command Atlas - Intelligence Query Form Component -->
+<!-- Centered form card section -->
+
+<section class="intelligence-query-form">
+  <div class="container">
+    <div class="form-wrapper">
+      <div class="form-card card-elevated">
+        <div class="form-header">
+          <div class="form-eyebrow text-uppercase">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">Research Request</span>
+          </div>
+          
+          <h2 class="form-title">
+            <span class="title-line">INTELLIGENCE</span>
+            <span class="title-line">QUERY FORM</span>
+          </h2>
+          
+          <p class="form-description">
+            Submit research requests for specific unit lookups, formation details, or source verification. Our analysts will review and respond to qualified inquiries.
+          </p>
+        </div>
+        
+        <form class="form-content" (ngSubmit)="onSubmit()">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label text-uppercase">Name</label>
+              <input 
+                type="text" 
+                class="form-input" 
+                [(ngModel)]="formData.name"
+                name="name"
+                placeholder="Your name"
+                required
+              >
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label text-uppercase">Organization</label>
+              <input 
+                type="text" 
+                class="form-input" 
+                [(ngModel)]="formData.organization"
+                name="organization"
+                placeholder="Organization or institution"
+                required
+              >
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label text-uppercase">Subject</label>
+              <input 
+                type="text" 
+                class="form-input" 
+                [(ngModel)]="formData.subject"
+                name="subject"
+                placeholder="Query subject"
+                required
+              >
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label text-uppercase">Theater Command</label>
+              <select 
+                class="form-input" 
+                [(ngModel)]="formData.theaterCommand"
+                name="theaterCommand"
+              >
+                <option value="">Select theater command</option>
+                <option value="eastern">Eastern Theater Command</option>
+                <option value="southern">Southern Theater Command</option>
+                <option value="western">Western Theater Command</option>
+                <option value="northern">Northern Theater Command</option>
+                <option value="central">Central Theater Command</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label text-uppercase">Unit / Formation</label>
+            <input 
+              type="text" 
+              class="form-input" 
+              [(ngModel)]="formData.unit"
+              name="unit"
+              placeholder="Specific unit or formation (if applicable)"
+            >
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label text-uppercase">Query Notes</label>
+            <textarea 
+              class="form-input form-textarea" 
+              [(ngModel)]="formData.query"
+              name="query"
+              placeholder="Describe your research request or query details"
+              rows="5"
+              required
+            ></textarea>
+          </div>
+          
+          <button type="submit" class="btn btn-primary form-submit">
+            Submit Query
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

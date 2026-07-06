@@ -1,0 +1,303 @@
+<!-- PLA Command Atlas - Formation Specs Component -->
+<!-- White section with 3-column cards, video card top, info panel bottom -->
+
+<section class="formation-specs">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="specs-header">
+      <div class="specs-eyebrow text-uppercase">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">Theater Commands</span>
+      </div>
+      
+      <h2 class="specs-title">
+        <span class="title-line">THREE THEATER COMMANDS.</span>
+        <span class="title-line">ONE STANDARD.</span>
+      </h2>
+      
+      <p class="specs-description">
+        Comprehensive analysis of the Eastern, Southern, and Western Theater Commands, covering their areas of responsibility, subordinate formations, equipment profiles, and strategic roles within the PLA structure.
+      </p>
+    </div>
+    
+    <!-- Formation Cards Grid -->
+    <div class="specs-grid" *ngIf="formations$ | async as formations">
+      <div class="formation-card card" *ngFor="let formation of formations">
+        <!-- Video Card Top -->
+        <div class="card-video">
+          <video 
+            class="card-video-element"
+            [src]="'assets/videos/' + formation.video"
+            autoplay
+            loop
+            muted
+            playsinline
+          ></video>
+          <div class="card-video-overlay"></div>
+          <div class="card-badge badge">{{ formation.category.designation }}</div>
+        </div>
+        
+        <!-- Info Panel Bottom -->
+        <div class="card-info">
+          <h3 class="card-name">{{ formation.name }}</h3>
+          <p class="card-tagline">{{ formation.tagline }}</p>
+          
+          <!-- Quick Specs -->
+          <div class="card-quick-specs">
+            <div class="quick-spec" *ngFor="let spec of formation.quickSpecs.slice(0, 2)">
+              <span class="spec-label text-muted text-uppercase">{{ spec.label }}</span>
+              <span class="spec-value">{{ spec.value }}</span>
+            </div>
+          </div>
+          
+          <!-- Action Buttons -->
+          <div class="card-actions">
+            <button class="btn btn-secondary" (click)="openDrawer(formation)">
+              QUICK DATA
+            </button>
+            <button class="btn btn-primary" (click)="openDrawer(formation)">
+              FULL PROFILE
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Land Unit Resources Section -->
+    <div class="resources-section">
+      <div class="resources-header">
+        <h3 class="resources-title">Land Unit Resources by Brigade Type</h3>
+        <p class="resources-description">Personnel, equipment, and operational parameters for each brigade type in the PLA structure.</p>
+      </div>
+      
+      <!-- Loading State -->
+      <div *ngIf="loadingResources" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading land unit resources...</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="errorResources" class="error-state">
+        <div class="error-icon">⚠</div>
+        <p class="error-message">{{ errorResources }}</p>
+      </div>
+      
+      <!-- Resources Grid -->
+      <div class="resources-grid" *ngIf="!loadingResources && !errorResources">
+        <div class="resource-card card" *ngFor="let resource of landUnitResources">
+          <div class="resource-header">
+            <h4 class="resource-type">{{ resource.brigadeUnitType }}</h4>
+            <span class="resource-personnel">{{ resource.personnel }}</span>
+          </div>
+          
+          <div class="resource-equipment">
+            <div class="equipment-item">
+              <span class="equipment-label">Tanks:</span>
+              <span class="equipment-value">{{ resource.tanks }}</span>
+            </div>
+            <div class="equipment-item">
+              <span class="equipment-label">IFVs/APCs:</span>
+              <span class="equipment-value">{{ resource.ifvsApcs }}</span>
+            </div>
+            <div class="equipment-item">
+              <span class="equipment-label">Artillery:</span>
+              <span class="equipment-value">{{ resource.sphArtillery }}</span>
+            </div>
+            <div class="equipment-item">
+              <span class="equipment-label">MLRS:</span>
+              <span class="equipment-value">{{ resource.mlrs }}</span>
+            </div>
+            <div class="equipment-item">
+              <span class="equipment-label">AA/SAM:</span>
+              <span class="equipment-value">{{ resource.aaSamSystems }}</span>
+            </div>
+            <div class="equipment-item">
+              <span class="equipment-label">Helicopters:</span>
+              <span class="equipment-value">{{ resource.helicopters }}</span>
+            </div>
+          </div>
+          
+          <div class="resource-operations">
+            <div class="operation-item">
+              <span class="operation-label">Speed Day:</span>
+              <span class="operation-value">{{ resource.speedDay }} km/h</span>
+            </div>
+            <div class="operation-item">
+              <span class="operation-label">Frontage Def:</span>
+              <span class="operation-value">{{ resource.frontageDefensive }} km</span>
+            </div>
+            <div class="operation-item">
+              <span class="operation-label">Frontage Off:</span>
+              <span class="operation-value">{{ resource.frontageOffensive }} km</span>
+            </div>
+            <div class="operation-item">
+              <span class="operation-label">Depth:</span>
+              <span class="operation-value">{{ resource.depth }} km</span>
+            </div>
+          </div>
+          
+          <p class="resource-potential">{{ resource.forcePotential }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Vehicle Speeds Section -->
+    <div class="speeds-section" *ngIf="vehicleSpeeds.length > 0">
+      <div class="speeds-header">
+        <h3 class="speeds-title">Vehicle Speeds (Day & Night)</h3>
+        <p class="speeds-description">Road, cross-country, and amphibious speeds for PLA vehicles and aircraft.</p>
+      </div>
+      
+      <div class="speeds-grid">
+        <div class="speed-card card" *ngFor="let speed of vehicleSpeeds.slice(0, 15)">
+          <div class="speed-header">
+            <h4 class="speed-system">{{ speed.vehicleSystem }}</h4>
+            <span class="speed-designation">{{ speed.designation }}</span>
+          </div>
+          
+          <div class="speed-category">{{ speed.vehicleCategory }}</div>
+          
+          <div class="speed-metrics">
+            <div class="metric-item">
+              <span class="metric-label">Road Day:</span>
+              <span class="metric-value">{{ speed.roadSpeedDay }} km/h</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Road Night:</span>
+              <span class="metric-value">{{ speed.roadSpeedNight }} km/h</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Cross-Country Day:</span>
+              <span class="metric-value">{{ speed.crossCountryDay }} km/h</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Cross-Country Night:</span>
+              <span class="metric-value">{{ speed.crossCountryNight }} km/h</span>
+            </div>
+            <div class="metric-item" *ngIf="speed.amphibiousWaterSpeed && speed.amphibiousWaterSpeed !== 'N/A'">
+              <span class="metric-label">Water:</span>
+              <span class="metric-value">{{ speed.amphibiousWaterSpeed }} km/h</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Range:</span>
+              <span class="metric-value">{{ speed.operationalRange }} km</span>
+            </div>
+          </div>
+          
+          <p class="speed-notes" *ngIf="speed.notes">{{ speed.notes }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Frontage & Depth Section -->
+    <div class="frontage-section" *ngIf="frontageDepths.length > 0">
+      <div class="frontage-header">
+        <h3 class="frontage-title">Frontage & Depth (Defensive & Offensive)</h3>
+        <p class="frontage-description">Operational frontage and depth parameters by unit level for PLA formations.</p>
+      </div>
+      
+      <div class="frontage-grid">
+        <div class="frontage-card card" *ngFor="let depth of frontageDepths">
+          <div class="frontage-header">
+            <h4 class="frontage-level">{{ depth.unitLevel }}</h4>
+            <span class="frontage-operation">{{ depth.operationType }}</span>
+          </div>
+          
+          <div class="frontage-zone">{{ depth.zone }}</div>
+          
+          <div class="frontage-dimensions">
+            <div class="dimension-item">
+              <span class="dimension-label">Frontage:</span>
+              <span class="dimension-value">{{ depth.frontage }} km</span>
+            </div>
+            <div class="dimension-item">
+              <span class="dimension-label">Depth:</span>
+              <span class="dimension-value">{{ depth.depth }} km</span>
+            </div>
+          </div>
+          
+          <div class="frontage-density">
+            <span class="density-label">Brigade Density:</span>
+            <span class="density-value">{{ depth.brigadeDensity }}</span>
+          </div>
+          
+          <p class="frontage-notes" *ngIf="depth.keyWeaponsNotes">{{ depth.keyWeaponsNotes }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Vehicle Designations Section -->
+    <div class="designations-section" *ngIf="vehicleDesignations.length > 0">
+      <div class="designations-header">
+        <h3 class="designations-title">Vehicle Designations & A/B Type Breakdown</h3>
+        <p class="designations-description">Complete vehicle designations with Chinese names, types, roles, and specifications.</p>
+      </div>
+      
+      <div class="designations-grid">
+        <div class="designation-card card" *ngFor="let designation of vehicleDesignations.slice(0, 20)">
+          <div class="designation-header">
+            <h4 class="designation-name">{{ designation.designation }}</h4>
+            <span class="designation-family">{{ designation.family }}</span>
+          </div>
+          
+          <p class="designation-chinese">{{ designation.fullChineseName }}</p>
+          
+          <div class="designation-meta">
+            <span class="meta-badge badge" [class.badge-secondary]="designation.aOrBType === 'Base'">{{ designation.aOrBType }} Type</span>
+            <span class="meta-badge badge">{{ designation.vehicleType }}</span>
+          </div>
+          
+          <div class="designation-specs">
+            <div class="spec-item">
+              <span class="spec-label">Role:</span>
+              <span class="spec-value">{{ designation.role }}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Weight:</span>
+              <span class="spec-value">{{ designation.weight }}t</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Main Armament:</span>
+              <span class="spec-value">{{ designation.mainArmament }}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Speed:</span>
+              <span class="spec-value">{{ designation.roadSpeed }} km/h</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Range:</span>
+              <span class="spec-value">{{ designation.range }} km</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Crew:</span>
+              <span class="spec-value">{{ designation.crew }}</span>
+            </div>
+            <div class="spec-item" *ngIf="designation.troops && designation.troops !== '0'">
+              <span class="spec-label">Troops:</span>
+              <span class="spec-value">{{ designation.troops }}</span>
+            </div>
+          </div>
+          
+          <p class="designation-notes" *ngIf="designation.notes">{{ designation.notes }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Compare Button -->
+    <div class="specs-footer">
+      <button class="btn btn-ghost">
+        COMPARE FORMATIONS
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 3 L13 8 L6 13"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Unit Detail Drawer -->
+  <app-unit-detail-drawer 
+    *ngIf="drawerOpen"
+    [formation]="selectedFormation"
+    (close)="closeDrawer()"
+  ></app-unit-detail-drawer>
+</section>

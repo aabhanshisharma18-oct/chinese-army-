@@ -1,0 +1,39 @@
+<!-- PLA Command Atlas - Sources Strip Component -->
+<!-- Sources / references / archival repositories strip -->
+
+<section class="sources-strip">
+  <div class="container">
+    <div class="strip-header">
+      <div class="strip-eyebrow text-uppercase">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">Data Sources</span>
+      </div>
+      
+      <h2 class="strip-title">
+        <span class="title-line">SOURCE</span>
+        <span class="title-line">REFERENCES</span>
+      </h2>
+      
+      <p class="strip-description">
+        Data compiled from official defense reports, international defense analysis organizations, research institutes, and verified open-source intelligence.
+      </p>
+    </div>
+    
+    <!-- Sources Grid -->
+    <div class="sources-grid">
+      <div class="source-item" *ngFor="let source of sources">
+        <div class="source-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2 L2 7 L12 12 L22 7 L12 2 Z"/>
+            <path d="M2 17 L12 22 L22 17"/>
+            <path d="M2 12 L12 17 L22 12"/>
+          </svg>
+        </div>
+        <div class="source-content">
+          <h3 class="source-name">{{ source.name }}</h3>
+          <span class="source-type text-muted">{{ source.type }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

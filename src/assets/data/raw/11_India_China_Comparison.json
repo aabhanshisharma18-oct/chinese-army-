@@ -1,0 +1,82 @@
+[
+  [
+    "INDIAN ARMY vs CHINESE ARMY (PLAGF) – UNIT HIERARCHY COMPARISON",
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  [
+    "Level",
+    "Indian Army Unit",
+    "Chinese Army Equivalent",
+    "Chinese Name",
+    "Size (Troops)",
+    "Notes"
+  ],
+  [
+    "1 (Highest)",
+    "Army Command / Strategic Command",
+    "Theater Command (战区)",
+    "Zhànqū",
+    "Regional (~300,000)",
+    "5 Theater Commands vs India's 4 Army Commands"
+  ],
+  [
+    "2",
+    "Army Corps",
+    "Group Army (集团军)",
+    "Jítuánjūn",
+    "46,300–50,000",
+    "13 Group Armies vs India's 14 Corps"
+  ],
+  [
+    "3",
+    "Division",
+    "Combined Arms Division (合成集团)",
+    "Héchéng Jítuán",
+    "10,000–12,000",
+    "China moving brigade-centric (less division level)"
+  ],
+  [
+    "4",
+    "Brigade",
+    "Combined Arms Brigade (合成旅)",
+    "Héchénglǚ",
+    "3,000–5,000",
+    "Main operational unit post-2016 reform"
+  ],
+  [
+    "5",
+    "Battalion / Regiment",
+    "团(Tuan)/营(Ying)",
+    "Tuán / Yíng",
+    "300–1,000",
+    "Tuan=Regt 800–1000 / Ying=Bn 300–500"
+  ],
+  [
+    "6",
+    "Company",
+    "Company (连)",
+    "Lián",
+    "100–150",
+    "Tank, Infantry, Artillery companies"
+  ],
+  [
+    "7",
+    "Platoon",
+    "Platoon (排)",
+    "Pái",
+    "30–40",
+    "3–4 squads"
+  ],
+  [
+    "8 (Lowest)",
+    "Section / Squad",
+    "Squad (班)",
+    "Bān",
+    "8–12",
+    "Lowest tactical unit"
+  ]
+]

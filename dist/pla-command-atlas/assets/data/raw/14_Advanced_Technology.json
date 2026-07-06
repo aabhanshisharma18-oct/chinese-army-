@@ -1,0 +1,222 @@
+[
+  [
+    "PLAGF / PLA – ADVANCED TECHNOLOGY & EMERGING CAPABILITIES",
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  [
+    "Side",
+    "Technology Domain",
+    "System Name",
+    "Description",
+    "Range / Capability",
+    "Status (2025)",
+    "Strategic Impact",
+    "Notes"
+  ],
+  [
+    "CHINA",
+    "Hypersonic Weapons",
+    "DF-17",
+    "Hypersonic Glide Vehicle on DF-17 booster",
+    "2,500 km / Mach 10+",
+    "Operational",
+    "Evades all current missile defenses",
+    "DF-ZF glide vehicle"
+  ],
+  [
+    "CHINA",
+    "Hypersonic Weapons",
+    "WZ-8",
+    "Hypersonic recon drone (air-launched)",
+    "3,000 km",
+    "Operational",
+    "ISR at hypersonic speed",
+    "Carried by H-6N bomber"
+  ],
+  [
+    "CHINA",
+    "Anti-Ship Ballistic Missiles",
+    "DF-21D",
+    "Anti-ship ballistic missile, carrier-killer",
+    "1,500 km",
+    "Operational",
+    "Threatens US carrier groups",
+    "MRBM with terminal maneuver"
+  ],
+  [
+    "CHINA",
+    "Anti-Ship Ballistic Missiles",
+    "DF-26",
+    "Intermediate-range anti-ship/land ballistic",
+    "4,000 km",
+    "Operational",
+    "Can hit Guam (Guam-killer)",
+    "Dual conventional/nuclear"
+  ],
+  [
+    "CHINA",
+    "Stealth Aviation",
+    "J-20 (Chengdu)",
+    "5th-gen air superiority stealth fighter",
+    "Combat radius 1,200 km",
+    "150+ operational",
+    "Challenges F-35 air superiority",
+    "WS-15 engine improving thrust"
+  ],
+  [
+    "CHINA",
+    "Stealth Aviation",
+    "GJ-11",
+    "Stealth combat UAV (UCAV)",
+    "1,500 km",
+    "Operational (limited)",
+    "Penetrating ISR and strike",
+    "Flying-wing design"
+  ],
+  [
+    "CHINA",
+    "Space Warfare",
+    "ASAT Weapons (DN-3)",
+    "Direct-ascent anti-satellite missile",
+    "LEO–MEO",
+    "Operational",
+    "Can blind US GPS/ISR satellites",
+    "Tested 2013–2022"
+  ],
+  [
+    "CHINA",
+    "Space Warfare",
+    "Beidou Navigation System",
+    "35-satellite global navigation system",
+    "Global / 1m accuracy",
+    "Fully operational (2020)",
+    "GPS independence for PLA",
+    "Civilian + military dual-use"
+  ],
+  [
+    "CHINA",
+    "Space Warfare",
+    "Yaogan Satellites",
+    "SAR + optical + ELINT recon constellation",
+    "Sub-meter resolution",
+    "Operational (40+ satellites)",
+    "Real-time battlefield ISR",
+    "Continuous coverage"
+  ],
+  [
+    "CHINA",
+    "Space Warfare",
+    "Gaofen Earth Observation",
+    "High-res optical imaging satellites",
+    "Sub-meter / 3D mapping",
+    "Operational",
+    "Mapping, BDA, target acquisition",
+    "Civilian cover"
+  ],
+  [
+    "CHINA",
+    "Quantum Technology",
+    "Micius Satellite",
+    "Quantum key distribution satellite",
+    "Global",
+    "Operational",
+    "Unhackable encrypted comms",
+    "World's first QKD satellite"
+  ],
+  [
+    "CHINA",
+    "Quantum Technology",
+    "JYT-2000 Quantum Radar",
+    "Experimental quantum radar",
+    "100 km (experimental)",
+    "R&D Phase",
+    "Could detect stealth aircraft",
+    "Not yet fielded"
+  ],
+  [
+    "CHINA",
+    "Artificial Intelligence",
+    "AI-Powered EW Systems",
+    "Real-time AI threat detection and decoding",
+    "10–20 km jamming",
+    "Fielding",
+    "Instant spectrum analysis + response",
+    "Broadband gigahertz monitoring"
+  ],
+  [
+    "CHINA",
+    "Artificial Intelligence",
+    "AI Drone Swarms",
+    "Coordinated autonomous UAV swarms",
+    "Variable",
+    "Tested",
+    "Overwhelm point defenses",
+    "AI swarm detection system also developed"
+  ],
+  [
+    "CHINA",
+    "Artificial Intelligence",
+    "AI Battle Management",
+    "AI-assisted C2 and targeting",
+    "Theater-wide",
+    "Developing",
+    "Faster OODA loop than adversary",
+    "Integration with radar networks"
+  ],
+  [
+    "CHINA",
+    "Active Protection Systems",
+    "Type 99A APS (Aktiva-type)",
+    "Active protection intercepts ATGMs/RPGs",
+    "100m radius",
+    "Operational",
+    "Significantly raises tank survivability",
+    "Detects, tracks, intercepts"
+  ],
+  [
+    "CHINA",
+    "Electromagnetic",
+    "EMALS (Type 003 Carrier)",
+    "Electromagnetic aircraft launch system",
+    "N/A (naval)",
+    "Operational (Fujian carrier)",
+    "Allows heavier aircraft loads",
+    "First non-US EMALS"
+  ],
+  [
+    "CHINA",
+    "Cyber Warfare",
+    "PLA Unit 61398",
+    "Offensive cyber operations unit",
+    "Global",
+    "Operational",
+    "APT attacks, espionage, infrastructure",
+    "SSF (Strategic Support Force)"
+  ],
+  [
+    "CHINA",
+    "Radar Network",
+    "Nationwide Radar Fusion",
+    "50+ radar systems networked at brigade level",
+    "450 km detection",
+    "Operational",
+    "360° anti-stealth coverage",
+    "VHF/UHF anti-stealth net"
+  ],
+  [
+    "CHINA",
+    "Radar Network",
+    "Over-Horizon Radar (LPAR)",
+    "Large Phased Array Radar (Yunnan)",
+    "5,000+ km (ballistic)",
+    "Operational",
+    "Detects Indian Agni ICBM launches",
+    "Early warning for nuclear"
+  ]
+]

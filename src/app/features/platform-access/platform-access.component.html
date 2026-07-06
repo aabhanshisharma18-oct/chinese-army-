@@ -1,0 +1,47 @@
+<!-- PLA Command Atlas - Platform Access Page Overlay -->
+<!-- Full-page overlay for data coverage and access tiers -->
+
+<div class="page-backdrop" (click)="onClose()"></div>
+
+<div class="page-content" @pageAnimation>
+  <div class="page-header">
+    <span class="page-title text-uppercase">Platform Access</span>
+    <button class="page-close" (click)="onClose()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="page-body">
+    <div class="page-intro">
+      <h2 class="page-headline">Data Access Tiers</h2>
+      <p class="page-description">
+        Choose the access level that matches your research requirements. From basic theater overviews to comprehensive intelligence layers with API access and custom reporting capabilities.
+      </p>
+    </div>
+    
+    <div class="access-grid">
+      <div class="access-card card" *ngFor="let level of accessLevels">
+        <div class="access-header">
+          <h3 class="access-name">{{ level.name }}</h3>
+          <span class="access-price badge">{{ level.price }}</span>
+        </div>
+        
+        <p class="access-description">{{ level.description }}</p>
+        
+        <ul class="access-features">
+          <li class="access-feature" *ngFor="let feature of level.features">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 8 L6 11 L13 4"/>
+            </svg>
+            <span>{{ feature }}</span>
+          </li>
+        </ul>
+        
+        <button class="btn btn-primary access-button">Request Access</button>
+      </div>
+    </div>
+  </div>
+</div>

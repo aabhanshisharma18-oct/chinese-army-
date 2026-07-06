@@ -1,0 +1,272 @@
+.drawer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+}
+
+.drawer-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  background: var(--color-surface);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-strong);
+}
+
+.drawer-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 2rem;
+  border-bottom: 1px solid var(--glass-border);
+  background: var(--color-surface-elevated);
+}
+
+.drawer-header-content {
+  flex: 1;
+}
+
+.drawer-badge {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 0.625rem;
+}
+
+.drawer-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+}
+
+.drawer-subtitle {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.drawer-close {
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  padding: 0.5rem;
+  flex-shrink: 0;
+  transition: color var(--transition-fast);
+  
+  &:hover {
+    color: var(--color-accent-red);
+  }
+}
+
+.drawer-body {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.drawer-section {
+  margin-bottom: 2rem;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.drawer-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--color-accent-red);
+  margin-bottom: 1rem;
+}
+
+.quick-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.spec-label {
+  font-size: 0.625rem;
+  font-weight: 500;
+}
+
+.spec-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.command-structure {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.command-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: var(--color-bg-tertiary);
+  border-radius: 8px;
+}
+
+.command-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.command-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.aor-details {
+  padding: 1rem;
+  background: var(--color-bg-tertiary);
+  border-radius: 8px;
+}
+
+.aor-region {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+}
+
+.aor-importance {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.units-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.unit-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--color-bg-tertiary);
+  border-radius: 8px;
+  align-items: center;
+}
+
+.unit-designation {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.unit-type {
+  font-size: 0.75rem;
+}
+
+.unit-strength {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-accent-blue);
+}
+
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.equipment-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  background: var(--color-bg-tertiary);
+  border-radius: 8px;
+}
+
+.equipment-label {
+  font-size: 0.625rem;
+  font-weight: 500;
+}
+
+.equipment-value {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.readiness-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.readiness-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  background: var(--color-bg-tertiary);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.readiness-label {
+  font-size: 0.625rem;
+  font-weight: 500;
+}
+
+.readiness-value {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-accent-red);
+}
+
+.drawer-notes {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  padding: 1rem;
+  background: var(--color-bg-tertiary);
+  border-radius: 8px;
+}
+
+.sources-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.source-item {
+  font-size: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--glass-border);
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}

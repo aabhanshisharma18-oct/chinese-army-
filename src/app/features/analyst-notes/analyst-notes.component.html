@@ -1,0 +1,42 @@
+<!-- PLA Command Atlas - Analyst Notes Component -->
+<!-- Horizontal scroll rail of analyst observation cards -->
+
+<section class="analyst-notes">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="notes-header">
+      <div class="notes-eyebrow text-uppercase">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">Reference Insights</span>
+      </div>
+      
+      <h2 class="notes-title">
+        <span class="title-line">ANALYST</span>
+        <span class="title-line">OBSERVATIONS</span>
+      </h2>
+      
+      <p class="notes-description">
+        Curated analysis and observations from defense analysts, military researchers, and strategic studies institutions on PLA force structure, capabilities, and modernization trends.
+      </p>
+    </div>
+    
+    <!-- Horizontal Scroll Rail -->
+    <div class="notes-rail scroll-rail" *ngIf="analystNotes$ | async as notes">
+      <div class="note-card card" *ngFor="let note of notes">
+        <div class="note-header">
+          <div class="note-category badge badge-secondary">{{ note.category.designation }}</div>
+          <span class="note-date text-muted">{{ note.date }}</span>
+        </div>
+        
+        <div class="note-author">
+          <span class="author-name">{{ note.author }}</span>
+          <span class="author-role text-muted">{{ note.role }}</span>
+        </div>
+        
+        <p class="note-organization text-muted">{{ note.organization }}</p>
+        
+        <p class="note-content">{{ note.content }}</p>
+      </div>
+    </div>
+  </div>
+</section>

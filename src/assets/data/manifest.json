@@ -1,0 +1,114 @@
+{
+  "workbook": "chinese database 2.xlsx",
+  "generatedAt": "2026-07-05T08:47:09.633Z",
+  "sheets": [
+    {
+      "originalSheetName": "00_INDEX",
+      "file": "assets/data/raw/00_INDEX.json",
+      "rows": 22,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "1_Land_Units",
+      "file": "assets/data/raw/1_Land_Units.json",
+      "rows": 58,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "2_Arm_Types",
+      "file": "assets/data/raw/2_Arm_Types.json",
+      "rows": 19,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "3_Weapon_Categories",
+      "file": "assets/data/raw/3_Weapon_Categories.json",
+      "rows": 90,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "4_Weapon_Sensor",
+      "file": "assets/data/raw/4_Weapon_Sensor.json",
+      "rows": 80,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "5_Land_Unit_Resources",
+      "file": "assets/data/raw/5_Land_Unit_Resources.json",
+      "rows": 15,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "6_Vehicle_Speeds",
+      "file": "assets/data/raw/6_Vehicle_Speeds.json",
+      "rows": 47,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "7_Frontage_Depth",
+      "file": "assets/data/raw/7_Frontage_Depth.json",
+      "rows": 45,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "8_Force_Potential",
+      "file": "assets/data/raw/8_Force_Potential.json",
+      "rows": 70,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "9_Vehicle_Designations",
+      "file": "assets/data/raw/9_Vehicle_Designations.json",
+      "rows": 37,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "10_Ranks",
+      "file": "assets/data/raw/10_Ranks.json",
+      "rows": 22,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "11_India_China_Comparison",
+      "file": "assets/data/raw/11_India_China_Comparison.json",
+      "rows": 10,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "12_Theater_Capabilities",
+      "file": "assets/data/raw/12_Theater_Capabilities.json",
+      "rows": 23,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "13_Unit_Categories",
+      "file": "assets/data/raw/13_Unit_Categories.json",
+      "rows": 15,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "14_Advanced_Technology",
+      "file": "assets/data/raw/14_Advanced_Technology.json",
+      "rows": 22,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "15_References",
+      "file": "assets/data/raw/15_References.json",
+      "rows": 91,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "16_Aviation_Detailed",
+      "file": "assets/data/raw/16_Aviation_Detailed.json",
+      "rows": 22,
+      "format": "array-of-arrays"
+    },
+    {
+      "originalSheetName": "17_Air_Defence_Detailed",
+      "file": "assets/data/raw/17_Air_Defence_Detailed.json",
+      "rows": 17,
+      "format": "array-of-arrays"
+    }
+  ]
+}

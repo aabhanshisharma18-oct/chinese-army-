@@ -1,0 +1,229 @@
+<div class="drawer-backdrop" *ngIf="itemId" (click)="onClose()" @fadeIn></div>
+
+<div class="drawer-container glass" *ngIf="itemId" @slideInOut>
+  <!-- Technical border overlays -->
+  <div class="hud-corners">
+    <span class="corner top-left"></span>
+    <span class="corner top-right"></span>
+    <span class="corner bottom-left"></span>
+    <span class="corner bottom-right"></span>
+  </div>
+
+  <!-- Header -->
+  <div class="drawer-header">
+    <div class="header-top font-mono">
+      <span class="classification text-uppercase">SECRET // NOFORN</span>
+      <button class="btn-close" (click)="onClose()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="header-main" *ngIf="!loading()">
+      <span class="category-tag text-uppercase font-mono">{{ itemType }} dossier</span>
+      <h2 class="title text-uppercase">
+        {{ unitData()?.name || typeData()?.name || categoryData()?.name || weaponData()?.name || resourceData()?.name }}
+      </h2>
+      <div class="coordinates font-mono" *ngIf="unitData()?.coordinates || resourceData()?.coordinates">
+        GRID: {{ unitData()?.coordinates || resourceData()?.coordinates }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading state -->
+  <div class="drawer-loader" *ngIf="loading()">
+    <div class="radar-scan"></div>
+    <div class="loading-text font-mono text-uppercase">DECRYPTING RECORD FEED...</div>
+  </div>
+
+  <!-- Body Content -->
+  <div class="drawer-body" *ngIf="!loading()">
+    <!-- 1. LAND UNIT DETAIL SHEET -->
+    <div *ngIf="itemType === 'unit' && unitData() as unit" class="dossier-sheet">
+      <div class="meta-grid font-mono">
+        <div class="meta-item">
+          <span class="meta-label">THEATER COMMAND</span>
+          <span class="meta-val text-uppercase highlight-khaki">{{ unit.theaterCommand }} Theater</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">HEADQUARTERS</span>
+          <span class="meta-val">{{ unit.headquarters }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">COMMANDER</span>
+          <span class="meta-val">{{ unit.commander }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">ESTIMATED STRENGTH</span>
+          <span class="meta-val">{{ unit.strength }}</span>
+        </div>
+      </div>
+
+      <div class="readiness-section">
+        <div class="section-title font-mono text-uppercase">OPERATIONAL READINESS INDEX</div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="unit.readiness" [class.high]="unit.readiness >= 90" [class.med]="unit.readiness >= 75 && unit.readiness < 90"></div>
+          </div>
+          <span class="readiness-val font-mono" [class.text-high]="unit.readiness >= 90">{{ unit.readiness }}%</span>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="block-title font-mono text-uppercase">OPERATIONAL MISSION ROLE</div>
+        <p class="block-content">{{ unit.role }}</p>
+      </div>
+
+      <div class="list-section">
+        <div class="block-title font-mono text-uppercase">SUBORDINATE BRIGADES</div>
+        <ul class="dossier-list font-mono">
+          <li *ngFor="let brigade of unit.subordinateBrigades">
+            <span class="bullet">■</span> {{ brigade }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="list-section">
+        <div class="block-title font-mono text-uppercase">PRIMARY EQUIPMENT INVENTORY</div>
+        <ul class="dossier-list font-mono">
+          <li *ngFor="let eq of unit.primaryEquipment">
+            <span class="bullet">▲</span> {{ eq }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="info-block italic-block">
+        <div class="block-title font-mono text-uppercase">COMMAND ASSESSMENTS & NOTES</div>
+        <p class="block-content">{{ unit.notes }}</p>
+      </div>
+    </div>
+
+    <!-- 2. TYPE DETAIL SHEET -->
+    <div *ngIf="itemType === 'type' && typeData() as type" class="dossier-sheet">
+      <div class="meta-grid font-mono">
+        <div class="meta-item">
+          <span class="meta-label">MOBILITY CLASSIFICATION</span>
+          <span class="meta-val text-uppercase highlight-khaki">{{ type.mobility }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">TACTICAL READINESS INDEX</span>
+          <span class="meta-val">{{ type.readiness }}%</span>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="block-title font-mono text-uppercase">TYPE OVERVIEW</div>
+        <p class="block-content">{{ type.description }}</p>
+      </div>
+
+      <div class="list-section">
+        <div class="block-title font-mono text-uppercase">CORE EQUIPMENT ASSETS</div>
+        <ul class="dossier-list font-mono">
+          <li *ngFor="let asset of type.coreAssets">
+            <span class="bullet">■</span> {{ asset }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="info-block">
+        <div class="block-title font-mono text-uppercase">TACTICAL MOBILITY PROFILE</div>
+        <p class="block-content">{{ type.tacticalMobility }}</p>
+      </div>
+    </div>
+
+    <!-- 3. CATEGORY DETAIL SHEET -->
+    <div *ngIf="itemType === 'category' && categoryData() as cat" class="dossier-sheet">
+      <div class="meta-grid font-mono">
+        <div class="meta-item">
+          <span class="meta-label">PRIMARY ECHELON LEVEL</span>
+          <span class="meta-val">{{ cat.echelon }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">ACTIVE BRIGADES IN SERVICE</span>
+          <span class="meta-val highlight-khaki">{{ cat.activeBrigadesCount }}</span>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="block-title font-mono text-uppercase">FUNCTIONAL CATEGORY DESCRIPTION</div>
+        <p class="block-content">{{ cat.description }}</p>
+      </div>
+    </div>
+
+    <!-- 4. WEAPON DETAIL SHEET -->
+    <div *ngIf="itemType === 'weapon' && weaponData() as wep" class="dossier-sheet">
+      <div class="meta-grid font-mono">
+        <div class="meta-item">
+          <span class="meta-label">FUNCTIONAL ROLE</span>
+          <span class="meta-val text-uppercase highlight-khaki">{{ wep.functionalCategory }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">CLASSIFICATION</span>
+          <span class="meta-val text-uppercase">{{ wep.type }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">PRIMARY SYSTEM ARMAMENT</span>
+          <span class="meta-val">{{ wep.armament }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">EFFECTIVE ENGAGEMENT RANGE</span>
+          <span class="meta-val">{{ wep.effectiveRange }}</span>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="block-title font-mono text-uppercase">SYSTEM CAPABILITIES OVERVIEW</div>
+        <p class="block-content">{{ wep.description }}</p>
+      </div>
+
+      <div class="telemetry-section">
+        <div class="block-title font-mono text-uppercase">DETAILED TELEMETRY SPECS</div>
+        <div class="telemetry-grid font-mono">
+          <div class="telemetry-row" *ngFor="let spec of wep.telemetrySpecs">
+            <span class="tele-lbl">{{ spec.label }}</span>
+            <span class="tele-val">{{ spec.value }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. RESOURCE DETAIL SHEET -->
+    <div *ngIf="itemType === 'resource' && resourceData() as res" class="dossier-sheet">
+      <div class="meta-grid font-mono">
+        <div class="meta-item">
+          <span class="meta-label">RESOURCE TYPE</span>
+          <span class="meta-val text-uppercase highlight-khaki">{{ res.resourceType }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">GEOGRAPHIC LOCATION</span>
+          <span class="meta-val">{{ res.location }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">CAPACITY INDEX STATUS</span>
+          <span class="meta-val text-uppercase">{{ res.capacityStatus }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">LOGISTICS READY FEED</span>
+          <span class="meta-val">{{ res.readiness }}%</span>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <div class="block-title font-mono text-uppercase">STRATEGIC FUNCTION RESPONSIBILITY</div>
+        <p class="block-content">{{ res.strategicFunction }}</p>
+      </div>
+
+      <div class="info-block">
+        <div class="block-title font-mono text-uppercase">FACILITY PROFILE DESCRIPTION</div>
+        <p class="block-content">{{ res.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom classified seal -->
+  <div class="drawer-footer font-mono">
+    CLASSIFIED // DATA ACQUIRED VIA PLA ATLAS ENGINE
+  </div>
+</div>

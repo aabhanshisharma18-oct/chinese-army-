@@ -1,0 +1,200 @@
+[
+  [
+    "PLAGF – OFFICER & ENLISTED RANK STRUCTURE (LOWEST TO HIGHEST)",
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  [
+    "Side",
+    "Rank Category",
+    "English Rank",
+    "Chinese (Characters)",
+    "Chinese (Pinyin)",
+    "NATO Equivalent",
+    "Notes"
+  ],
+  [
+    "CHINA",
+    "Enlisted",
+    "Private",
+    "列兵",
+    "Lie Bing",
+    "OR-1",
+    "Lowest enlisted rank"
+  ],
+  [
+    "CHINA",
+    "Enlisted",
+    "Private First Class",
+    "上等兵",
+    "Shang Deng Bing",
+    "OR-2",
+    null
+  ],
+  [
+    "CHINA",
+    "Enlisted",
+    "Junior Sergeant",
+    "下士",
+    "Xia Shi",
+    "OR-3",
+    "NCO entry"
+  ],
+  [
+    "CHINA",
+    "Enlisted",
+    "Sergeant",
+    "中士",
+    "Zhong Shi",
+    "OR-4",
+    null
+  ],
+  [
+    "CHINA",
+    "Enlisted",
+    "Senior Sergeant",
+    "上士",
+    "Shang Shi",
+    "OR-5",
+    null
+  ],
+  [
+    "CHINA",
+    "Enlisted",
+    "Master Sergeant 4th Class",
+    "四级军士长",
+    "Si Ji Jun Shi Zhang",
+    "OR-6",
+    null
+  ],
+  [
+    "CHINA",
+    "Enlisted",
+    "Master Sergeant 3rd Class",
+    "三级军士长",
+    "San Ji Jun Shi Zhang",
+    "OR-7",
+    null
+  ],
+  [
+    "CHINA",
+    "Enlisted",
+    "Master Sergeant 2nd Class",
+    "二级军士长",
+    "Er Ji Jun Shi Zhang",
+    "OR-8",
+    null
+  ],
+  [
+    "CHINA",
+    "Enlisted",
+    "Master Sergeant 1st Class",
+    "一级军士长",
+    "Yi Ji Jun Shi Zhang",
+    "OR-9",
+    "Highest NCO rank"
+  ],
+  [
+    "CHINA",
+    "Officer",
+    "Officer Cadet",
+    "学员",
+    "Xue Yuan",
+    "OF(D)",
+    "Cadet / officer trainee"
+  ],
+  [
+    "CHINA",
+    "Officer",
+    "Second Lieutenant",
+    "少尉",
+    "Shao Wei",
+    "OF-1",
+    "Junior officer entry"
+  ],
+  [
+    "CHINA",
+    "Officer",
+    "First Lieutenant",
+    "中尉",
+    "Zhong Wei",
+    "OF-1/2",
+    null
+  ],
+  [
+    "CHINA",
+    "Officer",
+    "Captain",
+    "上尉",
+    "Shang Wei",
+    "OF-2",
+    "Company commander level"
+  ],
+  [
+    "CHINA",
+    "Officer",
+    "Major",
+    "少校",
+    "Shao Xiao",
+    "OF-3",
+    "Battalion staff"
+  ],
+  [
+    "CHINA",
+    "Officer",
+    "Lieutenant Colonel",
+    "中校",
+    "Zhong Xiao",
+    "OF-4",
+    "Battalion commander"
+  ],
+  [
+    "CHINA",
+    "Officer",
+    "Colonel",
+    "上校",
+    "Shang Xiao",
+    "OF-5",
+    "Regiment/Brigade commander"
+  ],
+  [
+    "CHINA",
+    "Officer",
+    "Senior Colonel / Brigadier",
+    "大校",
+    "Da Xiao",
+    "OF-6",
+    "Senior Colonel (unique PLA rank)"
+  ],
+  [
+    "CHINA",
+    "Officer",
+    "Major General",
+    "少将",
+    "Shao Jiang",
+    "OF-7",
+    "Division/Brigade general"
+  ],
+  [
+    "CHINA",
+    "Officer",
+    "Lieutenant General",
+    "中将",
+    "Zhong Jiang",
+    "OF-8",
+    "Corps/Group Army general"
+  ],
+  [
+    "CHINA",
+    "Officer",
+    "General",
+    "上将",
+    "Shang Jiang",
+    "OF-9",
+    "Theater Command / PLAGF chief"
+  ]
+]

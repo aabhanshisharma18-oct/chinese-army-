@@ -1,0 +1,123 @@
+.intelligence-query-form {
+  padding: var(--space-xl) 0;
+  background: var(--color-bg-primary);
+}
+
+.form-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.form-card {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 3rem;
+  box-shadow: var(--shadow-medium);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--color-accent-red);
+}
+
+.eyebrow-line {
+  width: 40px;
+  height: 1px;
+  background: var(--color-accent-red);
+}
+
+.form-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+  color: var(--color-text-primary);
+  
+  .title-line {
+    display: block;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.form-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+
+.form-input {
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 0.875rem 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+  
+  &:focus {
+    outline: none;
+    border-color: var(--color-accent-red);
+    box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+  }
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-submit {
+  width: 100%;
+  margin-top: 1rem;
+}

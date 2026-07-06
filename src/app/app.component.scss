@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+}
+
+/* Fixed hero spacer for scroll behavior */
+.hero-spacer {
+  height: 100vh;
+  pointer-events: none;
+}

@@ -1,0 +1,452 @@
+[
+  [
+    "PLAGF – FRONTAGE & DEPTH (DEFENSIVE & OFFENSIVE)",
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  [
+    "Side",
+    "Unit Level",
+    "Operation Type",
+    "Zone",
+    "Frontage (km)",
+    "Depth (km)",
+    "Brigade Density",
+    "Key Weapons / Notes"
+  ],
+  [
+    "CHINA",
+    "Theater Command",
+    "Both",
+    "Overall Theater",
+    "1,000–2,000",
+    "500–1,500",
+    "5 Theater Commands",
+    "All forces"
+  ],
+  [
+    "CHINA",
+    "Eastern Theater Command",
+    "Both",
+    "Eastern Theater",
+    "500–800",
+    "300–500",
+    "71st, 72nd, 73rd GAs",
+    "Taiwan Strait, amphibious"
+  ],
+  [
+    "CHINA",
+    "Southern Theater Command",
+    "Both",
+    "Southern Theater",
+    "400–600",
+    "300–500",
+    "74th, 75th GAs",
+    "South China Sea, A2/AD"
+  ],
+  [
+    "CHINA",
+    "Western Theater Command",
+    "Both",
+    "Western Theater",
+    "1,500–2,000",
+    "500–1,000",
+    "76th, 77th GAs",
+    "India LAC border, Tibet"
+  ],
+  [
+    "CHINA",
+    "Northern Theater Command",
+    "Both",
+    "Northern Theater",
+    "600–800",
+    "400–600",
+    "78th, 79th, 80th GAs",
+    "Korea/Russia border"
+  ],
+  [
+    "CHINA",
+    "Central Theater Command",
+    "Both",
+    "Central Theater",
+    "400–500",
+    "300–400",
+    "81st, 82nd, 83rd GAs",
+    "Beijing defense, reserve"
+  ],
+  [
+    "CHINA",
+    "Group Army",
+    "Defensive",
+    "Full Front",
+    "40–65",
+    "30–50",
+    "3–4 CABs per front",
+    "EW, SAM, SOF, ISR"
+  ],
+  [
+    "CHINA",
+    "Group Army",
+    "Defensive",
+    "Frontal Blocking Zone",
+    "10–15",
+    "10–15",
+    "Forward screen",
+    "Cover groups, SOF, ISR"
+  ],
+  [
+    "CHINA",
+    "Group Army",
+    "Defensive",
+    "Frontier Defense Zone",
+    "18–28",
+    "12–18",
+    "Main line",
+    "CABs, EW, SAM"
+  ],
+  [
+    "CHINA",
+    "Group Army",
+    "Defensive",
+    "Depth Defense Zone",
+    "Variable",
+    "12–20",
+    "2nd echelon",
+    "Depth defense groups"
+  ],
+  [
+    "CHINA",
+    "Group Army",
+    "Defensive",
+    "Rear Defense Zone",
+    "Variable",
+    "6–12",
+    "Rear security",
+    "Rear defense groups"
+  ],
+  [
+    "CHINA",
+    "Group Army",
+    "Offensive",
+    "Full Attack",
+    "30–50",
+    "30–50 depth",
+    "3–4 CABs",
+    "Combined arms"
+  ],
+  [
+    "CHINA",
+    "Heavy CAB",
+    "Defensive",
+    "Full Brigade",
+    "10–15",
+    "10–18",
+    "1 CAB per 15 km",
+    "Type 99A, PLZ-05, HQ-9B"
+  ],
+  [
+    "CHINA",
+    "Heavy CAB",
+    "Defensive",
+    "Frontal Block",
+    "N/A",
+    "3–5",
+    "Forward screen",
+    "SOF, ATGM"
+  ],
+  [
+    "CHINA",
+    "Heavy CAB",
+    "Defensive",
+    "Frontier Line",
+    "N/A",
+    "3–4",
+    "Main defense",
+    "Tanks, IFV"
+  ],
+  [
+    "CHINA",
+    "Heavy CAB",
+    "Defensive",
+    "Depth Zone",
+    "N/A",
+    "4–6",
+    "2nd echelon",
+    "Artillery"
+  ],
+  [
+    "CHINA",
+    "Heavy CAB",
+    "Defensive",
+    "Rear Zone",
+    "N/A",
+    "2–3",
+    "Rear security",
+    "Logistics"
+  ],
+  [
+    "CHINA",
+    "Heavy CAB",
+    "Offensive",
+    "Main Attack",
+    "5–8",
+    "4–8",
+    "Concentrated",
+    "Kill Zone A: 10–15 km"
+  ],
+  [
+    "CHINA",
+    "Medium CAB",
+    "Defensive",
+    "Full Brigade",
+    "15–20",
+    "10–15",
+    "1 CAB per 20 km",
+    "Type 96A, PLZ-07"
+  ],
+  [
+    "CHINA",
+    "Medium CAB",
+    "Offensive",
+    "Main Attack",
+    "8–12",
+    "8–12",
+    "Normal attack",
+    "Combined arms"
+  ],
+  [
+    "CHINA",
+    "Light CAB",
+    "Defensive",
+    "Full Brigade",
+    "20–25",
+    "8–12",
+    "1 CAB per 25 km",
+    "Type 15, wheeled"
+  ],
+  [
+    "CHINA",
+    "Light CAB",
+    "Offensive",
+    "Main Attack",
+    "10–15",
+    "8–12",
+    "Broad attack",
+    "High mobility"
+  ],
+  [
+    "CHINA",
+    "Combined Arms Battalion",
+    "Defensive",
+    "Full Battalion",
+    "2–3",
+    "7.5–12",
+    "—",
+    "Mix of tank/IFV cos"
+  ],
+  [
+    "CHINA",
+    "Combined Arms Battalion",
+    "Defensive",
+    "Block Zone",
+    "N/A",
+    "2.5–4",
+    "—",
+    "ATGM, cover"
+  ],
+  [
+    "CHINA",
+    "Combined Arms Battalion",
+    "Offensive",
+    "Main Attack",
+    "1–2",
+    "4–8",
+    "—",
+    "2 tank + 2 mech inf cos"
+  ],
+  [
+    "CHINA",
+    "Company",
+    "Defensive",
+    "Company Sector",
+    "0.5–1",
+    "1.5–2",
+    "—",
+    "Tank/IFV/infantry"
+  ],
+  [
+    "CHINA",
+    "Company",
+    "Offensive",
+    "Company Attack",
+    "0.3–0.5",
+    "1–2",
+    "—",
+    "3–4 platoons"
+  ],
+  [
+    "CHINA",
+    "Platoon",
+    "Defensive",
+    "Platoon Sector",
+    "0.2–0.5",
+    "0.5–1",
+    "—",
+    "3–4 squads"
+  ],
+  [
+    "CHINA",
+    "Platoon",
+    "Offensive",
+    "Platoon Attack",
+    "0.1–0.3",
+    "0.5–1",
+    "—",
+    "Bounding overwatch"
+  ],
+  [
+    "CHINA",
+    "Squad",
+    "Defensive",
+    "Squad Sector",
+    "0.1–0.2",
+    "0.2–0.5",
+    "—",
+    "8–12 soldiers"
+  ],
+  [
+    "CHINA",
+    "Squad",
+    "Offensive",
+    "Squad Attack",
+    "0.05–0.1",
+    "0.2–0.5",
+    "—",
+    "Fire and maneuver"
+  ],
+  [
+    "CHINA",
+    "Fire Support",
+    "Both",
+    "Direct Fire",
+    "0.4",
+    "4",
+    "—",
+    "Tanks, IFV"
+  ],
+  [
+    "CHINA",
+    "Fire Support",
+    "Both",
+    "Brigade Artillery",
+    "27",
+    "50",
+    "—",
+    "PLZ-07A, PHZ-11"
+  ],
+  [
+    "CHINA",
+    "Fire Support",
+    "Both",
+    "Division/GA Artillery",
+    "50",
+    "100",
+    "—",
+    "PLZ-05, PCL-181"
+  ],
+  [
+    "CHINA",
+    "Fire Support",
+    "Both",
+    "Corps MLRS",
+    "100",
+    "480",
+    "—",
+    "PHL-191 300mm"
+  ],
+  [
+    "CHINA",
+    "Fire Support",
+    "Both",
+    "UAS Recon",
+    "0",
+    "20",
+    "—",
+    "ASN-206, mini drones"
+  ],
+  [
+    "CHINA",
+    "Fire Support",
+    "Both",
+    "Air Defence",
+    "0",
+    "200",
+    "—",
+    "HQ-9B (200 km)"
+  ],
+  [
+    "CHINA",
+    "Border / LAC",
+    "Defensive",
+    "LAC Total",
+    "3,488",
+    "Variable",
+    "Multiple GAs",
+    "Western TC area"
+  ],
+  [
+    "CHINA",
+    "Border / LAC",
+    "Defensive",
+    "Depsang Sector",
+    "40–50",
+    "20–30",
+    "76th/77th GA elements",
+    "High-altitude"
+  ],
+  [
+    "CHINA",
+    "Border / LAC",
+    "Defensive",
+    "Chumar Sector",
+    "30–40",
+    "15–25",
+    "76th/77th GA elements",
+    "Disputed"
+  ],
+  [
+    "CHINA",
+    "Border / LAC",
+    "Defensive",
+    "Pangong Tso Sector",
+    "50–60",
+    "20–30",
+    "76th GA elements",
+    "70 sq km occupied"
+  ],
+  [
+    "CHINA",
+    "Border / LAC",
+    "Defensive",
+    "Forward Staging Areas",
+    "Variable",
+    "200 km from LAC",
+    "Ali, Rudok, Ngari",
+    "Infrastructure built"
+  ],
+  [
+    "CHINA",
+    "Border / LAC",
+    "Defensive",
+    "China Bases (from LAC)",
+    "Variable",
+    "150–300 km",
+    "Rear echelon",
+    "Deep-positioned bases"
+  ]
+]

@@ -1,0 +1,139 @@
+<div class="hierarchy-page">
+  <!-- Tactical background lines -->
+  <div class="tactical-grid"></div>
+  
+  <div class="container-fluid">
+    <div class="page-header font-mono">
+      <div class="system-path text-uppercase">PLA COMMAND ATLAS // HIERARCHY EXPLORER</div>
+      <h1 class="page-title text-uppercase">Operational Command Structure</h1>
+    </div>
+
+    <div class="workspace-split">
+      <!-- 1. HIERARCHY TREE VIEW -->
+      <div class="tree-panel glass">
+        <div class="hud-corners">
+          <span class="corner top-left"></span>
+          <span class="corner top-right"></span>
+          <span class="corner bottom-left"></span>
+          <span class="corner bottom-right"></span>
+        </div>
+        
+        <div class="panel-header font-mono text-uppercase">
+          <span>Active Command Nodes</span>
+          <span class="pulse-indicator">GRID SYSTEM ONLINE</span>
+        </div>
+        
+        <div class="tree-container">
+          <!-- Recursive Node Template -->
+          <ng-template #nodeTemplate let-node>
+            <div class="tree-node" [class.selected]="selectedNode()?.id === node.id" (click)="selectNode(node)">
+              <!-- Indent Lines & Expand Button -->
+              <div class="node-controls">
+                <button *ngIf="hasChildren(node)" class="btn-expand" (click)="toggleNode(node.id, $event)">
+                  <span class="expand-icon font-mono">{{ isExpanded(node.id) ? '[-]' : '[+]' }}</span>
+                </button>
+                <span *ngIf="!hasChildren(node)" class="bullet-node">•</span>
+              </div>
+              
+              <!-- Node Info -->
+              <div class="node-content">
+                <span class="node-badge text-uppercase font-mono" [class]="node.type">{{ node.type }}</span>
+                <span class="node-label">{{ node.label }}</span>
+              </div>
+            </div>
+
+            <!-- Children Sub-tree -->
+            <div *ngIf="hasChildren(node) && isExpanded(node.id)" class="node-children">
+              <ng-container *ngFor="let child of node.children">
+                <ng-container *ngTemplateOutlet="nodeTemplate; context: { $implicit: child }"></ng-container>
+              </ng-container>
+            </div>
+          </ng-template>
+
+          <!-- Render root node -->
+          <div class="tree-root" *ngIf="hierarchyRoot() as root">
+            <ng-container *ngTemplateOutlet="nodeTemplate; context: { $implicit: root }"></ng-container>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. OPERATIONAL BRIEFING HUD -->
+      <div class="briefing-panel glass">
+        <div class="hud-corners">
+          <span class="corner top-left"></span>
+          <span class="corner top-right"></span>
+          <span class="corner bottom-left"></span>
+          <span class="corner bottom-right"></span>
+        </div>
+        
+        <div class="panel-header font-mono text-uppercase">
+          <span>Operational Command Briefing</span>
+          <span class="telemetry-tag">RE: ORG-SEC9</span>
+        </div>
+
+        <div class="briefing-content" *ngIf="selectedNode() as selected; else noSelection">
+          <div class="briefing-header">
+            <span class="briefing-tag text-uppercase font-mono">{{ selected.type }} ECHELON</span>
+            <h2 class="briefing-title text-uppercase">{{ selected.label }}</h2>
+          </div>
+
+          <div class="briefing-body">
+            <div class="briefing-grid font-mono" *ngIf="selected.details as details">
+              <div class="grid-row" *ngIf="details.headquarters">
+                <span class="grid-label">HEADQUARTERS</span>
+                <span class="grid-value">{{ details.headquarters }}</span>
+              </div>
+              <div class="grid-row" *ngIf="details.commander">
+                <span class="grid-label">ACTIVE LEADER</span>
+                <span class="grid-value">{{ details.commander }}</span>
+              </div>
+              <div class="grid-row" *ngIf="details.status">
+                <span class="grid-label">DEPLOY STATUS</span>
+                <span class="grid-value alert-status">{{ details.status }}</span>
+              </div>
+            </div>
+
+            <div class="briefing-description" *ngIf="selected.details?.role">
+              <div class="desc-title font-mono text-uppercase">STRATEGIC ROLE & OBJECTIVE</div>
+              <p>{{ selected.details?.role }}</p>
+            </div>
+            
+            <div class="briefing-subordinates" *ngIf="selected.children && selected.children.length > 0">
+              <div class="desc-title font-mono text-uppercase">DIRECT SUBORDINATE COMMANDS</div>
+              <ul class="subordinate-list font-mono">
+                <li *ngFor="let child of selected.children" (click)="selectNode(child)">
+                  <span class="list-bullet">></span> {{ child.label }} ({{ child.type }})
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="briefing-actions" *ngIf="canInspectDetails(selected)">
+            <button class="btn btn-dossier" (click)="inspectDossier(selected)">
+              <span class="btn-text">DECRYPT FULL INTEL DOSSIER</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="action-icon">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Fallback template -->
+        <ng-template #noSelection>
+          <div class="no-selection font-mono text-uppercase">
+            <span class="blink-warning">WARNING // BRIEFING FEED OFFLINE</span>
+            <p>SELECT A NODE IN THE COMMAND STRUCTURE ON THE LEFT TO INITIALIZE ENCRYPTION INTEGRATION</p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sliding Dossier Drawer -->
+  <app-pla-detail-drawer
+    [itemId]="drawerItemId()"
+    [itemType]="drawerItemType()"
+    (close)="closeDrawer()"
+  ></app-pla-detail-drawer>
+</div>

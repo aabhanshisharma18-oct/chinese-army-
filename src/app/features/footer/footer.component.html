@@ -1,0 +1,59 @@
+<!-- PLA Command Atlas - Footer Component -->
+<!-- Full-screen video closing section with footer content -->
+
+<footer class="footer">
+  <!-- Video Background -->
+  <video 
+    class="footer-video"
+    [src]="videoSrc"
+    autoplay
+    loop
+    muted
+    playsinline
+  ></video>
+  
+  <!-- Video Overlay -->
+  <div class="footer-overlay"></div>
+  
+  <!-- Footer Content -->
+  <div class="footer-content">
+    <div class="container">
+      <div class="footer-main">
+        <!-- Logo Section -->
+        <div class="footer-brand">
+          <svg class="footer-logo-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="4" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none"/>
+            <path d="M12 20 L20 12 L28 20 L20 28 Z" stroke="currentColor" stroke-width="2" fill="none"/>
+            <circle cx="20" cy="20" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+          </svg>
+          <span class="footer-wordmark text-uppercase">PLA Command Atlas</span>
+        </div>
+        
+        <!-- Footer Description -->
+        <p class="footer-description">
+          Comprehensive Chinese Army / PLA details platform providing theater command analysis, formation indexing, equipment mapping, and strategic force structure data.
+        </p>
+        
+        <!-- Navigation Links -->
+        <div class="footer-nav">
+          <a class="footer-link" *ngFor="let link of footerLinks" [href]="link.href">
+            {{ link.label }}
+          </a>
+        </div>
+      </div>
+      
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="footer-legal">
+          <a class="legal-link" *ngFor="let link of legalLinks" [href]="link.href">
+            {{ link.label }}
+          </a>
+        </div>
+        
+        <p class="footer-copyright text-muted">
+          © {{ currentYear }} PLA Command Atlas. All data compiled from open-source intelligence and official publications.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

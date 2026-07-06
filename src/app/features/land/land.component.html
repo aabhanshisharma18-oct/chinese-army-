@@ -1,0 +1,224 @@
+<div class="land-page">
+  <!-- Tactical grid lines background -->
+  <div class="tactical-grid"></div>
+
+  <div class="container-fluid">
+    <!-- Page Header -->
+    <div class="page-header font-mono">
+      <div class="system-path text-uppercase">PLA COMMAND ATLAS // LAND DATA WORKSPACE</div>
+      <h1 class="page-title text-uppercase">Maneuver Force & Ordnance Registry</h1>
+    </div>
+
+    <!-- 1. MASTER SUBCATEGORY NAVIGATION -->
+    <div class="navigation-tabs-container">
+      <div class="navigation-tabs">
+        <button 
+          *ngFor="let tab of tabs" 
+          class="tab-btn font-mono text-uppercase"
+          [class.active]="activeTab() === tab.value"
+          (click)="setTab(tab.value)"
+        >
+          <span class="tab-marker">//</span> {{ tab.label }}
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. FILTER & SEARCH CONTROL CONSOLE -->
+    <div class="control-console glass">
+      <div class="hud-corners">
+        <span class="corner top-left"></span>
+        <span class="corner top-right"></span>
+        <span class="corner bottom-left"></span>
+        <span class="corner bottom-right"></span>
+      </div>
+
+      <div class="console-grid">
+        <!-- Text Search -->
+        <div class="console-item search-box">
+          <label class="console-lbl font-mono text-uppercase">Search Database Index</label>
+          <div class="input-wrapper">
+            <span class="input-prefix font-mono">></span>
+            <input 
+              type="text" 
+              class="console-input font-mono" 
+              placeholder="SEARCH BY KEYWORD..." 
+              [ngModel]="searchQuery()" 
+              (ngModelChange)="searchQuery.set($event)"
+            />
+          </div>
+        </div>
+
+        <!-- Dynamic Dropdown Filter (Category Specific) -->
+        <div class="console-item filter-box" *ngIf="activeTab() === 'unit'">
+          <label class="console-lbl font-mono text-uppercase">Theater Command</label>
+          <select 
+            class="console-select font-mono" 
+            [ngModel]="theaterFilter()"
+            (ngModelChange)="theaterFilter.set($event)"
+          >
+            <option value="ALL">ALL THEATERS</option>
+            <option value="Eastern">EASTERN THEATER</option>
+            <option value="Southern">SOUTHERN THEATER</option>
+            <option value="Western">WESTERN THEATER</option>
+          </select>
+        </div>
+
+        <div class="console-item filter-box" *ngIf="activeTab() === 'type'">
+          <label class="console-lbl font-mono text-uppercase">Mobility Profile</label>
+          <select 
+            class="console-select font-mono" 
+            [ngModel]="mobilityFilter()"
+            (ngModelChange)="mobilityFilter.set($event)"
+          >
+            <option value="ALL">ALL MOBILITY TYPES</option>
+            <option value="Tracked">TRACKED VEHICLES</option>
+            <option value="Wheeled">WHEELED VEHICLES</option>
+            <option value="High-Mobility">HIGH-MOBILITY LIGHT VEHICLES</option>
+            <option value="Amphibious">AMPHIBIOUS ASSAULT</option>
+            <option value="Rotary-Wing">ROTARY-WING AVIATION</option>
+          </select>
+        </div>
+
+        <div class="console-item filter-box" *ngIf="activeTab() === 'weapon'">
+          <label class="console-lbl font-mono text-uppercase">Combat Role Category</label>
+          <select 
+            class="console-select font-mono" 
+            [ngModel]="weaponCategoryFilter()"
+            (ngModelChange)="weaponCategoryFilter.set($event)"
+          >
+            <option value="ALL">ALL SYSTEMS</option>
+            <option value="Armored Combat">ARMORED COMBAT</option>
+            <option value="Artillery">ARTILLERY SYSTEMS</option>
+            <option value="Aviation">ARMY AVIATION</option>
+            <option value="Sensors">RADAR / SENSORS</option>
+          </select>
+        </div>
+
+        <div class="console-item filter-box" *ngIf="activeTab() === 'resource'">
+          <label class="console-lbl font-mono text-uppercase">Resource Classification</label>
+          <select 
+            class="console-select font-mono" 
+            [ngModel]="resourceTypeFilter()"
+            (ngModelChange)="resourceTypeFilter.set($event)"
+          >
+            <option value="ALL">ALL RESOURCES</option>
+            <option value="Training Ground">TRAINING BASES</option>
+            <option value="Logistics Hub">LOGISTICS HUBS</option>
+            <option value="Maintenance Center">MAINTENANCE DEPOTS</option>
+          </select>
+        </div>
+
+        <!-- Reset Button Section -->
+        <div class="console-item reset-actions">
+          <button class="btn btn-reset font-mono text-uppercase" (click)="resetFilters()">
+            RESET FILTERS
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. QUERY REPORT TELEMETRY -->
+    <div class="query-report font-mono text-uppercase">
+      <span>Query Result: {{ filteredItems().length }} dossier cards matching search criteria</span>
+      <span>Status: INTEGRITY SECURE</span>
+    </div>
+
+    <!-- 4. DATABASE CARD GRID -->
+    <div class="database-grid" *ngIf="filteredItems().length > 0; else noRecords">
+      
+      <!-- Card Loop -->
+      <div 
+        *ngFor="let item of filteredItems()" 
+        class="dossier-card glass"
+        (click)="openDossier(item.id)"
+      >
+        <div class="card-borders">
+          <span class="bracket top-left">[</span>
+          <span class="bracket top-right">]</span>
+          <span class="bracket bottom-left">[</span>
+          <span class="bracket bottom-right">]</span>
+        </div>
+
+        <!-- Card Header status indicator -->
+        <div class="card-header font-mono">
+          <span class="readiness-tag" [class.ready]="item.readiness >= 90" [class.alert]="item.readiness < 90">
+            {{ item.readiness ? 'READINESS: ' + item.readiness + '%' : 'SYSTEM ECHELON' }}
+          </span>
+          <span class="record-id">ID: {{ item.id.toUpperCase() }}</span>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body">
+          <h3 class="card-title text-uppercase">{{ item.name }}</h3>
+          
+          <!-- Card details depending on type -->
+          <div class="card-details font-mono">
+            <!-- Unit Data details -->
+            <ng-container *ngIf="activeTab() === 'unit'">
+              <div class="detail-row"><span class="lbl">HQ:</span> <span class="val">{{ item.headquarters }}</span></div>
+              <div class="detail-row"><span class="lbl">THEATER:</span> <span class="val">{{ item.theaterCommand }} Command</span></div>
+              <div class="detail-row"><span class="lbl">COMMANDER:</span> <span class="val text-ellipsis">{{ item.commander }}</span></div>
+            </ng-container>
+
+            <!-- Type Data details -->
+            <ng-container *ngIf="activeTab() === 'type'">
+              <div class="detail-row"><span class="lbl">MOBILITY:</span> <span class="val text-uppercase">{{ item.mobility }}</span></div>
+              <div class="detail-row"><span class="lbl">DEPLOYMENT:</span> <span class="val text-uppercase">READY</span></div>
+              <p class="summary-desc">{{ item.description | slice:0:80 }}...</p>
+            </ng-container>
+
+            <!-- Category Data details -->
+            <ng-container *ngIf="activeTab() === 'category'">
+              <div class="detail-row"><span class="lbl">ECHELON:</span> <span class="val">{{ item.echelon | slice:0:30 }}...</span></div>
+              <div class="detail-row"><span class="lbl">ACTIVE BRIGADES:</span> <span class="val highlight-val">{{ item.activeBrigadesCount }} units</span></div>
+            </ng-container>
+
+            <!-- Weapon Data details -->
+            <ng-container *ngIf="activeTab() === 'weapon'">
+              <div class="detail-row"><span class="lbl">TYPE:</span> <span class="val text-uppercase">{{ item.type }}</span></div>
+              <div class="detail-row"><span class="lbl">CATEGORY:</span> <span class="val text-uppercase">{{ item.functionalCategory }}</span></div>
+              <div class="detail-row"><span class="lbl">ENGAGEMENT RANGE:</span> <span class="val">{{ item.effectiveRange }}</span></div>
+            </ng-container>
+
+            <!-- Resource Data details -->
+            <ng-container *ngIf="activeTab() === 'resource'">
+              <div class="detail-row"><span class="lbl">TYPE:</span> <span class="val text-uppercase">{{ item.resourceType }}</span></div>
+              <div class="detail-row"><span class="lbl">LOCATION:</span> <span class="val">{{ item.location }}</span></div>
+              <div class="detail-row"><span class="lbl">STATUS:</span> <span class="val text-uppercase highlight-val">{{ item.capacityStatus }}</span></div>
+            </ng-container>
+          </div>
+        </div>
+
+        <!-- Card Footer -->
+        <div class="card-footer font-mono text-uppercase">
+          <span>// Dossier access link</span>
+          <span class="action-text">DECRYPT DOSSIER ></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Empty State -->
+    <ng-template #noRecords>
+      <div class="no-records-wrapper glass font-mono">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-title text-uppercase">NO CORRESPONDING DOSSIER FOUND</div>
+        <p class="alert-msg">
+          YOUR SEARCH TERM "{{ searchQuery().toUpperCase() }}" AND FILTER PARAMS RETURNED ZERO INDEX DATA. 
+          REFINE RECOGNITION QUERY OR DEPLOY THE RESET SWITCH.
+        </p>
+        <button class="btn btn-reset btn-large font-mono text-uppercase" (click)="resetFilters()">
+          RESET SEARCH MATRIX
+        </button>
+      </div>
+    </ng-template>
+
+  </div>
+
+  <!-- Reusable Sliding dossier drawer -->
+  <app-pla-detail-drawer
+    [itemId]="drawerItemId()"
+    [itemType]="drawerItemType()"
+    (close)="closeDossier()"
+  ></app-pla-detail-drawer>
+</div>

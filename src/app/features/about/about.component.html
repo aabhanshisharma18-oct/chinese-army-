@@ -1,0 +1,72 @@
+<!-- PLA Command Atlas - About Page Overlay -->
+<!-- Full-page overlay for about information -->
+
+<div class="page-backdrop" (click)="onClose()"></div>
+
+<div class="page-content" @pageAnimation>
+  <div class="page-header">
+    <span class="page-title text-uppercase">About</span>
+    <button class="page-close" (click)="onClose()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="page-body">
+    <div class="about-section">
+      <h2 class="about-headline">PLA Command Atlas</h2>
+      <p class="about-description">
+        PLA Command Atlas is a comprehensive Chinese Army / PLA details platform providing theater command analysis, formation indexing, equipment mapping, and strategic force structure data. The platform serves researchers, defense analysts, and policymakers with authoritative information on PLA organization and capabilities.
+      </p>
+    </div>
+    
+    <div class="about-section">
+      <h3 class="about-subtitle text-uppercase">Mission</h3>
+      <p class="about-text">
+        To provide accurate, comprehensive, and up-to-date information on Chinese Army force structure, capabilities, and modernization trends through rigorous analysis of open-source intelligence, official publications, and expert research.
+      </p>
+    </div>
+    
+    <div class="about-section">
+      <h3 class="about-subtitle text-uppercase">Data Sources</h3>
+      <p class="about-text">
+        All data is compiled from verified sources including official PLA publications, defense ministry reports, international defense analysis organizations (IISS, RAND, SIPRI), satellite imagery analysis, and peer-reviewed open-source intelligence. Each data point includes source references for verification.
+      </p>
+    </div>
+    
+    <div class="about-section">
+      <h3 class="about-subtitle text-uppercase">Coverage</h3>
+      <div class="coverage-list">
+        <div class="coverage-item">
+          <span class="coverage-icon">🎯</span>
+          <span class="coverage-text">Five Theater Commands with complete organizational structures</span>
+        </div>
+        <div class="coverage-item">
+          <span class="coverage-icon">📊</span>
+          <span class="coverage-text">Formation profiles for group armies, brigades, and specialized units</span>
+        </div>
+        <div class="coverage-item">
+          <span class="coverage-icon">🔧</span>
+          <span class="coverage-text">Equipment inventories and modernization indicators</span>
+        </div>
+        <div class="coverage-item">
+          <span class="coverage-icon">📈</span>
+          <span class="coverage-text">Readiness assessments and deployment tracking</span>
+        </div>
+        <div class="coverage-item">
+          <span class="coverage-icon">📝</span>
+          <span class="coverage-text">Analyst notes and strategic assessments</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="about-section">
+      <h3 class="about-subtitle text-uppercase">Disclaimer</h3>
+      <p class="about-text text-muted">
+        This platform is for informational and research purposes only. All data is derived from open-source intelligence and official publications. Force structures and capabilities are subject to change and should be verified through multiple sources before use in operational planning or policy decisions.
+      </p>
+    </div>
+  </div>
+</div>

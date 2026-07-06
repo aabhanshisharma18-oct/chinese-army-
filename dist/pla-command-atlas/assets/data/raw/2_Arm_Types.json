@@ -1,0 +1,211 @@
+[
+  [
+    "PLAGF – ARM TYPES / BRANCHES OF SERVICE (兵种)",
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  [
+    "#",
+    "Combat Arm Type (Chinese)",
+    "Combat Arm Type (English)",
+    "Primary Role",
+    "Classification (Mobility)",
+    "Classification (Combat Role)",
+    "Training Category",
+    "Indian Army Equivalent",
+    "Terrain Specialisation"
+  ],
+  [
+    1,
+    "步兵",
+    "Infantry (Light)",
+    "Basic ground combat, foot mobile",
+    "Light",
+    "Maneuver",
+    "Cat A / Cat B",
+    "Infantry Corps",
+    "All terrain; jungle, urban, mountain"
+  ],
+  [
+    2,
+    "摩托化步兵",
+    "Motorized Infantry",
+    "Vehicle transport, dismounts to fight",
+    "Motorized",
+    "Maneuver",
+    "Cat A / Cat B",
+    "Infantry Corps (Motorized)",
+    "Road-capable terrain"
+  ],
+  [
+    3,
+    "机械化步兵",
+    "Mechanized Infantry",
+    "Armored vehicle combat, high mobility",
+    "Mechanized",
+    "Maneuver",
+    "Cat A",
+    "Infantry Corps (Mech)",
+    "Open & urban terrain"
+  ],
+  [
+    4,
+    "装甲兵",
+    "Armoured (Tanks)",
+    "Armored warfare, tank combat",
+    "Armored",
+    "Maneuver",
+    "Cat A",
+    "Corps of Armoured Corps",
+    "Open, flat terrain; steppe"
+  ],
+  [
+    5,
+    "炮兵",
+    "Field Artillery",
+    "Indirect fire support",
+    "Motorized/Tracked",
+    "Fire Support",
+    "Cat A",
+    "Regiment of Artillery",
+    "All terrain"
+  ],
+  [
+    6,
+    "防空兵",
+    "Air Defence",
+    "Ground-to-air missiles, AA guns",
+    "Motorized",
+    "Air Defense",
+    "Cat A",
+    "Army Air Defence",
+    "All terrain"
+  ],
+  [
+    7,
+    "陆军航空兵",
+    "Army Aviation",
+    "Helicopter ops, air assault",
+    "Airborne",
+    "Maneuver / Fire Support",
+    "Cat A",
+    "Army Aviation Corps",
+    "All terrain"
+  ],
+  [
+    8,
+    "特种作战兵",
+    "Special Forces",
+    "Direct action, recon, sabotage",
+    "Air/Land/Water",
+    "Special Operations",
+    "Cat A",
+    "Para (SF), MIGMAN",
+    "All terrain"
+  ],
+  [
+    9,
+    "工程兵",
+    "Combat Engineers",
+    "Construction, demolition, obstacle clearing",
+    "Motorized/Tracked",
+    "Support",
+    "Cat A / Cat B",
+    "Corps of Engineers",
+    "All terrain"
+  ],
+  [
+    10,
+    "通信兵",
+    "Signal Corps",
+    "Communications, network operations",
+    "Motorized",
+    "Support",
+    "Cat A / Cat B",
+    "Corps of Signals",
+    "All terrain"
+  ],
+  [
+    11,
+    "防化兵",
+    "CBRN Defense",
+    "Nuclear, chemical, biological defense",
+    "Motorized",
+    "Emerging / Support",
+    "Cat A",
+    "Chemical Defence Units",
+    "Contaminated terrain"
+  ],
+  [
+    12,
+    "电子对抗兵",
+    "Electronic Warfare",
+    "Signal jamming, cyber operations",
+    "Motorized",
+    "Emerging",
+    "Cat A",
+    "EW Units, Signals",
+    "All terrain"
+  ],
+  [
+    13,
+    "侦察兵",
+    "Reconnaissance",
+    "Intelligence, surveillance",
+    "Light/Motorized",
+    "Special Operations",
+    "Cat A",
+    "Recce Units",
+    "All terrain"
+  ],
+  [
+    14,
+    "无人机兵",
+    "UAV/Drone Units",
+    "Drone recon, strike drones",
+    "Airborne (unmanned)",
+    "Emerging",
+    "Cat A",
+    "Drone Units",
+    "All terrain"
+  ],
+  [
+    15,
+    "后勤保障兵",
+    "Sustainment/Logistics",
+    "Supply, transport, medical, maintenance",
+    "Motorized",
+    "Support",
+    "Cat A / Cat B",
+    "Army Service Corps",
+    "All terrain"
+  ],
+  [
+    "—",
+    "空降兵",
+    "Airborne",
+    "Parachute insertion, air assault",
+    "Airborne",
+    "Maneuver",
+    "Cat A",
+    "Parachute Regt",
+    "All terrain"
+  ],
+  [
+    "—",
+    "两栖步兵",
+    "Amphibious Infantry",
+    "Amphibious vehicles, water crossings",
+    "Amphibious",
+    "Maneuver",
+    "Cat A",
+    "Amphibious Bn",
+    "Coastal/riverine"
+  ]
+]
