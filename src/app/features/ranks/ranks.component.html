@@ -1,0 +1,99 @@
+<!-- PLA Command Atlas - Ranks Component -->
+<!-- Displays PLA officer and enlisted rank structure -->
+
+<section class="ranks-section">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="ranks-header">
+      <div class="ranks-eyebrow text-uppercase">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">Personnel Structure</span>
+      </div>
+      
+      <h2 class="ranks-title">
+        <span class="title-line">PLA RANK</span>
+        <span class="title-line">STRUCTURE</span>
+      </h2>
+      
+      <p class="ranks-description">
+        Complete officer and enlisted rank structure of the People's Liberation Army Ground Force (PLAGF), including Chinese characters, pinyin, and NATO equivalents.
+      </p>
+    </div>
+    
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Loading ranks data...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="error-state">
+      <div class="error-icon">⚠</div>
+      <p class="error-message">{{ error }}</p>
+      <button class="btn btn-primary" (click)="retry()">Retry</button>
+    </div>
+    
+    <!-- Ranks Display -->
+    <div class="ranks-content" *ngIf="!loading && !error">
+      <!-- Enlisted Ranks -->
+      <div class="rank-category">
+        <h3 class="category-title">Enlisted Personnel (士兵)</h3>
+        <div class="ranks-grid">
+          <div class="rank-card card" *ngFor="let rank of getRanksByCategory('Enlisted')">
+            <div class="rank-header">
+              <h4 class="rank-english">{{ rank.englishRank }}</h4>
+              <span class="rank-nato">{{ rank.natoEquivalent }}</span>
+            </div>
+            
+            <div class="rank-chinese">
+              <p class="chinese-characters">{{ rank.chineseCharacters }}</p>
+              <p class="chinese-pinyin">{{ rank.chinesePinyin }}</p>
+            </div>
+            
+            <p class="rank-notes" *ngIf="rank.notes">{{ rank.notes }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Officer Ranks -->
+      <div class="rank-category">
+        <h3 class="category-title">Commissioned Officers (军官)</h3>
+        <div class="ranks-grid">
+          <div class="rank-card card" *ngFor="let rank of getRanksByCategory('Officer')">
+            <div class="rank-header">
+              <h4 class="rank-english">{{ rank.englishRank }}</h4>
+              <span class="rank-nato">{{ rank.natoEquivalent }}</span>
+            </div>
+            
+            <div class="rank-chinese">
+              <p class="chinese-characters">{{ rank.chineseCharacters }}</p>
+              <p class="chinese-pinyin">{{ rank.chinesePinyin }}</p>
+            </div>
+            
+            <p class="rank-notes" *ngIf="rank.notes">{{ rank.notes }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Warrant Officers (if any) -->
+      <div class="rank-category" *ngIf="getRanksByCategory('Warrant Officer').length > 0">
+        <h3 class="category-title">Warrant Officers (准尉)</h3>
+        <div class="ranks-grid">
+          <div class="rank-card card" *ngFor="let rank of getRanksByCategory('Warrant Officer')">
+            <div class="rank-header">
+              <h4 class="rank-english">{{ rank.englishRank }}</h4>
+              <span class="rank-nato">{{ rank.natoEquivalent }}</span>
+            </div>
+            
+            <div class="rank-chinese">
+              <p class="chinese-characters">{{ rank.chineseCharacters }}</p>
+              <p class="chinese-pinyin">{{ rank.chinesePinyin }}</p>
+            </div>
+            
+            <p class="rank-notes" *ngIf="rank.notes">{{ rank.notes }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

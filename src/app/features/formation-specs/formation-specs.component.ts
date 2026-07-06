@@ -73,6 +73,72 @@ interface VehicleDesignation {
   notes: string;
 }
 
+interface UnitCategory {
+  side: string;
+  category: string;
+  description: string;
+  trainingLevel: string;
+  equipmentLevel: string;
+  manningLevel: string;
+  readiness: string;
+  deploymentTime: string;
+  usEquivalent: string;
+  percentOfForce: string;
+  notes: string;
+}
+
+interface AviationDetailed {
+  side: string;
+  helicopter: string;
+  variant: string;
+  typeRole: string;
+  manufacturer: string;
+  basedOn: string;
+  firstFlight: string;
+  serviceEntry: string;
+  status: string;
+  totalBuilt: string;
+  unitCost: string;
+  crew: string;
+  passengersTroops: string;
+  length: string;
+  rotorDiameter: string;
+  height: string;
+  emptyWeight: string;
+  maxTakeoffWeight: string;
+  maxSpeed: string;
+  cruiseSpeed: string;
+  range: string;
+  ferryRange: string;
+  serviceCeiling: string;
+  rateOfClimb: string;
+  armament: string;
+  notes: string;
+}
+
+interface AirDefenceDetailed {
+  side: string;
+  system: string;
+  typeCategory: string;
+  basedOn: string;
+  serviceEntry: string;
+  status: string;
+  exportName: string;
+  missileMunitionLength: string;
+  missileMunitionDiameter: string;
+  missileMunitionWeight: string;
+  launcherConfig: string;
+  radar: string;
+  range: string;
+  altitude: string;
+  radarRange: string;
+  engagementTime: string;
+  speed: string;
+  gunCaliber: string;
+  gunRate: string;
+  notes: string;
+}
+
 @Component({
   selector: 'app-formation-specs',
   standalone: true,
@@ -88,6 +154,9 @@ export class FormationSpecsComponent implements OnInit {
   vehicleSpeeds: VehicleSpeed[] = [];
   frontageDepths: FrontageDepth[] = [];
   vehicleDesignations: VehicleDesignation[] = [];
+  unitCategories: UnitCategory[] = [];
+  aviationDetails: AviationDetailed[] = [];
+  airDefenceDetails: AirDefenceDetailed[] = [];
   loadingResources = true;
   errorResources: string | null = null;
   
@@ -99,6 +168,162 @@ export class FormationSpecsComponent implements OnInit {
     this.loadVehicleSpeeds();
     this.loadFrontageDepths();
     this.loadVehicleDesignations();
+    this.loadUnitCategories();
+    this.loadAviationDetails();
+    this.loadAirDefenceDetails();
+  }
+
+  loadAirDefenceDetails(): void {
+    this.excelDataService.getSheet('assets/data/raw/17_Air_Defence_Detailed.json').subscribe({
+      next: (data: unknown) => {
+        this.airDefenceDetails = this.parseAirDefenceDetails(data);
+      },
+      error: (err) => {
+        console.error('Failed to load air defence details:', err);
+      }
+    });
+  }
+
+  private parseAirDefenceDetails(data: unknown): AirDefenceDetailed[] {
+    const rows = data as unknown[][];
+    if (!Array.isArray(rows) || rows.length < 2) return [];
+
+    const airDefence: AirDefenceDetailed[] = [];
+
+    for (let i = 2; i < rows.length; i++) {
+      const row = rows[i] as unknown[];
+      if (!Array.isArray(row) || row.length === 0) continue;
+
+      const detail: AirDefenceDetailed = {
+        side: this.getCellValue(row, 0) || '',
+        system: this.getCellValue(row, 1) || '',
+        typeCategory: this.getCellValue(row, 2) || '',
+        basedOn: this.getCellValue(row, 3) || '',
+        serviceEntry: this.getCellValue(row, 4) || '',
+        status: this.getCellValue(row, 5) || '',
+        exportName: this.getCellValue(row, 6) || '',
+        missileMunitionLength: this.getCellValue(row, 7) || '',
+        missileMunitionDiameter: this.getCellValue(row, 8) || '',
+        missileMunitionWeight: this.getCellValue(row, 9) || '',
+        launcherConfig: this.getCellValue(row, 10) || '',
+        radar: this.getCellValue(row, 11) || '',
+        range: this.getCellValue(row, 12) || '',
+        altitude: this.getCellValue(row, 13) || '',
+        radarRange: this.getCellValue(row, 14) || '',
+        engagementTime: this.getCellValue(row, 15) || '',
+        speed: this.getCellValue(row, 16) || '',
+        gunCaliber: this.getCellValue(row, 17) || '',
+        gunRate: this.getCellValue(row, 18) || '',
+        notes: this.getCellValue(row, 19) || ''
+      };
+
+      if (detail.system) {
+        airDefence.push(detail);
+      }
+    }
+
+    return airDefence;
+  }
+
+  loadAviationDetails(): void {
+    this.excelDataService.getSheet('assets/data/raw/16_Aviation_Detailed.json').subscribe({
+      next: (data: unknown) => {
+        this.aviationDetails = this.parseAviationDetails(data);
+      },
+      error: (err) => {
+        console.error('Failed to load aviation details:', err);
+      }
+    });
+  }
+
+  private parseAviationDetails(data: unknown): AviationDetailed[] {
+    const rows = data as unknown[][];
+    if (!Array.isArray(rows) || rows.length < 2) return [];
+
+    const aviation: AviationDetailed[] = [];
+
+    for (let i = 2; i < rows.length; i++) {
+      const row = rows[i] as unknown[];
+      if (!Array.isArray(row) || row.length === 0) continue;
+
+      const detail: AviationDetailed = {
+        side: this.getCellValue(row, 0) || '',
+        helicopter: this.getCellValue(row, 1) || '',
+        variant: this.getCellValue(row, 2) || '',
+        typeRole: this.getCellValue(row, 3) || '',
+        manufacturer: this.getCellValue(row, 4) || '',
+        basedOn: this.getCellValue(row, 5) || '',
+        firstFlight: this.getCellValue(row, 6) || '',
+        serviceEntry: this.getCellValue(row, 7) || '',
+        status: this.getCellValue(row, 8) || '',
+        totalBuilt: this.getCellValue(row, 9) || '',
+        unitCost: this.getCellValue(row, 10) || '',
+        crew: this.getCellValue(row, 11) || '',
+        passengersTroops: this.getCellValue(row, 12) || '',
+        length: this.getCellValue(row, 13) || '',
+        rotorDiameter: this.getCellValue(row, 14) || '',
+        height: this.getCellValue(row, 15) || '',
+        emptyWeight: this.getCellValue(row, 16) || '',
+        maxTakeoffWeight: this.getCellValue(row, 17) || '',
+        maxSpeed: this.getCellValue(row, 18) || '',
+        cruiseSpeed: this.getCellValue(row, 19) || '',
+        range: this.getCellValue(row, 20) || '',
+        ferryRange: this.getCellValue(row, 21) || '',
+        serviceCeiling: this.getCellValue(row, 22) || '',
+        rateOfClimb: this.getCellValue(row, 23) || '',
+        armament: this.getCellValue(row, 24) || '',
+        notes: this.getCellValue(row, 25) || ''
+      };
+
+      if (detail.helicopter) {
+        aviation.push(detail);
+      }
+    }
+
+    return aviation;
+  }
+
+  loadUnitCategories(): void {
+    this.excelDataService.getSheet('assets/data/raw/13_Unit_Categories.json').subscribe({
+      next: (data: unknown) => {
+        this.unitCategories = this.parseUnitCategories(data);
+      },
+      error: (err) => {
+        console.error('Failed to load unit categories:', err);
+      }
+    });
+  }
+
+  private parseUnitCategories(data: unknown): UnitCategory[] {
+    const rows = data as unknown[][];
+    if (!Array.isArray(rows) || rows.length < 2) return [];
+
+    const categories: UnitCategory[] = [];
+
+    for (let i = 2; i < rows.length; i++) {
+      const row = rows[i] as unknown[];
+      if (!Array.isArray(row) || row.length === 0) continue;
+
+      const category: UnitCategory = {
+        side: this.getCellValue(row, 0) || '',
+        category: this.getCellValue(row, 1) || '',
+        description: this.getCellValue(row, 2) || '',
+        trainingLevel: this.getCellValue(row, 3) || '',
+        equipmentLevel: this.getCellValue(row, 4) || '',
+        manningLevel: this.getCellValue(row, 5) || '',
+        readiness: this.getCellValue(row, 6) || '',
+        deploymentTime: this.getCellValue(row, 7) || '',
+        usEquivalent: this.getCellValue(row, 8) || '',
+        percentOfForce: this.getCellValue(row, 9) || '',
+        notes: this.getCellValue(row, 10) || ''
+      };
+
+      if (category.category) {
+        categories.push(category);
+      }
+    }
+
+    return categories;
   }
 
   loadVehicleDesignations(): void {

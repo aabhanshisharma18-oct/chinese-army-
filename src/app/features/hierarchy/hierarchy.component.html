@@ -8,7 +8,21 @@
       <h1 class="page-title text-uppercase">Operational Command Structure</h1>
     </div>
 
-    <div class="workspace-split">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Loading hierarchy data from Excel...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="error-state">
+      <div class="error-icon">⚠</div>
+      <p class="error-message">{{ error }}</p>
+      <button class="btn btn-primary" (click)="retry()">Retry</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="workspace-split" *ngIf="!loading && !error">
       <!-- 1. HIERARCHY TREE VIEW -->
       <div class="tree-panel glass">
         <div class="hud-corners">
@@ -83,9 +97,21 @@
                 <span class="grid-label">HEADQUARTERS</span>
                 <span class="grid-value">{{ details.headquarters }}</span>
               </div>
-              <div class="grid-row" *ngIf="details.commander">
-                <span class="grid-label">ACTIVE LEADER</span>
-                <span class="grid-value">{{ details.commander }}</span>
+              <div class="grid-row" *ngIf="details.unitType">
+                <span class="grid-label">UNIT TYPE</span>
+                <span class="grid-value">{{ details.unitType }}</span>
+              </div>
+              <div class="grid-row" *ngIf="details.unitPotential">
+                <span class="grid-label">UNIT POTENTIAL</span>
+                <span class="grid-value">{{ details.unitPotential }}</span>
+              </div>
+              <div class="grid-row" *ngIf="details.location">
+                <span class="grid-label">LOCATION</span>
+                <span class="grid-value">{{ details.location }}</span>
+              </div>
+              <div class="grid-row" *ngIf="details.coordinates">
+                <span class="grid-label">COORDINATES</span>
+                <span class="grid-value">{{ details.coordinates }}</span>
               </div>
               <div class="grid-row" *ngIf="details.status">
                 <span class="grid-label">DEPLOY STATUS</span>
@@ -107,16 +133,6 @@
               </ul>
             </div>
           </div>
-
-          <div class="briefing-actions" *ngIf="canInspectDetails(selected)">
-            <button class="btn btn-dossier" (click)="inspectDossier(selected)">
-              <span class="btn-text">DECRYPT FULL INTEL DOSSIER</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="action-icon">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </button>
-          </div>
         </div>
 
         <!-- Fallback template -->
@@ -129,11 +145,4 @@
       </div>
     </div>
   </div>
-
-  <!-- Sliding Dossier Drawer -->
-  <app-pla-detail-drawer
-    [itemId]="drawerItemId()"
-    [itemType]="drawerItemType()"
-    (close)="closeDrawer()"
-  ></app-pla-detail-drawer>
 </div>

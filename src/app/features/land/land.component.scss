@@ -484,3 +484,225 @@
     padding: 0.75rem 1.5rem;
   }
 }
+
+/* Subcategory Navigation Tabs */
+.subcategory-tabs {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  border: 1px solid rgba(232, 227, 214, 0.08);
+  
+  &::-webkit-scrollbar {
+    height: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(232, 227, 214, 0.1);
+  }
+}
+
+.subcategory-tab {
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.75rem 1.25rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  border-radius: 2px;
+  
+  .tab-marker {
+    color: var(--color-olive);
+    margin-right: 0.25rem;
+    transition: color var(--transition-fast);
+  }
+  
+  &:hover {
+    background: rgba(184, 174, 141, 0.05);
+    color: var(--color-text-primary);
+    
+    .tab-marker {
+      color: var(--color-khaki);
+    }
+  }
+  
+  &.active {
+    background: rgba(184, 174, 141, 0.15);
+    color: var(--color-khaki);
+    text-shadow: 0 0 8px rgba(184, 174, 141, 0.3);
+    
+    .tab-marker {
+      color: var(--color-accent-red);
+    }
+  }
+}
+
+/* Filter Console */
+.filter-console {
+  position: relative;
+  background: rgba(29, 31, 26, 0.5);
+  border: 1px solid rgba(232, 227, 214, 0.08);
+  padding: 1.5rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.console-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.console-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.console-lbl {
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  background: rgba(16, 17, 14, 0.6);
+  border: 1px solid rgba(232, 227, 214, 0.1);
+  padding: 0.5rem 0.75rem;
+  border-radius: 2px;
+}
+
+.input-prefix {
+  color: var(--color-olive-2);
+  font-weight: 700;
+  margin-right: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.console-input {
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  width: 100%;
+  outline: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  
+  &::placeholder {
+    color: rgba(232, 227, 214, 0.3);
+  }
+}
+
+.console-select {
+  background: rgba(16, 17, 14, 0.6);
+  border: 1px solid rgba(232, 227, 214, 0.1);
+  color: var(--color-text-primary);
+  padding: 0.5rem 0.75rem;
+  outline: none;
+  border-radius: 2px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  height: 38px;
+  
+  option {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+  }
+}
+
+/* Results Telemetry */
+.results-telemetry {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: var(--color-olive-2);
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  padding: 0 0.5rem;
+  opacity: 0.8;
+}
+
+/* Data Grid */
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 1.5rem;
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card Chinese Text */
+.card-chinese {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+  font-family: var(--font-sans);
+}
+
+/* Card Designation */
+.card-designation {
+  font-size: 0.8rem;
+  color: var(--color-olive);
+  margin-bottom: 0.75rem;
+  font-family: var(--font-mono);
+}
+
+/* Loading State */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  gap: 1rem;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(184, 174, 141, 0.2);
+  border-top-color: var(--color-khaki);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+/* Error State */
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  gap: 1rem;
+}
+
+.error-icon {
+  font-size: 2rem;
+}
+
+.error-message {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+  max-width: 400px;
+}

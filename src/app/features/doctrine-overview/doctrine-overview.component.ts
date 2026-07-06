@@ -52,6 +52,17 @@ interface IndiaChinaComparison {
   notes: string;
 }
 
+interface AdvancedTechnology {
+  side: string;
+  technologyDomain: string;
+  systemName: string;
+  description: string;
+  rangeCapability: string;
+  status2025: string;
+  strategicImpact: string;
+  notes: string;
+}
+
 @Component({
   selector: 'app-doctrine-overview',
   standalone: true,
@@ -65,6 +76,7 @@ export class DoctrineOverviewComponent implements OnInit {
   weaponCategories: WeaponCategory[] = [];
   weaponSensors: WeaponSensor[] = [];
   indiaChinaComparisons: IndiaChinaComparison[] = [];
+  advancedTechnologies: AdvancedTechnology[] = [];
   activeTab = 'armTypes';
   loading = true;
   error: string | null = null;
@@ -79,7 +91,7 @@ export class DoctrineOverviewComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    // Load all three data sources in sequence
+    // Load all five data sources in sequence
     this.excelDataService.getSheet('assets/data/raw/2_Arm_Types.json').subscribe({
       next: (data: unknown) => {
         this.armTypes = this.parseArmTypes(data);
@@ -109,10 +121,36 @@ export class DoctrineOverviewComponent implements OnInit {
     this.excelDataService.getSheet('assets/data/raw/4_Weapon_Sensor.json').subscribe({
       next: (data: unknown) => {
         this.weaponSensors = this.parseWeaponSensors(data);
-        this.loading = false;
+        this.loadIndiaChinaComparisons();
       },
       error: (err) => {
         this.error = `Failed to load weapon sensors data: ${err.message}`;
+        this.loading = false;
+      }
+    });
+  }
+
+  loadIndiaChinaComparisons(): void {
+    this.excelDataService.getSheet('assets/data/raw/11_India_China_Comparison.json').subscribe({
+      next: (data: unknown) => {
+        this.indiaChinaComparisons = this.parseIndiaChinaComparisons(data);
+        this.loadAdvancedTechnologies();
+      },
+      error: (err) => {
+        this.error = `Failed to load India-China comparison data: ${err.message}`;
+        this.loading = false;
+      }
+    });
+  }
+
+  loadAdvancedTechnologies(): void {
+    this.excelDataService.getSheet('assets/data/raw/14_Advanced_Technology.json').subscribe({
+      next: (data: unknown) => {
+        this.advancedTechnologies = this.parseAdvancedTechnologies(data);
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = `Failed to load advanced technology data: ${err.message}`;
         this.loading = false;
       }
     });
@@ -216,6 +254,62 @@ export class DoctrineOverviewComponent implements OnInit {
     }
 
     return sensors;
+  }
+
+  private parseIndiaChinaComparisons(data: unknown): IndiaChinaComparison[] {
+    const rows = data as unknown[][];
+    if (!Array.isArray(rows) || rows.length < 2) return [];
+
+    const comparisons: IndiaChinaComparison[] = [];
+
+    for (let i = 2; i < rows.length; i++) {
+      const row = rows[i] as unknown[];
+      if (!Array.isArray(row) || row.length === 0) continue;
+
+      const comparison: IndiaChinaComparison = {
+        level: this.getCellValue(row, 0) || '',
+        indianArmyUnit: this.getCellValue(row, 1) || '',
+        chineseArmyEquivalent: this.getCellValue(row, 2) || '',
+        chineseName: this.getCellValue(row, 3) || '',
+        sizeTroops: this.getCellValue(row, 4) || '',
+        notes: this.getCellValue(row, 5) || ''
+      };
+
+      if (comparison.indianArmyUnit) {
+        comparisons.push(comparison);
+      }
+    }
+
+    return comparisons;
+  }
+
+  private parseAdvancedTechnologies(data: unknown): AdvancedTechnology[] {
+    const rows = data as unknown[][];
+    if (!Array.isArray(rows) || rows.length < 2) return [];
+
+    const technologies: AdvancedTechnology[] = [];
+
+    for (let i = 2; i < rows.length; i++) {
+      const row = rows[i] as unknown[];
+      if (!Array.isArray(row) || row.length === 0) continue;
+
+      const technology: AdvancedTechnology = {
+        side: this.getCellValue(row, 0) || '',
+        technologyDomain: this.getCellValue(row, 1) || '',
+        systemName: this.getCellValue(row, 2) || '',
+        description: this.getCellValue(row, 3) || '',
+        rangeCapability: this.getCellValue(row, 4) || '',
+        status2025: this.getCellValue(row, 5) || '',
+        strategicImpact: this.getCellValue(row, 6) || '',
+        notes: this.getCellValue(row, 7) || ''
+      };
+
+      if (technology.systemName) {
+        technologies.push(technology);
+      }
+    }
+
+    return technologies;
   }
 
   retry(): void {

@@ -283,6 +283,186 @@
       </div>
     </div>
     
+    <!-- Unit Categories Section -->
+    <div class="categories-section" *ngIf="unitCategories.length > 0">
+      <div class="categories-header">
+        <h3 class="categories-title">Unit Training & Readiness Categories</h3>
+        <p class="categories-description">PLA unit categories by training level, equipment, manning, and deployment readiness.</p>
+      </div>
+      
+      <div class="categories-grid">
+        <div class="category-card card" *ngFor="let category of unitCategories">
+          <div class="category-header">
+            <h4 class="category-name">{{ category.category }}</h4>
+            <span class="category-percent">{{ category.percentOfForce }}</span>
+          </div>
+          
+          <p class="category-description">{{ category.description }}</p>
+          
+          <div class="category-metrics">
+            <div class="metric-item">
+              <span class="metric-label">Training:</span>
+              <span class="metric-value">{{ category.trainingLevel }}</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Equipment:</span>
+              <span class="metric-value">{{ category.equipmentLevel }}</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Manning:</span>
+              <span class="metric-value">{{ category.manningLevel }}</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Readiness:</span>
+              <span class="metric-value">{{ category.readiness }}</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Deployment:</span>
+              <span class="metric-value">{{ category.deploymentTime }}</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">US Equivalent:</span>
+              <span class="metric-value">{{ category.usEquivalent }}</span>
+            </div>
+          </div>
+          
+          <p class="category-notes" *ngIf="category.notes">{{ category.notes }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Aviation Details Section -->
+    <div class="aviation-section" *ngIf="aviationDetails.length > 0">
+      <div class="aviation-header">
+        <h3 class="aviation-title">Army Aviation - Detailed Helicopter Specifications</h3>
+        <p class="aviation-description">PLA Army Aviation helicopter models with detailed specifications and capabilities.</p>
+      </div>
+      
+      <div class="aviation-grid">
+        <div class="aviation-card card" *ngFor="let aviation of aviationDetails.slice(0, 12)">
+          <div class="aviation-header">
+            <h4 class="aviation-name">{{ aviation.helicopter }}</h4>
+            <span class="aviation-variant">{{ aviation.variant }}</span>
+          </div>
+          
+          <div class="aviation-meta">
+            <span class="meta-item">{{ aviation.typeRole }}</span>
+            <span class="meta-item">{{ aviation.manufacturer }}</span>
+          </div>
+          
+          <div class="aviation-specs">
+            <div class="spec-item">
+              <span class="spec-label">Status:</span>
+              <span class="spec-value">{{ aviation.status }}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Crew:</span>
+              <span class="spec-value">{{ aviation.crew }}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Troops:</span>
+              <span class="spec-value">{{ aviation.passengersTroops }}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Max Speed:</span>
+              <span class="spec-value">{{ aviation.maxSpeed }}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Range:</span>
+              <span class="spec-value">{{ aviation.range }}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Service Ceiling:</span>
+              <span class="spec-value">{{ aviation.serviceCeiling }}</span>
+            </div>
+          </div>
+          
+          <div class="aviation-dimensions">
+            <div class="dimension-item">
+              <span class="dimension-label">Length:</span>
+              <span class="dimension-value">{{ aviation.length }}m</span>
+            </div>
+            <div class="dimension-item">
+              <span class="dimension-label">Rotor:</span>
+              <span class="dimension-value">{{ aviation.rotorDiameter }}m</span>
+            </div>
+            <div class="dimension-item">
+              <span class="dimension-label">Height:</span>
+              <span class="dimension-value">{{ aviation.height }}m</span>
+            </div>
+          </div>
+          
+          <p class="aviation-armament" *ngIf="aviation.armament">{{ aviation.armament }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Air Defence Details Section -->
+    <div class="air-defence-section" *ngIf="airDefenceDetails.length > 0">
+      <div class="air-defence-header">
+        <h3 class="air-defence-title">Air Defence - Detailed System Specifications</h3>
+        <p class="air-defence-description">PLA Air Defence systems with detailed specifications and capabilities.</p>
+      </div>
+      
+      <div class="air-defence-grid">
+        <div class="air-defence-card card" *ngFor="let airDefence of airDefenceDetails.slice(0, 13)">
+          <div class="air-defence-header">
+            <h4 class="air-defence-name">{{ airDefence.system }}</h4>
+            <span class="air-defence-type">{{ airDefence.typeCategory }}</span>
+          </div>
+          
+          <div class="air-defence-meta">
+            <span class="meta-item">{{ airDefence.status }}</span>
+            <span class="meta-item" *ngIf="airDefence.exportName">{{ airDefence.exportName }}</span>
+          </div>
+          
+          <div class="air-defence-specs">
+            <div class="spec-item">
+              <span class="spec-label">Range:</span>
+              <span class="spec-value">{{ airDefence.range }} km</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Altitude:</span>
+              <span class="spec-value">{{ airDefence.altitude }} m</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Radar Range:</span>
+              <span class="spec-value">{{ airDefence.radarRange }} km</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Speed:</span>
+              <span class="spec-value">{{ airDefence.speed }}</span>
+            </div>
+            <div class="spec-item" *ngIf="airDefence.gunCaliber">
+              <span class="spec-label">Gun Caliber:</span>
+              <span class="spec-value">{{ airDefence.gunCaliber }}</span>
+            </div>
+            <div class="spec-item" *ngIf="airDefence.gunRate">
+              <span class="spec-label">Gun Rate:</span>
+              <span class="spec-value">{{ airDefence.gunRate }}</span>
+            </div>
+          </div>
+          
+          <div class="air-defence-missile" *ngIf="airDefence.missileMunitionLength">
+            <div class="missile-item">
+              <span class="missile-label">Missile Length:</span>
+              <span class="missile-value">{{ airDefence.missileMunitionLength }}m</span>
+            </div>
+            <div class="missile-item">
+              <span class="missile-label">Missile Diameter:</span>
+              <span class="missile-value">{{ airDefence.missileMunitionDiameter }}m</span>
+            </div>
+            <div class="missile-item">
+              <span class="missile-label">Missile Weight:</span>
+              <span class="missile-value">{{ airDefence.missileMunitionWeight }}kg</span>
+            </div>
+          </div>
+          
+          <p class="air-defence-notes" *ngIf="airDefence.notes">{{ airDefence.notes }}</p>
+        </div>
+      </div>
+    </div>
+    
     <!-- Compare Button -->
     <div class="specs-footer">
       <button class="btn btn-ghost">

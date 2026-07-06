@@ -68,12 +68,14 @@
           </div>
         </div>
         
-        <!-- Right Content - Tabs for Arm Types, Weapons, and Sensors -->
+        <!-- Right Content - Tabs for Arm Types, Weapons, Sensors, Comparison, and Technology -->
         <div class="doctrine-right" *ngIf="!loading && !error">
           <div class="tabs-nav">
             <button class="tab-btn" [class.active]="activeTab === 'armTypes'" (click)="activeTab = 'armTypes'">Arm Types</button>
             <button class="tab-btn" [class.active]="activeTab === 'weapons'" (click)="activeTab = 'weapons'">Weapons</button>
             <button class="tab-btn" [class.active]="activeTab === 'sensors'" (click)="activeTab = 'sensors'">Sensors</button>
+            <button class="tab-btn" [class.active]="activeTab === 'comparison'" (click)="activeTab = 'comparison'">India-China</button>
+            <button class="tab-btn" [class.active]="activeTab === 'technology'" (click)="activeTab = 'technology'">Technology</button>
           </div>
           
           <!-- Arm Types Grid -->
@@ -175,6 +177,60 @@
                   <span class="detail-value">{{ sensor.guidanceSensor }}</span>
                 </div>
               </div>
+            </div>
+          </div>
+          
+          <!-- India-China Comparison Grid -->
+          <div class="comparison-grid" *ngIf="activeTab === 'comparison'">
+            <div class="comparison-card glass-card fade-in" *ngFor="let comparison of indiaChinaComparisons">
+              <div class="comparison-header">
+                <span class="comparison-level">{{ comparison.level }}</span>
+                <h3 class="comparison-indian">{{ comparison.indianArmyUnit }}</h3>
+              </div>
+              
+              <div class="comparison-arrow">→</div>
+              
+              <div class="comparison-chinese">
+                <h4 class="comparison-equivalent">{{ comparison.chineseArmyEquivalent }}</h4>
+                <p class="comparison-name">{{ comparison.chineseName }}</p>
+              </div>
+              
+              <div class="comparison-size">
+                <span class="size-label">Size:</span>
+                <span class="size-value">{{ comparison.sizeTroops }}</span>
+              </div>
+              
+              <p class="comparison-notes" *ngIf="comparison.notes">{{ comparison.notes }}</p>
+            </div>
+          </div>
+          
+          <!-- Advanced Technology Grid -->
+          <div class="technology-grid" *ngIf="activeTab === 'technology'">
+            <div class="technology-card glass-card fade-in" *ngFor="let technology of advancedTechnologies">
+              <div class="technology-header">
+                <h3 class="technology-name">{{ technology.systemName }}</h3>
+                <span class="technology-domain">{{ technology.technologyDomain }}</span>
+              </div>
+              
+              <p class="technology-description">{{ technology.description }}</p>
+              
+              <div class="technology-specs">
+                <div class="spec-item">
+                  <span class="spec-label">Range/Capability:</span>
+                  <span class="spec-value">{{ technology.rangeCapability }}</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">Status (2025):</span>
+                  <span class="spec-value" [class.status-operational]="technology.status2025 === 'Operational'">{{ technology.status2025 }}</span>
+                </div>
+              </div>
+              
+              <div class="technology-impact">
+                <span class="impact-label">Strategic Impact:</span>
+                <span class="impact-value">{{ technology.strategicImpact }}</span>
+              </div>
+              
+              <p class="technology-notes" *ngIf="technology.notes">{{ technology.notes }}</p>
             </div>
           </div>
         </div>
