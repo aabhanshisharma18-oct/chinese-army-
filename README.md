@@ -142,3 +142,11 @@ This project is for informational and research purposes only. All data is derive
 ## Disclaimer
 
 This platform is for informational and research purposes only. All data is derived from open-source intelligence and official publications. Force structures and capabilities are subject to change and should be verified through multiple sources before use in operational planning or policy decisions.
+
+## Project Documentation
+
+For current implementation status and AI/developer continuation notes, read:
+
+- `PROJECT_STATUS.md` — current progress, bugs, and priorities
+- `PROJECT_HANDOFF.md` — detailed handoff for future developers or AI tools
+- `AI_CONTEXT.md` — instructions for AI coding tools working in this repo
