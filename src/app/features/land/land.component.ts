@@ -9,20 +9,22 @@ interface LandUnit {
   formationUnitType: string;
   formationUnitParentName: string;
   standardUnitFormation: string;
-  unitPotential: string;
+  unitPotentialTroops: string;
   locationName: string;
   latitude: string;
   longitude: string;
 }
 
 interface ArmType {
-  side: string;
-  combatArmTypeEnglish: string;
+  number: string;
   combatArmTypeChinese: string;
+  combatArmTypeEnglish: string;
+  primaryRole: string;
+  classificationMobility: string;
   classificationCombatRole: string;
-  primaryMission: string;
-  terrainSpecialization: string;
-  trainingEmphasis: string;
+  trainingCategory: string;
+  indianArmyEquivalent: string;
+  terrainSpecialisation: string;
 }
 
 interface WeaponCategory {
@@ -36,6 +38,8 @@ interface WeaponCategory {
   range: string;
   typeGuidance: string;
   roleCapability: string;
+  weight: string;
+  mainGunNotes: string;
 }
 
 interface WeaponSensor {
@@ -49,6 +53,7 @@ interface WeaponSensor {
   guidanceSensor: string;
   latLocation: string;
   nameLocation: string;
+  oli: string;
 }
 
 interface LandUnitResource {
@@ -89,7 +94,59 @@ interface VehicleSpeed {
   notes: string;
 }
 
-type SubcategoryType = 'land-units' | 'arm-type' | 'weapon-category' | 'weapon-sensor' | 'land-unit-resources' | 'vehicle-speeds';
+interface FrontageDepth {
+  side: string;
+  unitLevel: string;
+  operationType: string;
+  zone: string;
+  frontage: string;
+  depth: string;
+  brigadeDensity: string;
+  keyWeaponsNotes: string;
+}
+
+interface ForcePotential {
+  side: string;
+  category: string;
+  metricSystem: string;
+  value: string;
+  globalRank: string;
+  comparisonNotes: string;
+}
+
+interface VehicleDesignation {
+  side: string;
+  family: string;
+  designation: string;
+  fullChineseName: string;
+  aOrBType: string;
+  vehicleType: string;
+  role: string;
+  weight: string;
+  mainArmament: string;
+  roadSpeed: string;
+  range: string;
+  amphibious: string;
+  crew: string;
+  troops: string;
+  notes: string;
+}
+
+interface TheaterCapability {
+  side: string;
+  theaterCommand: string;
+  hqLocation: string;
+  latitude: string;
+  longitude: string;
+  groupArmiesUnderIt: string;
+  combatPowerFocus: string;
+  keyCapabilities: string;
+  areaOfResponsibility: string;
+  specialUnitsNotes: string;
+}
+
+type SubcategoryType = 'land-units' | 'arm-type' | 'weapon-category' | 'weapon-sensor' | 'land-unit-resources' | 'theater-capabilities';
+type ResourceSubcategoryType = 'resources-main' | 'vehicle-speeds' | 'frontage-depth' | 'force-potential' | 'vehicle-designations';
 type DrillDownLevel = 'categories' | 'subcategory' | 'results';
 
 @Component({
@@ -102,13 +159,22 @@ type DrillDownLevel = 'categories' | 'subcategory' | 'results';
 export class LandComponent implements OnInit {
   // Subcategory navigation
   activeSubcategory = signal<SubcategoryType>('land-units');
+  activeResourceSubcategory = signal<ResourceSubcategoryType>('resources-main');
   subcategories: { label: string; value: SubcategoryType }[] = [
     { label: 'Land Units', value: 'land-units' },
     { label: 'Arm Type', value: 'arm-type' },
     { label: 'Weapon Category', value: 'weapon-category' },
-    { label: 'Weapon & Sensor', value: 'weapon-sensor' },
+    { label: 'Weapon / Sensor', value: 'weapon-sensor' },
     { label: 'Land Unit Resources', value: 'land-unit-resources' },
-    { label: 'Vehicle Speeds', value: 'vehicle-speeds' }
+    { label: 'Theater Capabilities', value: 'theater-capabilities' }
+  ];
+
+  resourceSubcategories: { label: string; value: ResourceSubcategoryType }[] = [
+    { label: 'Resources', value: 'resources-main' },
+    { label: 'Vehicle Speeds', value: 'vehicle-speeds' },
+    { label: 'Frontage & Depth', value: 'frontage-depth' },
+    { label: 'Force Potential', value: 'force-potential' },
+    { label: 'Vehicle Designations', value: 'vehicle-designations' }
   ];
 
   // Hierarchy state
@@ -122,6 +188,10 @@ export class LandComponent implements OnInit {
   weaponSensors: WeaponSensor[] = [];
   landUnitResources: LandUnitResource[] = [];
   vehicleSpeeds: VehicleSpeed[] = [];
+  frontageDepths: FrontageDepth[] = [];
+  forcePotentials: ForcePotential[] = [];
+  vehicleDesignations: VehicleDesignation[] = [];
+  theaterCapabilities: TheaterCapability[] = [];
   
   // Filters
   searchQuery = signal<string>('');
@@ -131,6 +201,7 @@ export class LandComponent implements OnInit {
   locationFilter = signal<string>('ALL');
   weaponTypeFilter = signal<string>('ALL');
   vehicleCategoryFilter = signal<string>('ALL');
+  unitLevelFilter = signal<string>('ALL');
   
   // Loading states
   loading = true;
@@ -145,81 +216,68 @@ export class LandComponent implements OnInit {
   loadData(): void {
     this.loading = true;
     this.error = null;
+    let loadedCount = 0;
+    const totalSheets = 10;
+
+    const checkComplete = () => {
+      loadedCount++;
+      if (loadedCount >= totalSheets) {
+        this.loading = false;
+      }
+    };
 
     // Load all sheets in parallel
     this.excelDataService.getSheet('assets/data/raw/1_Land_Units.json').subscribe({
-      next: (data: unknown) => {
-        this.landUnits = this.parseLandUnits(data);
-        this.checkLoadingComplete();
-      },
-      error: (err) => {
-        console.error('Failed to load land units:', err);
-        this.checkLoadingComplete();
-      }
+      next: (data: unknown) => { this.landUnits = this.parseLandUnits(data); checkComplete(); },
+      error: (err) => { console.error('Failed to load land units:', err); checkComplete(); }
     });
 
     this.excelDataService.getSheet('assets/data/raw/2_Arm_Types.json').subscribe({
-      next: (data: unknown) => {
-        this.armTypes = this.parseArmTypes(data);
-        this.checkLoadingComplete();
-      },
-      error: (err) => {
-        console.error('Failed to load arm types:', err);
-        this.checkLoadingComplete();
-      }
+      next: (data: unknown) => { this.armTypes = this.parseArmTypes(data); checkComplete(); },
+      error: (err) => { console.error('Failed to load arm types:', err); checkComplete(); }
     });
 
     this.excelDataService.getSheet('assets/data/raw/3_Weapon_Categories.json').subscribe({
-      next: (data: unknown) => {
-        this.weaponCategories = this.parseWeaponCategories(data);
-        this.checkLoadingComplete();
-      },
-      error: (err) => {
-        console.error('Failed to load weapon categories:', err);
-        this.checkLoadingComplete();
-      }
+      next: (data: unknown) => { this.weaponCategories = this.parseWeaponCategories(data); checkComplete(); },
+      error: (err) => { console.error('Failed to load weapon categories:', err); checkComplete(); }
     });
 
     this.excelDataService.getSheet('assets/data/raw/4_Weapon_Sensor.json').subscribe({
-      next: (data: unknown) => {
-        this.weaponSensors = this.parseWeaponSensors(data);
-        this.checkLoadingComplete();
-      },
-      error: (err) => {
-        console.error('Failed to load weapon sensors:', err);
-        this.checkLoadingComplete();
-      }
+      next: (data: unknown) => { this.weaponSensors = this.parseWeaponSensors(data); checkComplete(); },
+      error: (err) => { console.error('Failed to load weapon sensors:', err); checkComplete(); }
     });
 
     this.excelDataService.getSheet('assets/data/raw/5_Land_Unit_Resources.json').subscribe({
-      next: (data: unknown) => {
-        this.landUnitResources = this.parseLandUnitResources(data);
-        this.checkLoadingComplete();
-      },
-      error: (err) => {
-        console.error('Failed to load land unit resources:', err);
-        this.checkLoadingComplete();
-      }
+      next: (data: unknown) => { this.landUnitResources = this.parseLandUnitResources(data); checkComplete(); },
+      error: (err) => { console.error('Failed to load land unit resources:', err); checkComplete(); }
     });
 
     this.excelDataService.getSheet('assets/data/raw/6_Vehicle_Speeds.json').subscribe({
-      next: (data: unknown) => {
-        this.vehicleSpeeds = this.parseVehicleSpeeds(data);
-        this.checkLoadingComplete();
-      },
-      error: (err) => {
-        console.error('Failed to load vehicle speeds:', err);
-        this.checkLoadingComplete();
-      }
+      next: (data: unknown) => { this.vehicleSpeeds = this.parseVehicleSpeeds(data); checkComplete(); },
+      error: (err) => { console.error('Failed to load vehicle speeds:', err); checkComplete(); }
+    });
+
+    this.excelDataService.getSheet('assets/data/raw/7_Frontage_Depth.json').subscribe({
+      next: (data: unknown) => { this.frontageDepths = this.parseFrontageDepths(data); checkComplete(); },
+      error: (err) => { console.error('Failed to load frontage depths:', err); checkComplete(); }
+    });
+
+    this.excelDataService.getSheet('assets/data/raw/8_Force_Potential.json').subscribe({
+      next: (data: unknown) => { this.forcePotentials = this.parseForcePotentials(data); checkComplete(); },
+      error: (err) => { console.error('Failed to load force potentials:', err); checkComplete(); }
+    });
+
+    this.excelDataService.getSheet('assets/data/raw/9_Vehicle_Designations.json').subscribe({
+      next: (data: unknown) => { this.vehicleDesignations = this.parseVehicleDesignations(data); checkComplete(); },
+      error: (err) => { console.error('Failed to load vehicle designations:', err); checkComplete(); }
+    });
+
+    this.excelDataService.getSheet('assets/data/raw/12_Theater_Capabilities.json').subscribe({
+      next: (data: unknown) => { this.theaterCapabilities = this.parseTheaterCapabilities(data); checkComplete(); },
+      error: (err) => { console.error('Failed to load theater capabilities:', err); checkComplete(); }
     });
   }
 
-  private checkLoadingComplete(): void {
-    // Simple check - in production you'd track each load separately
-    if (this.landUnits.length > 0 || this.armTypes.length > 0) {
-      this.loading = false;
-    }
-  }
 
   private parseLandUnits(data: unknown): LandUnit[] {
     const rows = data as unknown[][];
@@ -236,7 +294,7 @@ export class LandComponent implements OnInit {
         formationUnitType: this.getCellValue(row, 2) || '',
         formationUnitParentName: this.getCellValue(row, 3) || '',
         standardUnitFormation: this.getCellValue(row, 4) || '',
-        unitPotential: this.getCellValue(row, 5) || '',
+        unitPotentialTroops: this.getCellValue(row, 5) || '',
         locationName: this.getCellValue(row, 6) || '',
         latitude: this.getCellValue(row, 7) || '',
         longitude: this.getCellValue(row, 8) || ''
@@ -259,13 +317,15 @@ export class LandComponent implements OnInit {
       if (!Array.isArray(row) || row.length === 0) continue;
 
       const type: ArmType = {
-        side: this.getCellValue(row, 0) || '',
-        combatArmTypeEnglish: this.getCellValue(row, 1) || '',
-        combatArmTypeChinese: this.getCellValue(row, 2) || '',
-        classificationCombatRole: this.getCellValue(row, 3) || '',
-        primaryMission: this.getCellValue(row, 4) || '',
-        terrainSpecialization: this.getCellValue(row, 5) || '',
-        trainingEmphasis: this.getCellValue(row, 6) || ''
+        number: this.getCellValue(row, 0) || '',
+        combatArmTypeChinese: this.getCellValue(row, 1) || '',
+        combatArmTypeEnglish: this.getCellValue(row, 2) || '',
+        primaryRole: this.getCellValue(row, 3) || '',
+        classificationMobility: this.getCellValue(row, 4) || '',
+        classificationCombatRole: this.getCellValue(row, 5) || '',
+        trainingCategory: this.getCellValue(row, 6) || '',
+        indianArmyEquivalent: this.getCellValue(row, 7) || '',
+        terrainSpecialisation: this.getCellValue(row, 8) || ''
       };
 
       if (type.combatArmTypeEnglish) {
@@ -294,7 +354,9 @@ export class LandComponent implements OnInit {
         caliber: this.getCellValue(row, 6) || '',
         range: this.getCellValue(row, 7) || '',
         typeGuidance: this.getCellValue(row, 8) || '',
-        roleCapability: this.getCellValue(row, 9) || ''
+        roleCapability: this.getCellValue(row, 9) || '',
+        weight: this.getCellValue(row, 10) || '',
+        mainGunNotes: this.getCellValue(row, 11) || ''
       };
 
       if (category.weaponName) {
@@ -323,7 +385,8 @@ export class LandComponent implements OnInit {
         altitudeDepth: this.getCellValue(row, 6) || '',
         guidanceSensor: this.getCellValue(row, 7) || '',
         latLocation: this.getCellValue(row, 8) || '',
-        nameLocation: this.getCellValue(row, 9) || ''
+        nameLocation: this.getCellValue(row, 9) || '',
+        oli: this.getCellValue(row, 10) || ''
       };
 
       if (sensor.weaponSensorName) {
@@ -403,6 +466,122 @@ export class LandComponent implements OnInit {
     return speeds;
   }
 
+  private parseFrontageDepths(data: unknown): FrontageDepth[] {
+    const rows = data as unknown[][];
+    if (!Array.isArray(rows) || rows.length < 2) return [];
+
+    const depths: FrontageDepth[] = [];
+    for (let i = 2; i < rows.length; i++) {
+      const row = rows[i] as unknown[];
+      if (!Array.isArray(row) || row.length === 0) continue;
+
+      const depth: FrontageDepth = {
+        side: this.getCellValue(row, 0) || '',
+        unitLevel: this.getCellValue(row, 1) || '',
+        operationType: this.getCellValue(row, 2) || '',
+        zone: this.getCellValue(row, 3) || '',
+        frontage: this.getCellValue(row, 4) || '',
+        depth: this.getCellValue(row, 5) || '',
+        brigadeDensity: this.getCellValue(row, 6) || '',
+        keyWeaponsNotes: this.getCellValue(row, 7) || ''
+      };
+
+      if (depth.unitLevel) {
+        depths.push(depth);
+      }
+    }
+    return depths;
+  }
+
+  private parseForcePotentials(data: unknown): ForcePotential[] {
+    const rows = data as unknown[][];
+    if (!Array.isArray(rows) || rows.length < 2) return [];
+
+    const potentials: ForcePotential[] = [];
+    for (let i = 2; i < rows.length; i++) {
+      const row = rows[i] as unknown[];
+      if (!Array.isArray(row) || row.length === 0) continue;
+
+      const potential: ForcePotential = {
+        side: this.getCellValue(row, 0) || '',
+        category: this.getCellValue(row, 1) || '',
+        metricSystem: this.getCellValue(row, 2) || '',
+        value: this.getCellValue(row, 3) || '',
+        globalRank: this.getCellValue(row, 4) || '',
+        comparisonNotes: this.getCellValue(row, 5) || ''
+      };
+
+      if (potential.metricSystem) {
+        potentials.push(potential);
+      }
+    }
+    return potentials;
+  }
+
+  private parseVehicleDesignations(data: unknown): VehicleDesignation[] {
+    const rows = data as unknown[][];
+    if (!Array.isArray(rows) || rows.length < 2) return [];
+
+    const designations: VehicleDesignation[] = [];
+    for (let i = 2; i < rows.length; i++) {
+      const row = rows[i] as unknown[];
+      if (!Array.isArray(row) || row.length === 0) continue;
+
+      const designation: VehicleDesignation = {
+        side: this.getCellValue(row, 0) || '',
+        family: this.getCellValue(row, 1) || '',
+        designation: this.getCellValue(row, 2) || '',
+        fullChineseName: this.getCellValue(row, 3) || '',
+        aOrBType: this.getCellValue(row, 4) || '',
+        vehicleType: this.getCellValue(row, 5) || '',
+        role: this.getCellValue(row, 6) || '',
+        weight: this.getCellValue(row, 7) || '',
+        mainArmament: this.getCellValue(row, 8) || '',
+        roadSpeed: this.getCellValue(row, 9) || '',
+        range: this.getCellValue(row, 10) || '',
+        amphibious: this.getCellValue(row, 11) || '',
+        crew: this.getCellValue(row, 12) || '',
+        troops: this.getCellValue(row, 13) || '',
+        notes: this.getCellValue(row, 14) || ''
+      };
+
+      if (designation.designation) {
+        designations.push(designation);
+      }
+    }
+    return designations;
+  }
+
+  private parseTheaterCapabilities(data: unknown): TheaterCapability[] {
+    const rows = data as unknown[][];
+    if (!Array.isArray(rows) || rows.length < 2) return [];
+
+    const capabilities: TheaterCapability[] = [];
+    for (let i = 2; i < rows.length; i++) {
+      const row = rows[i] as unknown[];
+      if (!Array.isArray(row) || row.length === 0) continue;
+
+      const capability: TheaterCapability = {
+        side: this.getCellValue(row, 0) || '',
+        theaterCommand: this.getCellValue(row, 1) || '',
+        hqLocation: this.getCellValue(row, 2) || '',
+        latitude: this.getCellValue(row, 3) || '',
+        longitude: this.getCellValue(row, 4) || '',
+        groupArmiesUnderIt: this.getCellValue(row, 5) || '',
+        combatPowerFocus: this.getCellValue(row, 6) || '',
+        keyCapabilities: this.getCellValue(row, 7) || '',
+        areaOfResponsibility: this.getCellValue(row, 8) || '',
+        specialUnitsNotes: this.getCellValue(row, 9) || ''
+      };
+
+      if (capability.theaterCommand) {
+        capabilities.push(capability);
+      }
+    }
+    return capabilities;
+  }
+
+
   // Navigation methods
   setSubcategory(subcategory: SubcategoryType): void {
     this.activeSubcategory.set(subcategory);
@@ -436,6 +615,11 @@ export class LandComponent implements OnInit {
     this.locationFilter.set('ALL');
     this.weaponTypeFilter.set('ALL');
     this.vehicleCategoryFilter.set('ALL');
+    this.unitLevelFilter.set('ALL');
+  }
+
+  setResourceSubcategory(subcategory: ResourceSubcategoryType): void {
+    this.activeResourceSubcategory.set(subcategory);
   }
 
   // Computed properties for filtered results
@@ -477,7 +661,7 @@ export class LandComponent implements OnInit {
     return this.armTypes.filter(t => 
       t.combatArmTypeEnglish.toLowerCase().includes(query) ||
       t.classificationCombatRole.toLowerCase().includes(query) ||
-      t.terrainSpecialization.toLowerCase().includes(query)
+      t.terrainSpecialisation.toLowerCase().includes(query)
     );
   });
 
@@ -552,6 +736,53 @@ export class LandComponent implements OnInit {
     return filtered;
   });
 
+  filteredFrontageDepths = computed(() => {
+    const query = this.searchQuery().toLowerCase();
+    const unitLevel = this.unitLevelFilter();
+    
+    let filtered = this.frontageDepths;
+    
+    if (unitLevel !== 'ALL') {
+      filtered = filtered.filter(f => f.unitLevel === unitLevel);
+    }
+    
+    if (query) {
+      filtered = filtered.filter(f => 
+        f.unitLevel.toLowerCase().includes(query) ||
+        f.zone.toLowerCase().includes(query)
+      );
+    }
+    
+    return filtered;
+  });
+
+  filteredForcePotentials = computed(() => {
+    const query = this.searchQuery().toLowerCase();
+    if (!query) return this.forcePotentials;
+    return this.forcePotentials.filter(f => 
+      f.category.toLowerCase().includes(query) ||
+      f.metricSystem.toLowerCase().includes(query)
+    );
+  });
+
+  filteredVehicleDesignations = computed(() => {
+    const query = this.searchQuery().toLowerCase();
+    if (!query) return this.vehicleDesignations;
+    return this.vehicleDesignations.filter(v => 
+      v.designation.toLowerCase().includes(query) ||
+      v.vehicleType.toLowerCase().includes(query)
+    );
+  });
+
+  filteredTheaterCapabilities = computed(() => {
+    const query = this.searchQuery().toLowerCase();
+    if (!query) return this.theaterCapabilities;
+    return this.theaterCapabilities.filter(t => 
+      t.theaterCommand.toLowerCase().includes(query) ||
+      t.hqLocation.toLowerCase().includes(query)
+    );
+  });
+
   // Get current data based on subcategory
   currentData = computed(() => {
     const subcategory = this.activeSubcategory();
@@ -560,8 +791,17 @@ export class LandComponent implements OnInit {
       case 'arm-type': return this.filteredArmTypes();
       case 'weapon-category': return this.filteredWeaponCategories();
       case 'weapon-sensor': return this.filteredWeaponSensors();
-      case 'land-unit-resources': return this.filteredLandUnitResources();
-      case 'vehicle-speeds': return this.filteredVehicleSpeeds();
+      case 'land-unit-resources': 
+        const resourceSub = this.activeResourceSubcategory();
+        switch (resourceSub) {
+          case 'resources-main': return this.filteredLandUnitResources();
+          case 'vehicle-speeds': return this.filteredVehicleSpeeds();
+          case 'frontage-depth': return this.filteredFrontageDepths();
+          case 'force-potential': return this.filteredForcePotentials();
+          case 'vehicle-designations': return this.filteredVehicleDesignations();
+          default: return [];
+        }
+      case 'theater-capabilities': return this.filteredTheaterCapabilities();
       default: return [];
     }
   });
@@ -573,6 +813,53 @@ export class LandComponent implements OnInit {
   uniqueLocations = computed(() => [...new Set(this.landUnits.map(u => u.locationName))]);
   uniqueWeaponTypes = computed(() => [...new Set(this.weaponCategories.map(w => w.weaponCategory))]);
   uniqueVehicleCategories = computed(() => [...new Set(this.vehicleSpeeds.map(v => v.vehicleCategory))]);
+  uniqueUnitLevels = computed(() => [...new Set(this.frontageDepths.map(f => f.unitLevel))]);
+
+  // Typed getters for each subcategory
+  get landUnitsData(): LandUnit[] {
+    return this.filteredLandUnits();
+  }
+
+  get armTypesData(): ArmType[] {
+    return this.filteredArmTypes();
+  }
+
+  // Add side property to ArmType for display
+  getArmTypeWithSide(arm: ArmType): ArmType & { side: string } {
+    return { ...arm, side: 'CHINA' };
+  }
+
+  get weaponCategoriesData(): WeaponCategory[] {
+    return this.filteredWeaponCategories();
+  }
+
+  get weaponSensorsData(): WeaponSensor[] {
+    return this.filteredWeaponSensors();
+  }
+
+  get landUnitResourcesData(): LandUnitResource[] {
+    return this.filteredLandUnitResources();
+  }
+
+  get vehicleSpeedsData(): VehicleSpeed[] {
+    return this.filteredVehicleSpeeds();
+  }
+
+  get frontageDepthsData(): FrontageDepth[] {
+    return this.filteredFrontageDepths();
+  }
+
+  get forcePotentialsData(): ForcePotential[] {
+    return this.filteredForcePotentials();
+  }
+
+  get vehicleDesignationsData(): VehicleDesignation[] {
+    return this.filteredVehicleDesignations();
+  }
+
+  get theaterCapabilitiesData(): TheaterCapability[] {
+    return this.filteredTheaterCapabilities();
+  }
 
   retry(): void {
     this.loadData();

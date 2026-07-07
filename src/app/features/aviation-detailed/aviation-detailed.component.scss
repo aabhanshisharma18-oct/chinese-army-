@@ -1,0 +1,219 @@
+.aviation-detailed-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--color-bg);
+  padding: 6.5rem 2rem 2.5rem 2rem;
+  overflow: hidden;
+}
+
+.tactical-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(111, 123, 90, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(111, 123, 90, 0.03) 1px, transparent 1px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.container-fluid {
+  position: relative;
+  z-index: 5;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.system-path {
+  font-size: 0.75rem;
+  color: var(--color-olive-2);
+  letter-spacing: 0.2em;
+  margin-bottom: 0.5rem;
+}
+
+.page-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.loading-state,
+.error-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  border: 1px solid rgba(232, 227, 214, 0.08);
+  background: rgba(29, 31, 26, 0.5);
+  border-radius: 4px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 1rem;
+  border: 2px solid rgba(184, 174, 141, 0.2);
+  border-top-color: var(--color-khaki);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text,
+.error-message {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.error-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  background: var(--color-khaki);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 2px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-top: 1rem;
+
+  &:hover {
+    background: var(--color-accent-red);
+  }
+}
+
+.results-telemetry {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(232, 227, 214, 0.08);
+  background: rgba(29, 31, 26, 0.5);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.dossier-card {
+  position: relative;
+  padding: 1.5rem;
+  border: 1px solid rgba(232, 227, 214, 0.08);
+  background: rgba(29, 31, 26, 0.5);
+  border-radius: 4px;
+  transition: all var(--transition-fast);
+
+  &:hover {
+    border-color: rgba(184, 174, 141, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.card-borders {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+
+  .bracket {
+    position: absolute;
+    font-size: 0.75rem;
+    color: var(--color-khaki);
+    opacity: 0.5;
+
+    &.top-left { top: 4px; left: 4px; }
+    &.top-right { top: 4px; right: 4px; }
+    &.bottom-left { bottom: 4px; left: 4px; }
+    &.bottom-right { bottom: 4px; right: 4px; }
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(232, 227, 214, 0.08);
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
+.readiness-tag {
+  color: var(--color-olive);
+  font-weight: 700;
+}
+
+.record-id {
+  color: var(--color-khaki);
+  font-weight: 700;
+}
+
+.card-body {
+  position: relative;
+  z-index: 1;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.card-designation {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+}
+
+.lbl {
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.val {
+  color: var(--color-text-secondary);
+  text-align: right;
+  max-width: 60%;
+
+  &.highlight-val {
+    color: var(--color-khaki);
+    font-weight: 700;
+  }
+}

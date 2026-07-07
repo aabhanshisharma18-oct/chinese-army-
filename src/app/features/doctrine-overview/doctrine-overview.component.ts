@@ -315,4 +315,29 @@ export class DoctrineOverviewComponent implements OnInit {
   retry(): void {
     this.loadAllData();
   }
+
+  // Computed getters for template
+  get armTypesCount(): number {
+    return this.armTypes.length;
+  }
+
+  get categoryACount(): number {
+    return this.armTypes.filter(t => t.trainingCategory.includes('Cat A')).length;
+  }
+
+  get maneuverCount(): number {
+    return this.armTypes.filter(t => t.classificationCombatRole === 'Maneuver').length;
+  }
+
+  get weaponsCount(): number {
+    return this.weaponCategories.length;
+  }
+
+  get displayedWeapons(): WeaponCategory[] {
+    return this.weaponCategories.slice(0, 20);
+  }
+
+  get displayedSensors(): WeaponSensor[] {
+    return this.weaponSensors.slice(0, 20);
+  }
 }

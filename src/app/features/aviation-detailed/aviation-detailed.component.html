@@ -1,0 +1,61 @@
+<div class="aviation-detailed-page">
+  <div class="tactical-grid"></div>
+
+  <div class="container-fluid">
+    <div class="page-header font-mono">
+      <div class="system-path text-uppercase">PLA COMMAND ATLAS // AVIATION DETAILED</div>
+      <h1 class="page-title text-uppercase">Helicopter Fleet Specifications</h1>
+    </div>
+
+    <div *ngIf="loading" class="loading-state glass">
+      <div class="loading-spinner"></div>
+      <p class="loading-text font-mono text-uppercase">Loading aviation data...</p>
+    </div>
+
+    <div *ngIf="error" class="error-state glass">
+      <div class="error-icon">⚠</div>
+      <p class="error-message font-mono">{{ error }}</p>
+      <button class="btn btn-primary font-mono text-uppercase" (click)="retry()">Retry</button>
+    </div>
+
+    <div class="aviation-content" *ngIf="!loading && !error">
+      <div class="results-telemetry font-mono text-uppercase">
+        <span>Aircraft Found: {{ aviation.length }}</span>
+        <span>Status: DATA INTEGRITY SECURE</span>
+      </div>
+
+      <div class="data-grid">
+        <div class="dossier-card glass" *ngFor="let heli of aviation">
+          <div class="card-borders">
+            <span class="bracket top-left">[</span>
+            <span class="bracket top-right">]</span>
+            <span class="bracket bottom-left">[</span>
+            <span class="bracket bottom-right">]</span>
+          </div>
+          <div class="card-header font-mono">
+            <span class="readiness-tag">{{ heli.side }}</span>
+            <span class="record-id">{{ heli.typeRole }}</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title text-uppercase">{{ heli.helicopter }}</h3>
+            <p class="card-designation">{{ heli.variant }}</p>
+            <div class="card-details font-mono">
+              <div class="detail-row"><span class="lbl">Manufacturer:</span> <span class="val">{{ heli.manufacturer }}</span></div>
+              <div class="detail-row"><span class="lbl">Based On:</span> <span class="val">{{ heli.basedOn }}</span></div>
+              <div class="detail-row"><span class="lbl">Service Entry:</span> <span class="val">{{ heli.serviceEntry }}</span></div>
+              <div class="detail-row"><span class="lbl">Status:</span> <span class="val highlight-val">{{ heli.status }}</span></div>
+              <div class="detail-row"><span class="lbl">Total Built:</span> <span class="val">{{ heli.totalBuilt }}</span></div>
+              <div class="detail-row"><span class="lbl">Unit Cost:</span> <span class="val">{{ heli.unitCost }}</span></div>
+              <div class="detail-row"><span class="lbl">Crew:</span> <span class="val">{{ heli.crew }}</span></div>
+              <div class="detail-row"><span class="lbl">Passengers/Troops:</span> <span class="val">{{ heli.passengersTroops }}</span></div>
+              <div class="detail-row"><span class="lbl">Max Speed:</span> <span class="val highlight-val">{{ heli.maxSpeed }}</span></div>
+              <div class="detail-row"><span class="lbl">Range:</span> <span class="val highlight-val">{{ heli.range }}</span></div>
+              <div class="detail-row"><span class="lbl">Service Ceiling:</span> <span class="val">{{ heli.serviceCeiling }}</span></div>
+              <div class="detail-row"><span class="lbl">Armament:</span> <span class="val">{{ heli.armament }}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

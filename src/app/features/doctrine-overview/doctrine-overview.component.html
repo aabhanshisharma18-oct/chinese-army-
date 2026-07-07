@@ -50,19 +50,19 @@
           
           <div class="doctrine-stats fade-in stagger-4" *ngIf="!loading && !error">
             <div class="stat-item">
-              <span class="stat-value">{{ armTypes.length }}</span>
+              <span class="stat-value">{{ armTypesCount }}</span>
               <span class="stat-label text-uppercase">Arm Types</span>
             </div>
             <div class="stat-item">
-              <span class="stat-value">{{ armTypes.filter(t => t.trainingCategory.includes('Cat A')).length }}</span>
+              <span class="stat-value">{{ categoryACount }}</span>
               <span class="stat-label text-uppercase">Category A</span>
             </div>
             <div class="stat-item">
-              <span class="stat-value">{{ armTypes.filter(t => t.classificationCombatRole === 'Maneuver').length }}</span>
+              <span class="stat-value">{{ maneuverCount }}</span>
               <span class="stat-label text-uppercase">Maneuver</span>
             </div>
             <div class="stat-item">
-              <span class="stat-value">{{ weaponCategories.length }}</span>
+              <span class="stat-value">{{ weaponsCount }}</span>
               <span class="stat-label text-uppercase">Weapons</span>
             </div>
           </div>
@@ -114,7 +114,7 @@
           
           <!-- Weapons Grid -->
           <div class="weapons-grid" *ngIf="activeTab === 'weapons'">
-            <div class="weapon-card glass-card fade-in" *ngFor="let weapon of weaponCategories.slice(0, 20)">
+            <div class="weapon-card glass-card fade-in" *ngFor="let weapon of displayedWeapons">
               <div class="weapon-header">
                 <h3 class="weapon-name">{{ weapon.weaponName }}</h3>
                 <span class="weapon-designation">{{ weapon.designation }}</span>
@@ -146,7 +146,7 @@
           
           <!-- Sensors Grid -->
           <div class="sensors-grid" *ngIf="activeTab === 'sensors'">
-            <div class="sensor-card glass-card fade-in" *ngFor="let sensor of weaponSensors.slice(0, 20)">
+            <div class="sensor-card glass-card fade-in" *ngFor="let sensor of displayedSensors">
               <div class="sensor-header">
                 <h3 class="sensor-name">{{ sensor.weaponSensorName }}</h3>
                 <span class="sensor-type">{{ sensor.type }}</span>

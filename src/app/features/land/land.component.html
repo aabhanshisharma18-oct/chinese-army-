@@ -24,13 +24,25 @@
 
     <!-- Main Content -->
     <div class="land-content" *ngIf="!loading && !error">
-      <!-- Subcategory Navigation Tabs -->
+      <!-- Top-level Category Tabs -->
       <div class="subcategory-tabs glass">
         <button 
           *ngFor="let sub of subcategories" 
           class="subcategory-tab font-mono text-uppercase"
           [class.active]="activeSubcategory() === sub.value"
           (click)="setSubcategory(sub.value)"
+        >
+          <span class="tab-marker">//</span> {{ sub.label }}
+        </button>
+      </div>
+
+      <!-- Land Unit Resources Sub-tabs -->
+      <div class="resource-subtabs glass" *ngIf="activeSubcategory() === 'land-unit-resources'">
+        <button 
+          *ngFor="let sub of resourceSubcategories" 
+          class="resource-tab font-mono text-uppercase"
+          [class.active]="activeResourceSubcategory() === sub.value"
+          (click)="setResourceSubcategory(sub.value)"
         >
           <span class="tab-marker">//</span> {{ sub.label }}
         </button>
@@ -64,11 +76,7 @@
           <!-- Dynamic Filters based on subcategory -->
           <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-units'">
             <label class="console-lbl font-mono text-uppercase">Side</label>
-            <select 
-              class="console-select font-mono" 
-              [ngModel]="sideFilter()"
-              (ngModelChange)="sideFilter.set($event)"
-            >
+            <select class="console-select font-mono" [ngModel]="sideFilter()" (ngModelChange)="sideFilter.set($event)">
               <option value="ALL">ALL SIDES</option>
               <option *ngFor="let side of uniqueSides()" [value]="side">{{ side }}</option>
             </select>
@@ -76,11 +84,7 @@
 
           <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-units'">
             <label class="console-lbl font-mono text-uppercase">Unit Type</label>
-            <select 
-              class="console-select font-mono" 
-              [ngModel]="unitTypeFilter()"
-              (ngModelChange)="unitTypeFilter.set($event)"
-            >
+            <select class="console-select font-mono" [ngModel]="unitTypeFilter()" (ngModelChange)="unitTypeFilter.set($event)">
               <option value="ALL">ALL UNIT TYPES</option>
               <option *ngFor="let type of uniqueUnitTypes()" [value]="type">{{ type }}</option>
             </select>
@@ -88,11 +92,7 @@
 
           <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-units'">
             <label class="console-lbl font-mono text-uppercase">Parent Unit</label>
-            <select 
-              class="console-select font-mono" 
-              [ngModel]="parentFilter()"
-              (ngModelChange)="parentFilter.set($event)"
-            >
+            <select class="console-select font-mono" [ngModel]="parentFilter()" (ngModelChange)="parentFilter.set($event)">
               <option value="ALL">ALL PARENTS</option>
               <option *ngFor="let parent of uniqueParents()" [value]="parent">{{ parent }}</option>
             </select>
@@ -100,11 +100,7 @@
 
           <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-units'">
             <label class="console-lbl font-mono text-uppercase">Location</label>
-            <select 
-              class="console-select font-mono" 
-              [ngModel]="locationFilter()"
-              (ngModelChange)="locationFilter.set($event)"
-            >
+            <select class="console-select font-mono" [ngModel]="locationFilter()" (ngModelChange)="locationFilter.set($event)">
               <option value="ALL">ALL LOCATIONS</option>
               <option *ngFor="let loc of uniqueLocations()" [value]="loc">{{ loc }}</option>
             </select>
@@ -112,33 +108,25 @@
 
           <div class="console-item filter-box" *ngIf="activeSubcategory() === 'weapon-category' || activeSubcategory() === 'weapon-sensor'">
             <label class="console-lbl font-mono text-uppercase">Weapon Type</label>
-            <select 
-              class="console-select font-mono" 
-              [ngModel]="weaponTypeFilter()"
-              (ngModelChange)="weaponTypeFilter.set($event)"
-            >
+            <select class="console-select font-mono" [ngModel]="weaponTypeFilter()" (ngModelChange)="weaponTypeFilter.set($event)">
               <option value="ALL">ALL TYPES</option>
               <option *ngFor="let type of uniqueWeaponTypes()" [value]="type">{{ type }}</option>
             </select>
           </div>
 
-          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'vehicle-speeds'">
-            <label class="console-lbl font-mono text-uppercase">Vehicle Category</label>
-            <select 
-              class="console-select font-mono" 
-              [ngModel]="vehicleCategoryFilter()"
-              (ngModelChange)="vehicleCategoryFilter.set($event)"
-            >
-              <option value="ALL">ALL CATEGORIES</option>
-              <option *ngFor="let cat of uniqueVehicleCategories()" [value]="cat">{{ cat }}</option>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'frontage-depth'">
+            <label class="console-lbl font-mono text-uppercase">Unit Level</label>
+            <select class="console-select font-mono" [ngModel]="unitLevelFilter()" (ngModelChange)="unitLevelFilter.set($event)">
+              <option value="ALL">ALL LEVELS</option>
+              <option *ngFor="let level of uniqueUnitLevels()" [value]="level">{{ level }}</option>
             </select>
           </div>
 
+
           <!-- Reset Button -->
           <div class="console-item reset-actions">
-            <button class="btn btn-reset font-mono text-uppercase" (click)="resetFilters()">
-              RESET FILTERS
-            </button>
+            <button class="btn btn-reset font-mono text-uppercase" (click)="resetFilters()">RESET FILTERS</button>
           </div>
         </div>
       </div>
@@ -153,159 +141,287 @@
       <div class="data-grid" *ngIf="currentData().length > 0; else noRecords">
         
         <!-- Land Units Cards -->
-        <div *ngIf="activeSubcategory() === 'land-units'" class="dossier-card glass" *ngFor="let unit of currentData()">
-          <div class="card-borders">
-            <span class="bracket top-left">[</span>
-            <span class="bracket top-right">]</span>
-            <span class="bracket bottom-left">[</span>
-            <span class="bracket bottom-right">]</span>
-          </div>
-          <div class="card-header font-mono">
-            <span class="readiness-tag">{{ unit.side }}</span>
-            <span class="record-id">{{ unit.formationUnitType }}</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title text-uppercase">{{ unit.formationUnitName }}</h3>
-            <div class="card-details font-mono">
-              <div class="detail-row"><span class="lbl">Parent:</span> <span class="val">{{ unit.formationUnitParentName }}</span></div>
-              <div class="detail-row"><span class="lbl">Formation:</span> <span class="val">{{ unit.standardUnitFormation }}</span></div>
-              <div class="detail-row"><span class="lbl">Potential:</span> <span class="val highlight-val">{{ unit.unitPotential }}</span></div>
-              <div class="detail-row"><span class="lbl">Location:</span> <span class="val">{{ unit.locationName }}</span></div>
-              <div class="detail-row"><span class="lbl">Coordinates:</span> <span class="val">{{ unit.latitude }}, {{ unit.longitude }}</span></div>
+        <ng-container *ngIf="activeSubcategory() === 'land-units'">
+          <div class="dossier-card glass" *ngFor="let unit of landUnitsData">
+            <div class="card-borders">
+              <span class="bracket top-left">[</span>
+              <span class="bracket top-right">]</span>
+              <span class="bracket bottom-left">[</span>
+              <span class="bracket bottom-right">]</span>
+            </div>
+            <div class="card-header font-mono">
+              <span class="readiness-tag">{{ unit.side }}</span>
+              <span class="record-id">{{ unit.formationUnitType }}</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title text-uppercase">{{ unit.formationUnitName }}</h3>
+              <div class="card-details font-mono">
+                <div class="detail-row"><span class="lbl">Parent:</span> <span class="val">{{ unit.formationUnitParentName }}</span></div>
+                <div class="detail-row"><span class="lbl">Formation:</span> <span class="val">{{ unit.standardUnitFormation }}</span></div>
+                <div class="detail-row"><span class="lbl">Potential:</span> <span class="val highlight-val">{{ unit.unitPotentialTroops }}</span></div>
+                <div class="detail-row"><span class="lbl">Location:</span> <span class="val">{{ unit.locationName }}</span></div>
+                <div class="detail-row"><span class="lbl">Coordinates:</span> <span class="val">{{ unit.latitude }}, {{ unit.longitude }}</span></div>
+              </div>
             </div>
           </div>
-        </div>
+        </ng-container>
 
         <!-- Arm Types Cards -->
-        <div *ngIf="activeSubcategory() === 'arm-type'" class="dossier-card glass" *ngFor="let arm of currentData()">
-          <div class="card-borders">
-            <span class="bracket top-left">[</span>
-            <span class="bracket top-right">]</span>
-            <span class="bracket bottom-left">[</span>
-            <span class="bracket bottom-right">]</span>
-          </div>
-          <div class="card-header font-mono">
-            <span class="readiness-tag">{{ arm.side }}</span>
-            <span class="record-id">ARM TYPE</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title text-uppercase">{{ arm.combatArmTypeEnglish }}</h3>
-            <p class="card-chinese">{{ arm.combatArmTypeChinese }}</p>
-            <div class="card-details font-mono">
-              <div class="detail-row"><span class="lbl">Role:</span> <span class="val">{{ arm.classificationCombatRole }}</span></div>
-              <div class="detail-row"><span class="lbl">Mission:</span> <span class="val">{{ arm.primaryMission }}</span></div>
-              <div class="detail-row"><span class="lbl">Terrain:</span> <span class="val">{{ arm.terrainSpecialization }}</span></div>
-              <div class="detail-row"><span class="lbl">Training:</span> <span class="val">{{ arm.trainingEmphasis }}</span></div>
+        <ng-container *ngIf="activeSubcategory() === 'arm-type'">
+          <div class="dossier-card glass" *ngFor="let arm of armTypesData">
+            <div class="card-borders">
+              <span class="bracket top-left">[</span>
+              <span class="bracket top-right">]</span>
+              <span class="bracket bottom-left">[</span>
+              <span class="bracket bottom-right">]</span>
+            </div>
+            <div class="card-header font-mono">
+              <span class="readiness-tag">CHINA</span>
+              <span class="record-id">ARM TYPE</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title text-uppercase">{{ arm.combatArmTypeEnglish }}</h3>
+              <p class="card-chinese">{{ arm.combatArmTypeChinese }}</p>
+              <div class="card-details font-mono">
+                <div class="detail-row"><span class="lbl">Role:</span> <span class="val">{{ arm.classificationCombatRole }}</span></div>
+                <div class="detail-row"><span class="lbl">Primary Role:</span> <span class="val">{{ arm.primaryRole }}</span></div>
+                <div class="detail-row"><span class="lbl">Mobility:</span> <span class="val">{{ arm.classificationMobility }}</span></div>
+                <div class="detail-row"><span class="lbl">Training:</span> <span class="val">{{ arm.trainingCategory }}</span></div>
+                <div class="detail-row"><span class="lbl">Indian Equivalent:</span> <span class="val">{{ arm.indianArmyEquivalent }}</span></div>
+                <div class="detail-row"><span class="lbl">Terrain:</span> <span class="val">{{ arm.terrainSpecialisation }}</span></div>
+              </div>
             </div>
           </div>
-        </div>
+        </ng-container>
 
         <!-- Weapon Categories Cards -->
-        <div *ngIf="activeSubcategory() === 'weapon-category'" class="dossier-card glass" *ngFor="let weapon of currentData()">
-          <div class="card-borders">
-            <span class="bracket top-left">[</span>
-            <span class="bracket top-right">]</span>
-            <span class="bracket bottom-left">[</span>
-            <span class="bracket bottom-right">]</span>
-          </div>
-          <div class="card-header font-mono">
-            <span class="readiness-tag">{{ weapon.side }}</span>
-            <span class="record-id">{{ weapon.weaponCategory }}</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title text-uppercase">{{ weapon.weaponName }}</h3>
-            <p class="card-designation">{{ weapon.designation }}</p>
-            <div class="card-details font-mono">
-              <div class="detail-row"><span class="lbl">Arm Type:</span> <span class="val">{{ weapon.armType }}</span></div>
-              <div class="detail-row"><span class="lbl">Sub-Category:</span> <span class="val">{{ weapon.subCategory }}</span></div>
-              <div class="detail-row"><span class="lbl">Range:</span> <span class="val highlight-val">{{ weapon.range }}</span></div>
-              <div class="detail-row"><span class="lbl">Caliber:</span> <span class="val">{{ weapon.caliber }}</span></div>
-              <div class="detail-row"><span class="lbl">Guidance:</span> <span class="val">{{ weapon.typeGuidance }}</span></div>
-              <div class="detail-row"><span class="lbl">Role:</span> <span class="val">{{ weapon.roleCapability }}</span></div>
+        <ng-container *ngIf="activeSubcategory() === 'weapon-category'">
+          <div class="dossier-card glass" *ngFor="let weapon of weaponCategoriesData">
+            <div class="card-borders">
+              <span class="bracket top-left">[</span>
+              <span class="bracket top-right">]</span>
+              <span class="bracket bottom-left">[</span>
+              <span class="bracket bottom-right">]</span>
+            </div>
+            <div class="card-header font-mono">
+              <span class="readiness-tag">{{ weapon.side }}</span>
+              <span class="record-id">{{ weapon.weaponCategory }}</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title text-uppercase">{{ weapon.weaponName }}</h3>
+              <p class="card-designation">{{ weapon.designation }}</p>
+              <div class="card-details font-mono">
+                <div class="detail-row"><span class="lbl">Arm Type:</span> <span class="val">{{ weapon.armType }}</span></div>
+                <div class="detail-row"><span class="lbl">Sub-Category:</span> <span class="val">{{ weapon.subCategory }}</span></div>
+                <div class="detail-row"><span class="lbl">Range:</span> <span class="val highlight-val">{{ weapon.range }}</span></div>
+                <div class="detail-row"><span class="lbl">Caliber:</span> <span class="val">{{ weapon.caliber }}</span></div>
+                <div class="detail-row"><span class="lbl">Guidance:</span> <span class="val">{{ weapon.typeGuidance }}</span></div>
+                <div class="detail-row"><span class="lbl">Role:</span> <span class="val">{{ weapon.roleCapability }}</span></div>
+                <div class="detail-row"><span class="lbl">Weight:</span> <span class="val">{{ weapon.weight }}</span></div>
+                <div class="detail-row"><span class="lbl">Main Gun:</span> <span class="val">{{ weapon.mainGunNotes }}</span></div>
+              </div>
             </div>
           </div>
-        </div>
+        </ng-container>
 
         <!-- Weapon & Sensor Cards -->
-        <div *ngIf="activeSubcategory() === 'weapon-sensor'" class="dossier-card glass" *ngFor="let sensor of currentData()">
-          <div class="card-borders">
-            <span class="bracket top-left">[</span>
-            <span class="bracket top-right">]</span>
-            <span class="bracket bottom-left">[</span>
-            <span class="bracket bottom-right">]</span>
-          </div>
-          <div class="card-header font-mono">
-            <span class="readiness-tag">{{ sensor.side }}</span>
-            <span class="record-id">{{ sensor.type }}</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title text-uppercase">{{ sensor.weaponSensorName }}</h3>
-            <div class="card-details font-mono">
-              <div class="detail-row"><span class="lbl">Sub-Type:</span> <span class="val">{{ sensor.subType }}</span></div>
-              <div class="detail-row"><span class="lbl">Detection Range:</span> <span class="val highlight-val">{{ sensor.detectionRange }} km</span></div>
-              <div class="detail-row"><span class="lbl">Engagement Range:</span> <span class="val highlight-val">{{ sensor.engagementRange }} km</span></div>
-              <div class="detail-row"><span class="lbl">Altitude/Depth:</span> <span class="val">{{ sensor.altitudeDepth }}</span></div>
-              <div class="detail-row"><span class="lbl">Guidance/Sensor:</span> <span class="val">{{ sensor.guidanceSensor }}</span></div>
+        <ng-container *ngIf="activeSubcategory() === 'weapon-sensor'">
+          <div class="dossier-card glass" *ngFor="let sensor of weaponSensorsData">
+            <div class="card-borders">
+              <span class="bracket top-left">[</span>
+              <span class="bracket top-right">]</span>
+              <span class="bracket bottom-left">[</span>
+              <span class="bracket bottom-right">]</span>
+            </div>
+            <div class="card-header font-mono">
+              <span class="readiness-tag">{{ sensor.side }}</span>
+              <span class="record-id">{{ sensor.type }}</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title text-uppercase">{{ sensor.weaponSensorName }}</h3>
+              <div class="card-details font-mono">
+                <div class="detail-row"><span class="lbl">Sub-Type:</span> <span class="val">{{ sensor.subType }}</span></div>
+                <div class="detail-row"><span class="lbl">Detection Range:</span> <span class="val highlight-val">{{ sensor.detectionRange }} km</span></div>
+                <div class="detail-row"><span class="lbl">Engagement Range:</span> <span class="val highlight-val">{{ sensor.engagementRange }} km</span></div>
+                <div class="detail-row"><span class="lbl">Altitude/Depth:</span> <span class="val">{{ sensor.altitudeDepth }}</span></div>
+                <div class="detail-row"><span class="lbl">Guidance/Sensor:</span> <span class="val">{{ sensor.guidanceSensor }}</span></div>
+                <div class="detail-row"><span class="lbl">OLI:</span> <span class="val">{{ sensor.oli }}</span></div>
+              </div>
             </div>
           </div>
-        </div>
+        </ng-container>
 
-        <!-- Land Unit Resources Cards -->
-        <div *ngIf="activeSubcategory() === 'land-unit-resources'" class="dossier-card glass" *ngFor="let resource of currentData()">
-          <div class="card-borders">
-            <span class="bracket top-left">[</span>
-            <span class="bracket top-right">]</span>
-            <span class="bracket bottom-left">[</span>
-            <span class="bracket bottom-right">]</span>
-          </div>
-          <div class="card-header font-mono">
-            <span class="readiness-tag">{{ resource.side }}</span>
-            <span class="record-id">RESOURCES</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title text-uppercase">{{ resource.brigadeUnitType }}</h3>
-            <div class="card-details font-mono">
-              <div class="detail-row"><span class="lbl">Personnel:</span> <span class="val highlight-val">{{ resource.personnel }}</span></div>
-              <div class="detail-row"><span class="lbl">Tanks:</span> <span class="val">{{ resource.tanks }}</span></div>
-              <div class="detail-row"><span class="lbl">IFVs/APCs:</span> <span class="val">{{ resource.ifvsApcs }}</span></div>
-              <div class="detail-row"><span class="lbl">Artillery:</span> <span class="val">{{ resource.sphArtillery }}</span></div>
-              <div class="detail-row"><span class="lbl">MLRS:</span> <span class="val">{{ resource.mlrs }}</span></div>
-              <div class="detail-row"><span class="lbl">AA/SAM:</span> <span class="val">{{ resource.aaSamSystems }}</span></div>
-              <div class="detail-row"><span class="lbl">Helicopters:</span> <span class="val">{{ resource.helicopters }}</span></div>
-              <div class="detail-row"><span class="lbl">ATGMs:</span> <span class="val">{{ resource.atgms }}</span></div>
-              <div class="detail-row"><span class="lbl">Detection Range:</span> <span class="val">{{ resource.detectionRange }} km</span></div>
-              <div class="detail-row"><span class="lbl">Engagement Range:</span> <span class="val">{{ resource.engagementRange }} km</span></div>
-              <div class="detail-row"><span class="lbl">Force Potential:</span> <span class="val highlight-val">{{ resource.forcePotential }}</span></div>
+        <!-- Land Unit Resources - Main -->
+        <ng-container *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'resources-main'">
+          <div class="dossier-card glass" *ngFor="let resource of landUnitResourcesData">
+            <div class="card-borders">
+              <span class="bracket top-left">[</span>
+              <span class="bracket top-right">]</span>
+              <span class="bracket bottom-left">[</span>
+              <span class="bracket bottom-right">]</span>
+            </div>
+            <div class="card-header font-mono">
+              <span class="readiness-tag">{{ resource.side }}</span>
+              <span class="record-id">RESOURCES</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title text-uppercase">{{ resource.brigadeUnitType }}</h3>
+              <div class="card-details font-mono">
+                <div class="detail-row"><span class="lbl">Personnel:</span> <span class="val highlight-val">{{ resource.personnel }}</span></div>
+                <div class="detail-row"><span class="lbl">Tanks:</span> <span class="val">{{ resource.tanks }}</span></div>
+                <div class="detail-row"><span class="lbl">IFVs/APCs:</span> <span class="val">{{ resource.ifvsApcs }}</span></div>
+                <div class="detail-row"><span class="lbl">Artillery:</span> <span class="val">{{ resource.sphArtillery }}</span></div>
+                <div class="detail-row"><span class="lbl">MLRS:</span> <span class="val">{{ resource.mlrs }}</span></div>
+                <div class="detail-row"><span class="lbl">AA/SAM:</span> <span class="val">{{ resource.aaSamSystems }}</span></div>
+                <div class="detail-row"><span class="lbl">Helicopters:</span> <span class="val">{{ resource.helicopters }}</span></div>
+                <div class="detail-row"><span class="lbl">ATGMs:</span> <span class="val">{{ resource.atgms }}</span></div>
+                <div class="detail-row"><span class="lbl">Detection Range:</span> <span class="val">{{ resource.detectionRange }} km</span></div>
+                <div class="detail-row"><span class="lbl">Engagement Range:</span> <span class="val">{{ resource.engagementRange }} km</span></div>
+                <div class="detail-row"><span class="lbl">Force Potential:</span> <span class="val highlight-val">{{ resource.forcePotential }}</span></div>
+              </div>
             </div>
           </div>
-        </div>
+        </ng-container>
 
-        <!-- Vehicle Speeds Cards -->
-        <div *ngIf="activeSubcategory() === 'vehicle-speeds'" class="dossier-card glass" *ngFor="let speed of currentData()">
-          <div class="card-borders">
-            <span class="bracket top-left">[</span>
-            <span class="bracket top-right">]</span>
-            <span class="bracket bottom-left">[</span>
-            <span class="bracket bottom-right">]</span>
-          </div>
-          <div class="card-header font-mono">
-            <span class="readiness-tag">{{ speed.side }}</span>
-            <span class="record-id">{{ speed.vehicleCategory }}</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title text-uppercase">{{ speed.vehicleSystem }}</h3>
-            <p class="card-designation">{{ speed.designation }}</p>
-            <div class="card-details font-mono">
-              <div class="detail-row"><span class="lbl">Road Speed Day:</span> <span class="val highlight-val">{{ speed.roadSpeedDay }} km/h</span></div>
-              <div class="detail-row"><span class="lbl">Road Speed Night:</span> <span class="val highlight-val">{{ speed.roadSpeedNight }} km/h</span></div>
-              <div class="detail-row"><span class="lbl">Cross-Country Day:</span> <span class="val">{{ speed.crossCountryDay }} km/h</span></div>
-              <div class="detail-row"><span class="lbl">Cross-Country Night:</span> <span class="val">{{ speed.crossCountryNight }} km/h</span></div>
-              <div class="detail-row"><span class="lbl">Amphibious Speed:</span> <span class="val">{{ speed.amphibiousWaterSpeed }} km/h</span></div>
-              <div class="detail-row"><span class="lbl">Operational Range:</span> <span class="val highlight-val">{{ speed.operationalRange }} km</span></div>
-              <div class="detail-row"><span class="lbl">Notes:</span> <span class="val">{{ speed.notes }}</span></div>
+        <!-- Vehicle Speeds -->
+        <ng-container *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'vehicle-speeds'">
+          <div class="dossier-card glass" *ngFor="let speed of vehicleSpeedsData">
+            <div class="card-borders">
+              <span class="bracket top-left">[</span>
+              <span class="bracket top-right">]</span>
+              <span class="bracket bottom-left">[</span>
+              <span class="bracket bottom-right">]</span>
+            </div>
+            <div class="card-header font-mono">
+              <span class="readiness-tag">{{ speed.side }}</span>
+              <span class="record-id">{{ speed.vehicleCategory }}</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title text-uppercase">{{ speed.vehicleSystem }}</h3>
+              <p class="card-designation">{{ speed.designation }}</p>
+              <div class="card-details font-mono">
+                <div class="detail-row"><span class="lbl">Road Speed Day:</span> <span class="val highlight-val">{{ speed.roadSpeedDay }} km/h</span></div>
+                <div class="detail-row"><span class="lbl">Road Speed Night:</span> <span class="val highlight-val">{{ speed.roadSpeedNight }} km/h</span></div>
+                <div class="detail-row"><span class="lbl">Cross-Country Day:</span> <span class="val">{{ speed.crossCountryDay }} km/h</span></div>
+                <div class="detail-row"><span class="lbl">Cross-Country Night:</span> <span class="val">{{ speed.crossCountryNight }} km/h</span></div>
+                <div class="detail-row"><span class="lbl">Amphibious Speed:</span> <span class="val">{{ speed.amphibiousWaterSpeed }} km/h</span></div>
+                <div class="detail-row"><span class="lbl">Operational Range:</span> <span class="val highlight-val">{{ speed.operationalRange }} km</span></div>
+                <div class="detail-row"><span class="lbl">Notes:</span> <span class="val">{{ speed.notes }}</span></div>
+              </div>
             </div>
           </div>
-        </div>
+        </ng-container>
+
+        <!-- Frontage & Depth -->
+        <ng-container *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'frontage-depth'">
+          <div class="dossier-card glass" *ngFor="let depth of frontageDepthsData">
+            <div class="card-borders">
+              <span class="bracket top-left">[</span>
+              <span class="bracket top-right">]</span>
+              <span class="bracket bottom-left">[</span>
+              <span class="bracket bottom-right">]</span>
+            </div>
+            <div class="card-header font-mono">
+              <span class="readiness-tag">{{ depth.side }}</span>
+              <span class="record-id">{{ depth.unitLevel }}</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title text-uppercase">{{ depth.zone }}</h3>
+              <div class="card-details font-mono">
+                <div class="detail-row"><span class="lbl">Operation Type:</span> <span class="val">{{ depth.operationType }}</span></div>
+                <div class="detail-row"><span class="lbl">Frontage:</span> <span class="val highlight-val">{{ depth.frontage }} km</span></div>
+                <div class="detail-row"><span class="lbl">Depth:</span> <span class="val highlight-val">{{ depth.depth }} km</span></div>
+                <div class="detail-row"><span class="lbl">Brigade Density:</span> <span class="val">{{ depth.brigadeDensity }}</span></div>
+                <div class="detail-row"><span class="lbl">Key Weapons:</span> <span class="val">{{ depth.keyWeaponsNotes }}</span></div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Force Potential -->
+        <ng-container *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'force-potential'">
+          <div class="dossier-card glass" *ngFor="let potential of forcePotentialsData">
+            <div class="card-borders">
+              <span class="bracket top-left">[</span>
+              <span class="bracket top-right">]</span>
+              <span class="bracket bottom-left">[</span>
+              <span class="bracket bottom-right">]</span>
+            </div>
+            <div class="card-header font-mono">
+              <span class="readiness-tag">{{ potential.side }}</span>
+              <span class="record-id">{{ potential.category }}</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title text-uppercase">{{ potential.metricSystem }}</h3>
+              <div class="card-details font-mono">
+                <div class="detail-row"><span class="lbl">Value:</span> <span class="val highlight-val">{{ potential.value }}</span></div>
+                <div class="detail-row"><span class="lbl">Global Rank:</span> <span class="val">{{ potential.globalRank }}</span></div>
+                <div class="detail-row"><span class="lbl">Comparison:</span> <span class="val">{{ potential.comparisonNotes }}</span></div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Vehicle Designations -->
+        <ng-container *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'vehicle-designations'">
+          <div class="dossier-card glass" *ngFor="let designation of vehicleDesignationsData">
+            <div class="card-borders">
+              <span class="bracket top-left">[</span>
+              <span class="bracket top-right">]</span>
+              <span class="bracket bottom-left">[</span>
+              <span class="bracket bottom-right">]</span>
+            </div>
+            <div class="card-header font-mono">
+              <span class="readiness-tag">{{ designation.side }}</span>
+              <span class="record-id">{{ designation.vehicleType }}</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title text-uppercase">{{ designation.designation }}</h3>
+              <p class="card-chinese">{{ designation.fullChineseName }}</p>
+              <div class="card-details font-mono">
+                <div class="detail-row"><span class="lbl">Family:</span> <span class="val">{{ designation.family }}</span></div>
+                <div class="detail-row"><span class="lbl">Type:</span> <span class="val">{{ designation.aOrBType }}</span></div>
+                <div class="detail-row"><span class="lbl">Role:</span> <span class="val">{{ designation.role }}</span></div>
+                <div class="detail-row"><span class="lbl">Weight:</span> <span class="val">{{ designation.weight }} t</span></div>
+                <div class="detail-row"><span class="lbl">Main Armament:</span> <span class="val">{{ designation.mainArmament }}</span></div>
+                <div class="detail-row"><span class="lbl">Road Speed:</span> <span class="val highlight-val">{{ designation.roadSpeed }} km/h</span></div>
+                <div class="detail-row"><span class="lbl">Range:</span> <span class="val highlight-val">{{ designation.range }} km</span></div>
+                <div class="detail-row"><span class="lbl">Amphibious:</span> <span class="val">{{ designation.amphibious }}</span></div>
+                <div class="detail-row"><span class="lbl">Crew:</span> <span class="val">{{ designation.crew }}</span></div>
+                <div class="detail-row"><span class="lbl">Troops:</span> <span class="val">{{ designation.troops }}</span></div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+
+        <!-- Theater Capabilities Cards -->
+        <ng-container *ngIf="activeSubcategory() === 'theater-capabilities'">
+          <div class="dossier-card glass" *ngFor="let theater of theaterCapabilitiesData">
+            <div class="card-borders">
+              <span class="bracket top-left">[</span>
+              <span class="bracket top-right">]</span>
+              <span class="bracket bottom-left">[</span>
+              <span class="bracket bottom-right">]</span>
+            </div>
+            <div class="card-header font-mono">
+              <span class="readiness-tag">{{ theater.side }}</span>
+              <span class="record-id">{{ theater.theaterCommand }}</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title text-uppercase">{{ theater.hqLocation }}</h3>
+              <div class="card-details font-mono">
+                <div class="detail-row"><span class="lbl">Coordinates:</span> <span class="val">{{ theater.latitude }}, {{ theater.longitude }}</span></div>
+                <div class="detail-row"><span class="lbl">Group Armies:</span> <span class="val">{{ theater.groupArmiesUnderIt }}</span></div>
+                <div class="detail-row"><span class="lbl">Combat Focus:</span> <span class="val highlight-val">{{ theater.combatPowerFocus }}</span></div>
+                <div class="detail-row"><span class="lbl">Key Capabilities:</span> <span class="val">{{ theater.keyCapabilities }}</span></div>
+                <div class="detail-row"><span class="lbl">Area of Responsibility:</span> <span class="val">{{ theater.areaOfResponsibility }}</span></div>
+                <div class="detail-row"><span class="lbl">Special Units:</span> <span class="val">{{ theater.specialUnitsNotes }}</span></div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
       </div>
 
       <!-- Empty State -->
@@ -317,9 +433,7 @@
             YOUR SEARCH PARAMETERS RETURNED ZERO RESULTS. 
             REFINE YOUR FILTERS OR DEPLOY THE RESET BUTTON.
           </p>
-          <button class="btn btn-reset btn-large font-mono text-uppercase" (click)="resetFilters()">
-            RESET SEARCH MATRIX
-          </button>
+          <button class="btn btn-reset btn-large font-mono text-uppercase" (click)="resetFilters()">RESET SEARCH MATRIX</button>
         </div>
       </ng-template>
     </div>

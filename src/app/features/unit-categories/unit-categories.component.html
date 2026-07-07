@@ -1,0 +1,56 @@
+<div class="unit-categories-page">
+  <div class="tactical-grid"></div>
+
+  <div class="container-fluid">
+    <div class="page-header font-mono">
+      <div class="system-path text-uppercase">PLA COMMAND ATLAS // UNIT CATEGORIES</div>
+      <h1 class="page-title text-uppercase">Force Classification & Readiness</h1>
+    </div>
+
+    <div *ngIf="loading" class="loading-state glass">
+      <div class="loading-spinner"></div>
+      <p class="loading-text font-mono text-uppercase">Loading unit categories...</p>
+    </div>
+
+    <div *ngIf="error" class="error-state glass">
+      <div class="error-icon">⚠</div>
+      <p class="error-message font-mono">{{ error }}</p>
+      <button class="btn btn-primary font-mono text-uppercase" (click)="retry()">Retry</button>
+    </div>
+
+    <div class="categories-content" *ngIf="!loading && !error">
+      <div class="results-telemetry font-mono text-uppercase">
+        <span>Categories Found: {{ categories.length }}</span>
+        <span>Status: DATA INTEGRITY SECURE</span>
+      </div>
+
+      <div class="data-grid">
+        <div class="dossier-card glass" *ngFor="let category of categories">
+          <div class="card-borders">
+            <span class="bracket top-left">[</span>
+            <span class="bracket top-right">]</span>
+            <span class="bracket bottom-left">[</span>
+            <span class="bracket bottom-right">]</span>
+          </div>
+          <div class="card-header font-mono">
+            <span class="readiness-tag">{{ category.side }}</span>
+            <span class="record-id">{{ category.category }}</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title text-uppercase">{{ category.description }}</h3>
+            <div class="card-details font-mono">
+              <div class="detail-row"><span class="lbl">Training Level:</span> <span class="val">{{ category.trainingLevel }}</span></div>
+              <div class="detail-row"><span class="lbl">Equipment Level:</span> <span class="val">{{ category.equipmentLevel }}</span></div>
+              <div class="detail-row"><span class="lbl">Manning Level:</span> <span class="val">{{ category.manningLevel }}</span></div>
+              <div class="detail-row"><span class="lbl">Readiness:</span> <span class="val highlight-val">{{ category.readiness }}</span></div>
+              <div class="detail-row"><span class="lbl">Deployment Time:</span> <span class="val">{{ category.deploymentTime }}</span></div>
+              <div class="detail-row"><span class="lbl">US Equivalent:</span> <span class="val">{{ category.usEquivalent }}</span></div>
+              <div class="detail-row"><span class="lbl">% of Force:</span> <span class="val highlight-val">{{ category.percentOfForce }}</span></div>
+              <div class="detail-row"><span class="lbl">Notes:</span> <span class="val">{{ category.notes }}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

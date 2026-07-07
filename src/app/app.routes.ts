@@ -18,6 +18,30 @@ export const appRoutes: Routes = [
     loadComponent: () => import('./features/land/land.component').then(m => m.LandComponent)
   },
   {
+    path: 'ranks',
+    loadComponent: () => import('./features/ranks/ranks.component').then(m => m.RanksComponent)
+  },
+  {
+    path: 'india-china',
+    loadComponent: () => import('./features/india-china/india-china.component').then(m => m.IndiaChinaComponent)
+  },
+  {
+    path: 'unit-categories',
+    loadComponent: () => import('./features/unit-categories/unit-categories.component').then(m => m.UnitCategoriesComponent)
+  },
+  {
+    path: 'advanced-technology',
+    loadComponent: () => import('./features/advanced-technology/advanced-technology.component').then(m => m.AdvancedTechnologyComponent)
+  },
+  {
+    path: 'aviation-detailed',
+    loadComponent: () => import('./features/aviation-detailed/aviation-detailed.component').then(m => m.AviationDetailedComponent)
+  },
+  {
+    path: 'air-defence-detailed',
+    loadComponent: () => import('./features/air-defence-detailed/air-defence-detailed.component').then(m => m.AirDefenceDetailedComponent)
+  },
+  {
     path: '**',
     redirectTo: ''
   }
