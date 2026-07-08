@@ -65,10 +65,32 @@
   display: flex;
   align-items: center;
   gap: 2.5rem;
-  
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(184, 174, 141, 0.3) transparent;
+  padding: 0.5rem 0;
+
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(184, 174, 141, 0.3);
+    border-radius: 2px;
+
+    &:hover {
+      background: rgba(184, 174, 141, 0.5);
+    }
+  }
+
   @media (max-width: 1024px) {
     display: none;
-    
+
     &.mobile-open {
       display: flex;
       flex-direction: column;
@@ -82,6 +104,7 @@
       gap: 1.5rem;
       border-radius: 4px;
       animation: slide-down 0.3s ease forwards;
+      overflow-x: visible;
     }
   }
 }

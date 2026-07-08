@@ -106,6 +106,11 @@
             </select>
           </div>
 
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-units'">
+            <label class="console-lbl font-mono text-uppercase">Formation Unit Name</label>
+            <input type="text" class="console-input font-mono" [ngModel]="formationUnitNameSearch()" (ngModelChange)="formationUnitNameSearch.set($event)" placeholder="Search...">
+          </div>
+
           <div class="console-item filter-box" *ngIf="activeSubcategory() === 'weapon-category' || activeSubcategory() === 'weapon-sensor'">
             <label class="console-lbl font-mono text-uppercase">Weapon Type</label>
             <select class="console-select font-mono" [ngModel]="weaponTypeFilter()" (ngModelChange)="weaponTypeFilter.set($event)">
@@ -114,6 +119,119 @@
             </select>
           </div>
 
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'weapon-category'">
+            <label class="console-lbl font-mono text-uppercase">Side</label>
+            <select class="console-select font-mono" [ngModel]="weaponCategoriesSideFilter()" (ngModelChange)="weaponCategoriesSideFilter.set($event)">
+              <option value="ALL">ALL SIDES</option>
+              <option *ngFor="let side of uniqueWeaponCategoriesSides()" [value]="side">{{ side }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'weapon-sensor'">
+            <label class="console-lbl font-mono text-uppercase">Side</label>
+            <select class="console-select font-mono" [ngModel]="weaponSensorsSideFilter()" (ngModelChange)="weaponSensorsSideFilter.set($event)">
+              <option value="ALL">ALL SIDES</option>
+              <option *ngFor="let side of uniqueWeaponSensorsSides()" [value]="side">{{ side }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'weapon-sensor'">
+            <label class="console-lbl font-mono text-uppercase">Sub Type</label>
+            <select class="console-select font-mono" [ngModel]="subTypeFilter()" (ngModelChange)="subTypeFilter.set($event)">
+              <option value="ALL">ALL SUB TYPES</option>
+              <option *ngFor="let subType of uniqueSubTypes()" [value]="subType">{{ subType }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'weapon-sensor'">
+            <label class="console-lbl font-mono text-uppercase">Weapon Sensor Name</label>
+            <input type="text" class="console-input font-mono" [ngModel]="weaponSensorNameSearch()" (ngModelChange)="weaponSensorNameSearch.set($event)" placeholder="Search...">
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'weapon-category'">
+            <label class="console-lbl font-mono text-uppercase">Arm Type</label>
+            <select class="console-select font-mono" [ngModel]="armTypeFilter()" (ngModelChange)="armTypeFilter.set($event)">
+              <option value="ALL">ALL ARM TYPES</option>
+              <option *ngFor="let armType of uniqueArmTypes()" [value]="armType">{{ armType }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'weapon-category'">
+            <label class="console-lbl font-mono text-uppercase">Sub Category</label>
+            <select class="console-select font-mono" [ngModel]="subCategoryFilter()" (ngModelChange)="subCategoryFilter.set($event)">
+              <option value="ALL">ALL SUB CATEGORIES</option>
+              <option *ngFor="let subCat of uniqueSubCategories()" [value]="subCat">{{ subCat }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'weapon-category'">
+            <label class="console-lbl font-mono text-uppercase">Caliber</label>
+            <select class="console-select font-mono" [ngModel]="caliberFilter()" (ngModelChange)="caliberFilter.set($event)">
+              <option value="ALL">ALL CALIBERS</option>
+              <option *ngFor="let caliber of uniqueCalibers()" [value]="caliber">{{ caliber }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'weapon-category'">
+            <label class="console-lbl font-mono text-uppercase">Weapon Name</label>
+            <input type="text" class="console-input font-mono" [ngModel]="weaponNameSearch()" (ngModelChange)="weaponNameSearch.set($event)" placeholder="Search...">
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'weapon-category'">
+            <label class="console-lbl font-mono text-uppercase">Designation</label>
+            <input type="text" class="console-input font-mono" [ngModel]="designationSearch()" (ngModelChange)="designationSearch.set($event)" placeholder="Search...">
+          </div>
+
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'arm-type'">
+            <label class="console-lbl font-mono text-uppercase">Classification Combat Role</label>
+            <select class="console-select font-mono" [ngModel]="classificationCombatRoleFilter()" (ngModelChange)="classificationCombatRoleFilter.set($event)">
+              <option value="ALL">ALL ROLES</option>
+              <option *ngFor="let role of uniqueClassificationCombatRoles()" [value]="role">{{ role }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'arm-type'">
+            <label class="console-lbl font-mono text-uppercase">Classification Mobility</label>
+            <select class="console-select font-mono" [ngModel]="classificationMobilityFilter()" (ngModelChange)="classificationMobilityFilter.set($event)">
+              <option value="ALL">ALL MOBILITIES</option>
+              <option *ngFor="let mobility of uniqueClassificationMobilities()" [value]="mobility">{{ mobility }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'arm-type'">
+            <label class="console-lbl font-mono text-uppercase">Terrain Specialisation</label>
+            <select class="console-select font-mono" [ngModel]="terrainSpecialisationFilter()" (ngModelChange)="terrainSpecialisationFilter.set($event)">
+              <option value="ALL">ALL TERRAINS</option>
+              <option *ngFor="let terrain of uniqueTerrainSpecialisations()" [value]="terrain">{{ terrain }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'arm-type'">
+            <label class="console-lbl font-mono text-uppercase">Combat Arm Type</label>
+            <input type="text" class="console-input font-mono" [ngModel]="combatArmTypeSearch()" (ngModelChange)="combatArmTypeSearch.set($event)" placeholder="Search...">
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'resources-main'">
+            <label class="console-lbl font-mono text-uppercase">Side</label>
+            <select class="console-select font-mono" [ngModel]="sideFilter()" (ngModelChange)="sideFilter.set($event)">
+              <option value="ALL">ALL SIDES</option>
+              <option *ngFor="let side of uniqueSides()" [value]="side">{{ side }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'resources-main'">
+            <label class="console-lbl font-mono text-uppercase">Brigade Unit Type</label>
+            <input type="text" class="console-input font-mono" [ngModel]="brigadeUnitTypeSearch()" (ngModelChange)="brigadeUnitTypeSearch.set($event)" placeholder="Search...">
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'frontage-depth'">
+            <label class="console-lbl font-mono text-uppercase">Side</label>
+            <select class="console-select font-mono" [ngModel]="frontageDepthSideFilter()" (ngModelChange)="frontageDepthSideFilter.set($event)">
+              <option value="ALL">ALL SIDES</option>
+              <option *ngFor="let side of uniqueFrontageDepthSides()" [value]="side">{{ side }}</option>
+            </select>
+          </div>
 
           <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'frontage-depth'">
             <label class="console-lbl font-mono text-uppercase">Unit Level</label>
@@ -121,6 +239,106 @@
               <option value="ALL">ALL LEVELS</option>
               <option *ngFor="let level of uniqueUnitLevels()" [value]="level">{{ level }}</option>
             </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'frontage-depth'">
+            <label class="console-lbl font-mono text-uppercase">Operation Type</label>
+            <select class="console-select font-mono" [ngModel]="operationTypeFilter()" (ngModelChange)="operationTypeFilter.set($event)">
+              <option value="ALL">ALL OPERATION TYPES</option>
+              <option *ngFor="let opType of uniqueOperationTypes()" [value]="opType">{{ opType }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'frontage-depth'">
+            <label class="console-lbl font-mono text-uppercase">Zone</label>
+            <input type="text" class="console-input font-mono" [ngModel]="zoneSearch()" (ngModelChange)="zoneSearch.set($event)" placeholder="Search...">
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'vehicle-speeds'">
+            <label class="console-lbl font-mono text-uppercase">Side</label>
+            <select class="console-select font-mono" [ngModel]="vehicleSpeedsSideFilter()" (ngModelChange)="vehicleSpeedsSideFilter.set($event)">
+              <option value="ALL">ALL SIDES</option>
+              <option *ngFor="let side of uniqueVehicleSpeedsSides()" [value]="side">{{ side }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'vehicle-speeds'">
+            <label class="console-lbl font-mono text-uppercase">Vehicle Category</label>
+            <select class="console-select font-mono" [ngModel]="vehicleCategoryFilter()" (ngModelChange)="vehicleCategoryFilter.set($event)">
+              <option value="ALL">ALL CATEGORIES</option>
+              <option *ngFor="let category of uniqueVehicleCategories()" [value]="category">{{ category }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'vehicle-speeds'">
+            <label class="console-lbl font-mono text-uppercase">Vehicle System</label>
+            <input type="text" class="console-input font-mono" [ngModel]="vehicleSystemSearch()" (ngModelChange)="vehicleSystemSearch.set($event)" placeholder="Search...">
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'vehicle-speeds'">
+            <label class="console-lbl font-mono text-uppercase">Designation</label>
+            <input type="text" class="console-input font-mono" [ngModel]="vehicleDesignationSearch()" (ngModelChange)="vehicleDesignationSearch.set($event)" placeholder="Search...">
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'force-potential'">
+            <label class="console-lbl font-mono text-uppercase">Side</label>
+            <select class="console-select font-mono" [ngModel]="forcePotentialSideFilter()" (ngModelChange)="forcePotentialSideFilter.set($event)">
+              <option value="ALL">ALL SIDES</option>
+              <option *ngFor="let side of uniqueForcePotentialSides()" [value]="side">{{ side }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'force-potential'">
+            <label class="console-lbl font-mono text-uppercase">Category</label>
+            <select class="console-select font-mono" [ngModel]="forcePotentialCategoryFilter()" (ngModelChange)="forcePotentialCategoryFilter.set($event)">
+              <option value="ALL">ALL CATEGORIES</option>
+              <option *ngFor="let category of uniqueForcePotentialCategories()" [value]="category">{{ category }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'force-potential'">
+            <label class="console-lbl font-mono text-uppercase">Metric System</label>
+            <select class="console-select font-mono" [ngModel]="metricSystemFilter()" (ngModelChange)="metricSystemFilter.set($event)">
+              <option value="ALL">ALL METRIC SYSTEMS</option>
+              <option *ngFor="let metric of uniqueMetricSystems()" [value]="metric">{{ metric }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'vehicle-designations'">
+            <label class="console-lbl font-mono text-uppercase">Side</label>
+            <select class="console-select font-mono" [ngModel]="vehicleDesignationsSideFilter()" (ngModelChange)="vehicleDesignationsSideFilter.set($event)">
+              <option value="ALL">ALL SIDES</option>
+              <option *ngFor="let side of uniqueVehicleDesignationsSides()" [value]="side">{{ side }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'vehicle-designations'">
+            <label class="console-lbl font-mono text-uppercase">Family</label>
+            <select class="console-select font-mono" [ngModel]="familyFilter()" (ngModelChange)="familyFilter.set($event)">
+              <option value="ALL">ALL FAMILIES</option>
+              <option *ngFor="let family of uniqueFamilies()" [value]="family">{{ family }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'vehicle-designations'">
+            <label class="console-lbl font-mono text-uppercase">Vehicle Type</label>
+            <select class="console-select font-mono" [ngModel]="vehicleTypeFilter()" (ngModelChange)="vehicleTypeFilter.set($event)">
+              <option value="ALL">ALL VEHICLE TYPES</option>
+              <option *ngFor="let vType of uniqueVehicleTypes()" [value]="vType">{{ vType }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'vehicle-designations'">
+            <label class="console-lbl font-mono text-uppercase">Role</label>
+            <select class="console-select font-mono" [ngModel]="vehicleDesignationsRoleFilter()" (ngModelChange)="vehicleDesignationsRoleFilter.set($event)">
+              <option value="ALL">ALL ROLES</option>
+              <option *ngFor="let role of uniqueVehicleDesignationsRoles()" [value]="role">{{ role }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'vehicle-designations'">
+            <label class="console-lbl font-mono text-uppercase">Designation</label>
+            <input type="text" class="console-input font-mono" [ngModel]="vehicleDesignationsDesignationSearch()" (ngModelChange)="vehicleDesignationsDesignationSearch.set($event)" placeholder="Search...">
           </div>
 
 
@@ -245,7 +463,8 @@
                 <div class="detail-row"><span class="lbl">Engagement Range:</span> <span class="val highlight-val">{{ sensor.engagementRange }} km</span></div>
                 <div class="detail-row"><span class="lbl">Altitude/Depth:</span> <span class="val">{{ sensor.altitudeDepth }}</span></div>
                 <div class="detail-row"><span class="lbl">Guidance/Sensor:</span> <span class="val">{{ sensor.guidanceSensor }}</span></div>
-                <div class="detail-row"><span class="lbl">OLI:</span> <span class="val">{{ sensor.oli }}</span></div>
+                <div class="detail-row"><span class="lbl">Lat Location:</span> <span class="val">{{ sensor.latLocation }}</span></div>
+                <div class="detail-row"><span class="lbl">Name Location:</span> <span class="val">{{ sensor.nameLocation }}</span></div>
               </div>
             </div>
           </div>
@@ -275,8 +494,16 @@
                 <div class="detail-row"><span class="lbl">AA/SAM:</span> <span class="val">{{ resource.aaSamSystems }}</span></div>
                 <div class="detail-row"><span class="lbl">Helicopters:</span> <span class="val">{{ resource.helicopters }}</span></div>
                 <div class="detail-row"><span class="lbl">ATGMs:</span> <span class="val">{{ resource.atgms }}</span></div>
+                <div class="detail-row"><span class="lbl">Trucks Logistics:</span> <span class="val">{{ resource.trucksLogistics }}</span></div>
                 <div class="detail-row"><span class="lbl">Detection Range:</span> <span class="val">{{ resource.detectionRange }} km</span></div>
                 <div class="detail-row"><span class="lbl">Engagement Range:</span> <span class="val">{{ resource.engagementRange }} km</span></div>
+                <div class="detail-row"><span class="lbl">Speed Day:</span> <span class="val">{{ resource.speedDay }}</span></div>
+                <div class="detail-row"><span class="lbl">Speed Night:</span> <span class="val">{{ resource.speedNight }}</span></div>
+                <div class="detail-row"><span class="lbl">Frontage Defensive:</span> <span class="val">{{ resource.frontageDefensive }}</span></div>
+                <div class="detail-row"><span class="lbl">Frontage Offensive:</span> <span class="val">{{ resource.frontageOffensive }}</span></div>
+                <div class="detail-row"><span class="lbl">Depth:</span> <span class="val">{{ resource.depth }}</span></div>
+                <div class="detail-row"><span class="lbl">A Vehicle:</span> <span class="val">{{ resource.aVehicle }}</span></div>
+                <div class="detail-row"><span class="lbl">B Vehicle:</span> <span class="val">{{ resource.bVehicle }}</span></div>
                 <div class="detail-row"><span class="lbl">Force Potential:</span> <span class="val highlight-val">{{ resource.forcePotential }}</span></div>
               </div>
             </div>
@@ -389,34 +616,6 @@
                 <div class="detail-row"><span class="lbl">Amphibious:</span> <span class="val">{{ designation.amphibious }}</span></div>
                 <div class="detail-row"><span class="lbl">Crew:</span> <span class="val">{{ designation.crew }}</span></div>
                 <div class="detail-row"><span class="lbl">Troops:</span> <span class="val">{{ designation.troops }}</span></div>
-              </div>
-            </div>
-          </div>
-        </ng-container>
-
-
-        <!-- Theater Capabilities Cards -->
-        <ng-container *ngIf="activeSubcategory() === 'theater-capabilities'">
-          <div class="dossier-card glass" *ngFor="let theater of theaterCapabilitiesData">
-            <div class="card-borders">
-              <span class="bracket top-left">[</span>
-              <span class="bracket top-right">]</span>
-              <span class="bracket bottom-left">[</span>
-              <span class="bracket bottom-right">]</span>
-            </div>
-            <div class="card-header font-mono">
-              <span class="readiness-tag">{{ theater.side }}</span>
-              <span class="record-id">{{ theater.theaterCommand }}</span>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title text-uppercase">{{ theater.hqLocation }}</h3>
-              <div class="card-details font-mono">
-                <div class="detail-row"><span class="lbl">Coordinates:</span> <span class="val">{{ theater.latitude }}, {{ theater.longitude }}</span></div>
-                <div class="detail-row"><span class="lbl">Group Armies:</span> <span class="val">{{ theater.groupArmiesUnderIt }}</span></div>
-                <div class="detail-row"><span class="lbl">Combat Focus:</span> <span class="val highlight-val">{{ theater.combatPowerFocus }}</span></div>
-                <div class="detail-row"><span class="lbl">Key Capabilities:</span> <span class="val">{{ theater.keyCapabilities }}</span></div>
-                <div class="detail-row"><span class="lbl">Area of Responsibility:</span> <span class="val">{{ theater.areaOfResponsibility }}</span></div>
-                <div class="detail-row"><span class="lbl">Special Units:</span> <span class="val">{{ theater.specialUnitsNotes }}</span></div>
               </div>
             </div>
           </div>

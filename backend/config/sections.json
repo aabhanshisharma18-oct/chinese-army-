@@ -1,0 +1,140 @@
+{
+  "sections": [
+    {
+      "id": "land",
+      "name": "LAND",
+      "tables": [
+        {
+          "id": "land_units",
+          "name": "Land Units",
+          "tableName": "land_units",
+          "apiEndpoint": "/api/land-units"
+        },
+        {
+          "id": "arm_types",
+          "name": "Arm Types",
+          "tableName": "arm_types",
+          "apiEndpoint": "/api/arm-types"
+        },
+        {
+          "id": "weapon_categories",
+          "name": "Weapon Categories",
+          "tableName": "weapon_categories",
+          "apiEndpoint": "/api/weapon-categories"
+        },
+        {
+          "id": "weapon_sensors",
+          "name": "Weapon Sensors",
+          "tableName": "weapon_sensors",
+          "apiEndpoint": "/api/weapon-sensors"
+        },
+        {
+          "id": "land_unit_resources",
+          "name": "Land Unit Resources",
+          "tableName": "land_unit_resources",
+          "apiEndpoint": "/api/land-unit-resources",
+          "subsections": [
+            {
+              "id": "vehicle_speeds",
+              "name": "Vehicle Speeds",
+              "tableName": "vehicle_speeds",
+              "apiEndpoint": "/api/vehicle-speeds"
+            },
+            {
+              "id": "frontage_depth",
+              "name": "Frontage Depth",
+              "tableName": "frontage_depth",
+              "apiEndpoint": "/api/frontage-depth"
+            },
+            {
+              "id": "force_potential",
+              "name": "Force Potential",
+              "tableName": "force_potential",
+              "apiEndpoint": "/api/force-potential"
+            },
+            {
+              "id": "vehicle_designations",
+              "name": "Vehicle Designations",
+              "tableName": "vehicle_designations",
+              "apiEndpoint": "/api/vehicle-designations"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "military_reference",
+      "name": "MILITARY REFERENCE",
+      "tables": [
+        {
+          "id": "ranks",
+          "name": "Ranks",
+          "tableName": "ranks",
+          "apiEndpoint": "/api/ranks"
+        },
+        {
+          "id": "india_china_comparison",
+          "name": "India-China Comparison",
+          "tableName": "india_china_comparison",
+          "apiEndpoint": "/api/india-china-comparison"
+        },
+        {
+          "id": "theater_capabilities",
+          "name": "Theater Capabilities",
+          "tableName": "theater_capabilities",
+          "apiEndpoint": "/api/theater-capabilities"
+        },
+        {
+          "id": "unit_categories",
+          "name": "Unit Categories",
+          "tableName": "unit_categories",
+          "apiEndpoint": "/api/unit-categories"
+        },
+        {
+          "id": "advanced_technology",
+          "name": "Advanced Technology",
+          "tableName": "advanced_technology",
+          "apiEndpoint": "/api/advanced-technology"
+        },
+        {
+          "id": "aviation_detailed",
+          "name": "Aviation Detailed",
+          "tableName": "aviation_detailed",
+          "apiEndpoint": "/api/aviation-detailed"
+        },
+        {
+          "id": "air_defence_detailed",
+          "name": "Air Defence Detailed",
+          "tableName": "air_defence_detailed",
+          "apiEndpoint": "/api/air-defence-detailed"
+        }
+      ]
+    }
+  ],
+  "excludedColumns": [
+    "id",
+    "created_at",
+    "updated_at",
+    "notes",
+    "description",
+    "main_gun_notes",
+    "key_weapons_notes",
+    "comparison_notes",
+    "strategic_impact",
+    "special_units_notes",
+    "armament",
+    "oli"
+  ],
+  "longTextFields": [
+    "notes",
+    "description",
+    "main_gun_notes",
+    "key_weapons_notes",
+    "comparison_notes",
+    "strategic_impact",
+    "special_units_notes",
+    "armament",
+    "area_of_responsibility",
+    "key_capabilities"
+  ]
+}
