@@ -28,10 +28,12 @@
   background: rgba(29, 31, 26, 0.8);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  gap: 2rem;
 }
 
 .logo-section {
   flex-shrink: 0;
+  min-width: 320px;
 }
 
 .logo-link {

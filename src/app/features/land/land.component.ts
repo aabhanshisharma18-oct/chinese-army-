@@ -207,10 +207,12 @@ export class LandComponent implements OnInit {
   weaponCategoriesSideFilter = signal<string>('ALL');
   subCategoryFilter = signal<string>('ALL');
   caliberFilter = signal<string>('ALL');
+  typeGuidanceFilter = signal<string>('ALL');
   weaponSensorsSideFilter = signal<string>('ALL');
   subTypeFilter = signal<string>('ALL');
   classificationCombatRoleFilter = signal<string>('ALL');
   classificationMobilityFilter = signal<string>('ALL');
+  trainingCategoryFilter = signal<string>('ALL');
   terrainSpecialisationFilter = signal<string>('ALL');
   forcePotentialSideFilter = signal<string>('ALL');
   forcePotentialCategoryFilter = signal<string>('ALL');
@@ -218,6 +220,7 @@ export class LandComponent implements OnInit {
   vehicleDesignationsSideFilter = signal<string>('ALL');
   familyFilter = signal<string>('ALL');
   vehicleTypeFilter = signal<string>('ALL');
+  aOrBTypeFilter = signal<string>('ALL');
   vehicleDesignationsRoleFilter = signal<string>('ALL');
   frontageDepthSideFilter = signal<string>('ALL');
   operationTypeFilter = signal<string>('ALL');
@@ -659,10 +662,12 @@ export class LandComponent implements OnInit {
     this.weaponCategoriesSideFilter.set('ALL');
     this.subCategoryFilter.set('ALL');
     this.caliberFilter.set('ALL');
+    this.typeGuidanceFilter.set('ALL');
     this.weaponSensorsSideFilter.set('ALL');
     this.subTypeFilter.set('ALL');
     this.classificationCombatRoleFilter.set('ALL');
     this.classificationMobilityFilter.set('ALL');
+    this.trainingCategoryFilter.set('ALL');
     this.terrainSpecialisationFilter.set('ALL');
     this.forcePotentialSideFilter.set('ALL');
     this.forcePotentialCategoryFilter.set('ALL');
@@ -670,6 +675,7 @@ export class LandComponent implements OnInit {
     this.vehicleDesignationsSideFilter.set('ALL');
     this.familyFilter.set('ALL');
     this.vehicleTypeFilter.set('ALL');
+    this.aOrBTypeFilter.set('ALL');
     this.vehicleDesignationsRoleFilter.set('ALL');
     this.frontageDepthSideFilter.set('ALL');
     this.operationTypeFilter.set('ALL');
@@ -734,6 +740,7 @@ export class LandComponent implements OnInit {
     const query = this.searchQuery().toLowerCase();
     const combatRole = this.classificationCombatRoleFilter();
     const mobility = this.classificationMobilityFilter();
+    const training = this.trainingCategoryFilter();
     const terrain = this.terrainSpecialisationFilter();
     const combatArmType = this.combatArmTypeSearch().toLowerCase();
 
@@ -744,6 +751,9 @@ export class LandComponent implements OnInit {
     }
     if (mobility !== 'ALL') {
       filtered = filtered.filter(t => t.classificationMobility === mobility);
+    }
+    if (training !== 'ALL') {
+      filtered = filtered.filter(t => t.trainingCategory === training);
     }
     if (terrain !== 'ALL') {
       filtered = filtered.filter(t => t.terrainSpecialisation === terrain);
@@ -768,6 +778,7 @@ export class LandComponent implements OnInit {
     const side = this.weaponCategoriesSideFilter();
     const subCategory = this.subCategoryFilter();
     const caliber = this.caliberFilter();
+    const typeGuidance = this.typeGuidanceFilter();
     const weaponName = this.weaponNameSearch().toLowerCase();
     const designation = this.designationSearch().toLowerCase();
 
@@ -787,6 +798,9 @@ export class LandComponent implements OnInit {
     }
     if (caliber !== 'ALL') {
       filtered = filtered.filter(w => w.caliber === caliber);
+    }
+    if (typeGuidance !== 'ALL') {
+      filtered = filtered.filter(w => w.typeGuidance === typeGuidance);
     }
     if (weaponName) {
       filtered = filtered.filter(w => w.weaponName.toLowerCase().includes(weaponName));
@@ -954,6 +968,7 @@ export class LandComponent implements OnInit {
     const side = this.vehicleDesignationsSideFilter();
     const family = this.familyFilter();
     const vehicleType = this.vehicleTypeFilter();
+    const aOrBType = this.aOrBTypeFilter();
     const role = this.vehicleDesignationsRoleFilter();
     const designation = this.vehicleDesignationsDesignationSearch().toLowerCase();
 
@@ -967,6 +982,9 @@ export class LandComponent implements OnInit {
     }
     if (vehicleType !== 'ALL') {
       filtered = filtered.filter(v => v.vehicleType === vehicleType);
+    }
+    if (aOrBType !== 'ALL') {
+      filtered = filtered.filter(v => v.aOrBType === aOrBType);
     }
     if (role !== 'ALL') {
       filtered = filtered.filter(v => v.role === role);
@@ -1096,6 +1114,14 @@ export class LandComponent implements OnInit {
     return [...new Set(this.weaponCategories.map(w => w.caliber))];
   });
 
+  uniqueTypeGuidances = computed(() => {
+    const dynamicOptions = this.filterOptions['weapon_categories_type_guidance'];
+    if (dynamicOptions && dynamicOptions.length > 1) {
+      return dynamicOptions.filter(v => v !== 'ALL');
+    }
+    return [...new Set(this.weaponCategories.map(w => w.typeGuidance))];
+  });
+
   uniqueWeaponSensorsSides = computed(() => {
     const dynamicOptions = this.filterOptions['weapon_sensors_side'];
     if (dynamicOptions && dynamicOptions.length > 1) {
@@ -1126,6 +1152,14 @@ export class LandComponent implements OnInit {
       return dynamicOptions.filter(v => v !== 'ALL');
     }
     return [...new Set(this.armTypes.map(a => a.classificationMobility))];
+  });
+
+  uniqueTrainingCategories = computed(() => {
+    const dynamicOptions = this.filterOptions['arm_types_training_category'];
+    if (dynamicOptions && dynamicOptions.length > 1) {
+      return dynamicOptions.filter(v => v !== 'ALL');
+    }
+    return [...new Set(this.armTypes.map(a => a.trainingCategory))];
   });
 
   uniqueTerrainSpecialisations = computed(() => {
@@ -1182,6 +1216,14 @@ export class LandComponent implements OnInit {
       return dynamicOptions.filter(v => v !== 'ALL');
     }
     return [...new Set(this.vehicleDesignations.map(v => v.vehicleType))];
+  });
+
+  uniqueAOrBTypes = computed(() => {
+    const dynamicOptions = this.filterOptions['vehicle_designations_a_or_b_type'];
+    if (dynamicOptions && dynamicOptions.length > 1) {
+      return dynamicOptions.filter(v => v !== 'ALL');
+    }
+    return [...new Set(this.vehicleDesignations.map(v => v.aOrBType))];
   });
 
   uniqueVehicleDesignationsRoles = computed(() => {

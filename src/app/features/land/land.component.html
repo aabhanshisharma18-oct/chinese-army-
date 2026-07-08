@@ -173,6 +173,14 @@
           </div>
 
           <div class="console-item filter-box" *ngIf="activeSubcategory() === 'weapon-category'">
+            <label class="console-lbl font-mono text-uppercase">Type / Guidance</label>
+            <select class="console-select font-mono" [ngModel]="typeGuidanceFilter()" (ngModelChange)="typeGuidanceFilter.set($event)">
+              <option value="ALL">ALL TYPES</option>
+              <option *ngFor="let typeGuidance of uniqueTypeGuidances()" [value]="typeGuidance">{{ typeGuidance }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'weapon-category'">
             <label class="console-lbl font-mono text-uppercase">Weapon Name</label>
             <input type="text" class="console-input font-mono" [ngModel]="weaponNameSearch()" (ngModelChange)="weaponNameSearch.set($event)" placeholder="Search...">
           </div>
@@ -196,6 +204,14 @@
             <select class="console-select font-mono" [ngModel]="classificationMobilityFilter()" (ngModelChange)="classificationMobilityFilter.set($event)">
               <option value="ALL">ALL MOBILITIES</option>
               <option *ngFor="let mobility of uniqueClassificationMobilities()" [value]="mobility">{{ mobility }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'arm-type'">
+            <label class="console-lbl font-mono text-uppercase">Training Category</label>
+            <select class="console-select font-mono" [ngModel]="trainingCategoryFilter()" (ngModelChange)="trainingCategoryFilter.set($event)">
+              <option value="ALL">ALL TRAINING</option>
+              <option *ngFor="let training of uniqueTrainingCategories()" [value]="training">{{ training }}</option>
             </select>
           </div>
 
@@ -329,6 +345,14 @@
           </div>
 
           <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'vehicle-designations'">
+            <label class="console-lbl font-mono text-uppercase">A / B Type</label>
+            <select class="console-select font-mono" [ngModel]="aOrBTypeFilter()" (ngModelChange)="aOrBTypeFilter.set($event)">
+              <option value="ALL">ALL TYPES</option>
+              <option *ngFor="let aOrBType of uniqueAOrBTypes()" [value]="aOrBType">{{ aOrBType }}</option>
+            </select>
+          </div>
+
+          <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-unit-resources' && activeResourceSubcategory() === 'vehicle-designations'">
             <label class="console-lbl font-mono text-uppercase">Role</label>
             <select class="console-select font-mono" [ngModel]="vehicleDesignationsRoleFilter()" (ngModelChange)="vehicleDesignationsRoleFilter.set($event)">
               <option value="ALL">ALL ROLES</option>
@@ -436,7 +460,6 @@
                 <div class="detail-row"><span class="lbl">Guidance:</span> <span class="val">{{ weapon.typeGuidance }}</span></div>
                 <div class="detail-row"><span class="lbl">Role:</span> <span class="val">{{ weapon.roleCapability }}</span></div>
                 <div class="detail-row"><span class="lbl">Weight:</span> <span class="val">{{ weapon.weight }}</span></div>
-                <div class="detail-row"><span class="lbl">Main Gun:</span> <span class="val">{{ weapon.mainGunNotes }}</span></div>
               </div>
             </div>
           </div>
@@ -533,7 +556,6 @@
                 <div class="detail-row"><span class="lbl">Cross-Country Night:</span> <span class="val">{{ speed.crossCountryNight }} km/h</span></div>
                 <div class="detail-row"><span class="lbl">Amphibious Speed:</span> <span class="val">{{ speed.amphibiousWaterSpeed }} km/h</span></div>
                 <div class="detail-row"><span class="lbl">Operational Range:</span> <span class="val highlight-val">{{ speed.operationalRange }} km</span></div>
-                <div class="detail-row"><span class="lbl">Notes:</span> <span class="val">{{ speed.notes }}</span></div>
               </div>
             </div>
           </div>
@@ -559,7 +581,6 @@
                 <div class="detail-row"><span class="lbl">Frontage:</span> <span class="val highlight-val">{{ depth.frontage }} km</span></div>
                 <div class="detail-row"><span class="lbl">Depth:</span> <span class="val highlight-val">{{ depth.depth }} km</span></div>
                 <div class="detail-row"><span class="lbl">Brigade Density:</span> <span class="val">{{ depth.brigadeDensity }}</span></div>
-                <div class="detail-row"><span class="lbl">Key Weapons:</span> <span class="val">{{ depth.keyWeaponsNotes }}</span></div>
               </div>
             </div>
           </div>
@@ -583,7 +604,6 @@
               <div class="card-details font-mono">
                 <div class="detail-row"><span class="lbl">Value:</span> <span class="val highlight-val">{{ potential.value }}</span></div>
                 <div class="detail-row"><span class="lbl">Global Rank:</span> <span class="val">{{ potential.globalRank }}</span></div>
-                <div class="detail-row"><span class="lbl">Comparison:</span> <span class="val">{{ potential.comparisonNotes }}</span></div>
               </div>
             </div>
           </div>
