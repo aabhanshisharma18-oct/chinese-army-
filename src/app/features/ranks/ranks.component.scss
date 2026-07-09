@@ -4,6 +4,13 @@
   padding-top: 6.5rem !important;
 }
 
+.container-fluid {
+  position: relative;
+  z-index: 5;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
 /* Page Header */
 .page-header {
   margin-bottom: 2rem;
