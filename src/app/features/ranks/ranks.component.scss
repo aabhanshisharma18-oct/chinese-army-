@@ -1,7 +1,12 @@
 /* PLA Command Atlas - Ranks Component Styles */
 
 .land-page {
-  padding-top: 6.5rem !important;
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--color-bg);
+  padding: 6.5rem 2rem 2.5rem 2rem;
+  overflow: hidden;
 }
 
 .container-fluid {
