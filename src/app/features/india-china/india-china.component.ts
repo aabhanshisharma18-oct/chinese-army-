@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExcelDataService } from '../../services/excel-data.service';
+import { FormsModule } from '@angular/forms';
+import comparisonSheet from '../../../assets/data/raw/11_India_China_Comparison.json';
+import { buildSheetColumnFilters, matchesSheetColumnFilters } from '../../shared/utils/sheet-column-filters';
 
 interface IndiaChinaComparison {
   level: string;
@@ -14,35 +16,25 @@ interface IndiaChinaComparison {
 @Component({
   selector: 'app-india-china',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './india-china.component.html',
   styleUrls: ['./india-china.component.scss']
 })
 export class IndiaChinaComponent implements OnInit {
   comparisons: IndiaChinaComparison[] = [];
-  loading = true;
+  loading = false;
   error: string | null = null;
-
-  constructor(private excelDataService: ExcelDataService) {}
+  readonly sheetFilters = buildSheetColumnFilters(comparisonSheet as unknown[][]);
+  columnFilters: Record<number, string> = {};
 
   ngOnInit(): void {
     this.loadData();
   }
 
   loadData(): void {
-    this.loading = true;
+    this.loading = false;
     this.error = null;
-
-    this.excelDataService.getSheet('assets/data/raw/11_India_China_Comparison.json').subscribe({
-      next: (data: unknown) => {
-        this.comparisons = this.parseComparisons(data);
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = `Failed to load India-China comparison data: ${err.message}`;
-        this.loading = false;
-      }
-    });
+    this.comparisons = this.parseComparisons(comparisonSheet);
   }
 
   private parseComparisons(data: unknown): IndiaChinaComparison[] {
@@ -75,6 +67,11 @@ export class IndiaChinaComponent implements OnInit {
   private getCellValue(row: unknown[], index: number): string {
     const value = row[index];
     return value === null || value === undefined ? '' : String(value);
+  }
+
+  get filteredComparisons(): IndiaChinaComparison[] {
+    return this.comparisons.filter((_, index) =>
+      matchesSheetColumnFilters(comparisonSheet as unknown[][], index, this.columnFilters));
   }
 
   retry(): void {

@@ -105,25 +105,47 @@ body {
 }
 
 body {
-  background:
-    linear-gradient(rgba(8,26,41,.18),rgba(8,26,41,.18)),
-    radial-gradient(ellipse at 74% 33%, rgba(168,200,150,.92) 0 9%, transparent 28%),
-    radial-gradient(ellipse at 54% 57%, rgba(200,168,120,.82) 0 12%, transparent 34%),
-    radial-gradient(ellipse at 26% 44%, rgba(107,184,212,.90) 0 13%, transparent 36%),
-    linear-gradient(135deg,#497d91,#91b5a7 44%,#b99772 72%,#704a35);
-  background-attachment:fixed;
+  background:#152b3a;
 }
 body::before {
-  content:''; position:fixed; inset:0; z-index:-1; pointer-events:none;
-  background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
-  background-size:48px 48px;
-  box-shadow:inset 0 0 160px rgba(4,18,30,.3);
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:linear-gradient(rgba(6,18,32,.18),rgba(6,18,32,.18)),url('/assets/images/china-earth-background.jpg');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  filter:blur(3px) brightness(.73) saturate(1.08);
+  transform:scale(1.025);
 }
+body::after {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(ellipse 92% 72% at 50% 46%,transparent 42%,rgba(5,16,29,.31) 100%),linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:auto,48px 48px,48px 48px;
+}
+
+app-root { position:relative; z-index:1; display:block; min-height:100vh; }
 
 /* Normalize the existing feature pages to the shared Claude glass language. */
 .land-page,.india-china-page,.unit-categories-page,.advanced-technology-page,
 .aviation-detailed-page,.air-defence-detailed-page,.theater-capabilities-page {
   background:transparent !important; color:var(--t1) !important;
+}
+
+/* The previous fixed top header was removed. Eliminate its reserved 6.5rem
+   space consistently on every routed workspace page. */
+.land-page,
+.hierarchy-page,
+.india-china-page,
+.unit-categories-page,
+.advanced-technology-page,
+.aviation-detailed-page,
+.air-defence-detailed-page,
+.theater-capabilities-page,
+.excel-data-viewer {
+  padding-top:1.25rem !important;
+}
+
+.excel-data-viewer {
+  background:transparent !important;
 }
 .tactical-grid { opacity:.32 !important; }
 .page-header { padding:10px 16px !important; border:1px solid rgba(255,255,255,.66); border-radius:18px; background:rgba(235,248,255,.55); backdrop-filter:blur(18px); box-shadow:var(--shadow-soft); }
@@ -145,7 +167,7 @@ body::before {
 .filter-control select:focus,.filter-control input:focus { border-color:rgba(26,111,168,.5); box-shadow:0 0 0 3px rgba(26,111,168,.1); }
 
 @media(max-width:900px){
-  .land-page,.india-china-page,.unit-categories-page,.advanced-technology-page,.aviation-detailed-page,.air-defence-detailed-page,.theater-capabilities-page { padding-top:4.5rem !important; }
+  .land-page,.hierarchy-page,.india-china-page,.unit-categories-page,.advanced-technology-page,.aviation-detailed-page,.air-defence-detailed-page,.theater-capabilities-page,.excel-data-viewer { padding-top:.75rem !important; }
 }
 
 /* Scrollbar styling */

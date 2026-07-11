@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, Observable, switchMap, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, timeout } from 'rxjs/operators';
 
 export interface DataManifest {
   workbook: string;
@@ -18,7 +18,10 @@ export interface DataManifest {
   providedIn: 'root'
 })
 export class ExcelDataService {
-  private useApi = true; // Set to false to use local JSON only
+  // Offline-first by default. Every sheet is bundled with the application, so
+  // a demo PC does not need PostgreSQL, internet access, or a Mac-specific path.
+  // Development environments may opt into PostgreSQL with setUseApi(true).
+  private useApi = false;
   private apiUrl = '/api';
 
   constructor(private http: HttpClient) {}
@@ -75,6 +78,9 @@ export class ExcelDataService {
       
       if (apiEndpoint) {
         return this.http.get(`${this.apiUrl}${apiEndpoint}`).pipe(
+          // A running backend can still stall while PostgreSQL is unavailable.
+          // Do not leave the page spinner waiting forever; use the bundled sheet.
+          timeout(5000),
           catchError(error => {
             console.warn(`API request failed for ${sheetName}, falling back to local JSON`, error);
             return this.http.get(filePath);

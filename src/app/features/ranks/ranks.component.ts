@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ExcelDataService } from '../../services/excel-data.service';
+import ranksSheet from '../../../assets/data/raw/10_Ranks.json';
+import { buildSheetColumnFilters, matchesSheetColumnFilters } from '../../shared/utils/sheet-column-filters';
 
 interface Rank {
   side: string;
@@ -22,32 +23,22 @@ interface Rank {
 })
 export class RanksComponent implements OnInit {
   ranks: Rank[] = [];
-  loading = true;
+  loading = false;
   error: string | null = null;
   sideFilter = '';
   categoryFilter = '';
   search = '';
-
-  constructor(private excelDataService: ExcelDataService) {}
+  readonly sheetFilters = buildSheetColumnFilters(ranksSheet as unknown[][]);
+  columnFilters: Record<number, string> = {};
 
   ngOnInit(): void {
     this.loadRanks();
   }
 
   loadRanks(): void {
-    this.loading = true;
+    this.loading = false;
     this.error = null;
-
-    this.excelDataService.getSheet('assets/data/raw/10_Ranks.json').subscribe({
-      next: (data: unknown) => {
-        this.ranks = this.parseRanks(data);
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = `Failed to load ranks data: ${err.message}`;
-        this.loading = false;
-      }
-    });
+    this.ranks = this.parseRanks(ranksSheet);
   }
 
   private parseRanks(data: unknown): Rank[] {
@@ -85,7 +76,8 @@ export class RanksComponent implements OnInit {
 
   getRanksByCategory(category: string): Rank[] {
     const query = this.search.toLowerCase().trim();
-    return this.ranks.filter(r => r.rankCategory === category &&
+    return this.ranks.filter((r, index) => r.rankCategory === category &&
+      matchesSheetColumnFilters(ranksSheet as unknown[][], index, this.columnFilters) &&
       (!this.sideFilter || r.side === this.sideFilter) &&
       (!this.categoryFilter || r.rankCategory === this.categoryFilter) &&
       (!query || [r.englishRank,r.chineseCharacters,r.chinesePinyin,r.natoEquivalent].some(v => v.toLowerCase().includes(query))));

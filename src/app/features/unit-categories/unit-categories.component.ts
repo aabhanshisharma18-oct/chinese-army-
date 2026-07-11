@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ExcelDataService } from '../../services/excel-data.service';
+import categoriesSheet from '../../../assets/data/raw/13_Unit_Categories.json';
+import { buildSheetColumnFilters, matchesSheetColumnFilters } from '../../shared/utils/sheet-column-filters';
 
 interface UnitCategory {
   side: string;
@@ -26,32 +27,22 @@ interface UnitCategory {
 })
 export class UnitCategoriesComponent implements OnInit {
   categories: UnitCategory[] = [];
-  loading = true;
+  loading = false;
   error: string | null = null;
   sideFilter = '';
   readinessFilter = '';
   search = '';
-
-  constructor(private excelDataService: ExcelDataService) {}
+  readonly sheetFilters = buildSheetColumnFilters(categoriesSheet as unknown[][]);
+  columnFilters: Record<number, string> = {};
 
   ngOnInit(): void {
     this.loadData();
   }
 
   loadData(): void {
-    this.loading = true;
+    this.loading = false;
     this.error = null;
-
-    this.excelDataService.getSheet('assets/data/raw/13_Unit_Categories.json').subscribe({
-      next: (data: unknown) => {
-        this.categories = this.parseCategories(data);
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = `Failed to load unit categories data: ${err.message}`;
-        this.loading = false;
-      }
-    });
+    this.categories = this.parseCategories(categoriesSheet);
   }
 
   private parseCategories(data: unknown): UnitCategory[] {
@@ -96,5 +87,5 @@ export class UnitCategoriesComponent implements OnInit {
   }
   get sides(): string[] { return [...new Set(this.categories.map(x=>x.side).filter(Boolean))]; }
   get readinessLevels(): string[] { return [...new Set(this.categories.map(x=>x.readiness).filter(Boolean))]; }
-  get filteredCategories(): UnitCategory[] { const q=this.search.toLowerCase().trim(); return this.categories.filter(x=>(!this.sideFilter||x.side===this.sideFilter)&&(!this.readinessFilter||x.readiness===this.readinessFilter)&&(!q||[x.category,x.description,x.trainingLevel].some(v=>v.toLowerCase().includes(q)))); }
+  get filteredCategories(): UnitCategory[] { const q=this.search.toLowerCase().trim(); return this.categories.filter((x,index)=>matchesSheetColumnFilters(categoriesSheet as unknown[][],index,this.columnFilters)&&(!this.sideFilter||x.side===this.sideFilter)&&(!this.readinessFilter||x.readiness===this.readinessFilter)&&(!q||[x.category,x.description,x.trainingLevel].some(v=>v.toLowerCase().includes(q)))); }
 }

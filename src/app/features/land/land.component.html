@@ -9,12 +9,6 @@
       <h1 class="page-title text-uppercase">Maneuver Force & Ordnance Registry</h1>
     </div>
 
-    <!-- Loading State -->
-    <div *ngIf="loading" class="loading-state glass">
-      <div class="loading-spinner"></div>
-      <p class="loading-text font-mono text-uppercase">Loading Excel data...</p>
-    </div>
-
     <!-- Error State -->
     <div *ngIf="error" class="error-state glass">
       <div class="error-icon">⚠</div>
@@ -73,6 +67,9 @@
             </div>
           </div>
 
+          <!-- Legacy hand-picked controls retained in source for reference but
+               never instantiated. Complete cached column filters follow. -->
+          <ng-container *ngIf="false">
           <!-- Dynamic Filters based on subcategory -->
           <div class="console-item filter-box" *ngIf="activeSubcategory() === 'land-units'">
             <label class="console-lbl font-mono text-uppercase">Side</label>
@@ -364,7 +361,19 @@
             <label class="console-lbl font-mono text-uppercase">Designation</label>
             <input type="text" class="console-input font-mono" [ngModel]="vehicleDesignationsDesignationSearch()" (ngModelChange)="vehicleDesignationsDesignationSearch.set($event)" placeholder="Search...">
           </div>
+          </ng-container>
 
+          <!-- Complete Excel column subcategories for the active sheet -->
+          <div class="console-item filter-box column-filter"
+               *ngFor="let column of activeColumnDefinitions()">
+            <label class="console-lbl font-mono text-uppercase">{{ column.label }}</label>
+            <select class="console-select font-mono"
+                    [ngModel]="getColumnFilter(column.key)"
+                    (ngModelChange)="setColumnFilter(column.key, $event)">
+              <option value="ALL">ALL {{ column.label | uppercase }}</option>
+              <option *ngFor="let option of getColumnOptions(column.key)" [value]="option">{{ option }}</option>
+            </select>
+          </div>
 
           <!-- Reset Button -->
           <div class="console-item reset-actions">

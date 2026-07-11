@@ -7,9 +7,14 @@
       <h1 class="page-title text-uppercase">Force Structure Comparison</h1>
     </div>
 
-    <div *ngIf="loading" class="loading-state glass">
-      <div class="loading-spinner"></div>
-      <p class="loading-text font-mono text-uppercase">Loading comparison data...</p>
+    <div class="filter-deck" *ngIf="!loading && !error">
+      <div class="filter-control" *ngFor="let filter of sheetFilters">
+        <label>{{filter.label}}</label>
+        <select [ngModel]="columnFilters[filter.index] || ''" (ngModelChange)="columnFilters[filter.index] = $event">
+          <option value="">All {{filter.label}}</option>
+          <option *ngFor="let value of filter.options" [value]="value">{{value}}</option>
+        </select>
+      </div>
     </div>
 
     <div *ngIf="error" class="error-state glass">
@@ -20,12 +25,12 @@
 
     <div class="comparison-content" *ngIf="!loading && !error">
       <div class="results-telemetry font-mono text-uppercase">
-        <span>Comparisons Found: {{ comparisons.length }}</span>
+        <span>Comparisons Found: {{ filteredComparisons.length }}</span>
         <span>Status: DATA INTEGRITY SECURE</span>
       </div>
 
       <div class="data-grid">
-        <div class="dossier-card glass" *ngFor="let comparison of comparisons">
+        <div class="dossier-card glass" *ngFor="let comparison of filteredComparisons">
           <div class="card-borders">
             <span class="bracket top-left">[</span>
             <span class="bracket top-right">]</span>

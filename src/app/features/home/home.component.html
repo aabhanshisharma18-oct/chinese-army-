@@ -1,98 +1,24 @@
-<div class="cinematic-container">
-  <!-- Grid & Scanline Tactical Overlay -->
-  <div class="tactical-grid"></div>
-  <div class="scanlines"></div>
+<section class="dashboard-page">
+  <div class="dashboard-topbar">
+    <div class="section-name"><strong>PLA</strong> <span>Ground Force</span></div>
+    <div class="section-state">Select a category</div>
+    <div class="live-state"><span>Chinese Army · Ground Force Intelligence · 2026</span><i></i></div>
+  </div>
 
-  <div class="content-wrapper">
-    <!-- Header Telemetry -->
-    <div class="top-telemetry font-mono text-uppercase">
-      <div>SECURE COMPASS: NE 45.12 // SHIELD STATUS: ACTIVE</div>
-      <div>CLASSIFICATION: SECRET // LEVEL-4 CLASSIFIED ACCESS ONLY</div>
-    </div>
+  <div class="dashboard-content">
+    <header class="dashboard-hero">
+      <p>DEFENCE RESEARCH & DEVELOPMENT ORGANISATION</p>
+      <h1>Chinese Army <span>Intelligence System</span></h1>
+      <div class="instruction">SELECT A CATEGORY FROM THE LEFT PANEL OR DASHBOARD TO BEGIN</div>
+    </header>
 
-    <!-- Main Command HUD -->
-    <div class="hud-frame glass">
-      <div class="hud-corners">
-        <span class="corner top-left"></span>
-        <span class="corner top-right"></span>
-        <span class="corner bottom-left"></span>
-        <span class="corner bottom-right"></span>
-      </div>
-
-      <div class="hud-header">
-        <span class="system-tag text-uppercase font-mono">PLA OPERATIONAL COMMAND ATLAS</span>
-        <h1 class="main-title">GROUND FORCE INTELLIGENCE MATRIX</h1>
-        <div class="system-sub font-mono">DECRYPTION ENGINE: SECTOR-G9 // INTEL REPORT DIRECTIVE 2026</div>
-      </div>
-
-      <div class="hud-body">
-        <!-- Interactive Radar Scanner -->
-        <div class="radar-container">
-          <svg class="radar-svg" viewBox="0 0 200 200">
-            <!-- Concentric Grid Circles -->
-            <circle cx="100" cy="100" r="90" class="radar-grid" />
-            <circle cx="100" cy="100" r="60" class="radar-grid" />
-            <circle cx="100" cy="100" r="30" class="radar-grid" />
-            
-            <!-- Crosshairs -->
-            <line x1="10" y1="100" x2="190" y2="100" class="radar-grid" />
-            <line x1="100" y1="10" x2="100" y2="190" class="radar-grid" />
-            
-            <!-- Sweeper Line -->
-            <line x1="100" y1="100" x2="100" y2="10" class="radar-sweep" />
-
-            <!-- Radar Blips -->
-            <g class="radar-blip blip-1">
-              <circle cx="140" cy="60" r="3" />
-              <circle cx="140" cy="60" r="7" class="blip-ping" />
-            </g>
-            <g class="radar-blip blip-2">
-              <circle cx="70" cy="130" r="3" />
-              <circle cx="70" cy="130" r="7" class="blip-ping" />
-            </g>
-          </svg>
-          <div class="radar-coords font-mono">GRID: 31.23° N // 121.47° E</div>
-        </div>
-
-        <!-- Terminal Logs Console -->
-        <div class="console-logs font-mono">
-          <div class="console-header text-uppercase">
-            <span>Terminal Feed // CMC Connection</span>
-            <span class="console-status" [class.ready]="decrypted()">
-              {{ decrypted() ? 'DECRYPTED' : 'LOADING' }}
-            </span>
-          </div>
-          <div class="log-lines">
-            <div *ngFor="let line of terminalLines()" class="log-line">
-              <span class="chevron">></span> {{ line }}
-            </div>
-            <div *ngIf="!decrypted()" class="cursor-line">
-              <span class="chevron">></span><span class="typing-cursor">█</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Action Footer -->
-      <div class="hud-footer">
-        <button 
-          class="btn btn-enter" 
-          [class.active]="decrypted()"
-          (click)="decrypted() ? enterWorkspace() : null"
-        >
-          <span class="btn-bracket-left">[</span>
-          <span class="btn-text">
-            {{ decrypted() ? 'ACCESS INTELLIGENCE WORKSPACE' : 'DECRYPTING INTERFACE...' }}
-          </span>
-          <span class="btn-bracket-right">]</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Bottom Telemetry Info -->
-    <div class="bottom-telemetry font-mono text-uppercase">
-      <div>DECRYPTION FEED: STABLE</div>
-      <div>SYS ECHELON: PLAGF // OPERATIONAL INTEL V4.0.2</div>
+    <div class="module-grid">
+      <a *ngFor="let module of modules" [routerLink]="module.route" class="module-card" [class]="'module-card ' + module.tone">
+        <div class="module-meta"><span>{{module.index}} / {{module.title}}</span><b>{{module.count}}</b></div>
+        <h2>{{module.title}}</h2>
+        <p>{{module.description}}</p>
+        <span class="module-arrow">Open intelligence module →</span>
+      </a>
     </div>
   </div>
-</div>
+</section>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ExcelDataService } from '../../services/excel-data.service';
+import defenceSheet from '../../../assets/data/raw/17_Air_Defence_Detailed.json';
+import { buildSheetColumnFilters, matchesSheetColumnFilters } from '../../shared/utils/sheet-column-filters';
 
 interface AirDefenceDetailed {
   side: string;
@@ -35,32 +36,22 @@ interface AirDefenceDetailed {
 })
 export class AirDefenceDetailedComponent implements OnInit {
   defences: AirDefenceDetailed[] = [];
-  loading = true;
+  loading = false;
   error: string | null = null;
   typeFilter = '';
   statusFilter = '';
   search = '';
-
-  constructor(private excelDataService: ExcelDataService) {}
+  readonly sheetFilters = buildSheetColumnFilters(defenceSheet as unknown[][]);
+  columnFilters: Record<number, string> = {};
 
   ngOnInit(): void {
     this.loadData();
   }
 
   loadData(): void {
-    this.loading = true;
+    this.loading = false;
     this.error = null;
-
-    this.excelDataService.getSheet('assets/data/raw/17_Air_Defence_Detailed.json').subscribe({
-      next: (data: unknown) => {
-        this.defences = this.parseDefences(data);
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = `Failed to load air defence detailed data: ${err.message}`;
-        this.loading = false;
-      }
-    });
+    this.defences = this.parseDefences(defenceSheet);
   }
 
   private parseDefences(data: unknown): AirDefenceDetailed[] {
@@ -114,5 +105,5 @@ export class AirDefenceDetailedComponent implements OnInit {
   }
   get types(): string[] { return [...new Set(this.defences.map(x=>x.typeCategory).filter(Boolean))]; }
   get statuses(): string[] { return [...new Set(this.defences.map(x=>x.status).filter(Boolean))]; }
-  get filteredDefences(): AirDefenceDetailed[] { const q=this.search.toLowerCase().trim(); return this.defences.filter(x=>(!this.typeFilter||x.typeCategory===this.typeFilter)&&(!this.statusFilter||x.status===this.statusFilter)&&(!q||[x.system,x.radar,x.exportName].some(v=>v.toLowerCase().includes(q)))); }
+  get filteredDefences(): AirDefenceDetailed[] { const q=this.search.toLowerCase().trim(); return this.defences.filter((x,index)=>matchesSheetColumnFilters(defenceSheet as unknown[][],index,this.columnFilters)&&(!this.typeFilter||x.typeCategory===this.typeFilter)&&(!this.statusFilter||x.status===this.statusFilter)&&(!q||[x.system,x.radar,x.exportName].some(v=>v.toLowerCase().includes(q)))); }
 }

@@ -3,6 +3,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ExcelDataService } from '../../services/excel-data.service';
 import { MetadataService, FilterColumn } from '../../services/metadata.service';
+import landUnitsSheet from '../../../assets/data/raw/1_Land_Units.json';
+import armTypesSheet from '../../../assets/data/raw/2_Arm_Types.json';
+import weaponCategoriesSheet from '../../../assets/data/raw/3_Weapon_Categories.json';
+import weaponSensorsSheet from '../../../assets/data/raw/4_Weapon_Sensor.json';
+import landUnitResourcesSheet from '../../../assets/data/raw/5_Land_Unit_Resources.json';
+import vehicleSpeedsSheet from '../../../assets/data/raw/6_Vehicle_Speeds.json';
+import frontageDepthSheet from '../../../assets/data/raw/7_Frontage_Depth.json';
+import forcePotentialSheet from '../../../assets/data/raw/8_Force_Potential.json';
+import vehicleDesignationsSheet from '../../../assets/data/raw/9_Vehicle_Designations.json';
 
 interface LandUnit {
   side: string;
@@ -136,6 +145,13 @@ interface VehicleDesignation {
 type SubcategoryType = 'land-units' | 'arm-type' | 'weapon-category' | 'weapon-sensor' | 'land-unit-resources';
 type ResourceSubcategoryType = 'resources-main' | 'vehicle-speeds' | 'frontage-depth' | 'force-potential' | 'vehicle-designations';
 type DrillDownLevel = 'categories' | 'subcategory' | 'results';
+type LandDatasetKey = 'land-units' | 'arm-type' | 'weapon-category' | 'weapon-sensor' |
+  'resources-main' | 'vehicle-speeds' | 'frontage-depth' | 'force-potential' | 'vehicle-designations';
+
+interface ColumnFilterDefinition {
+  key: string;
+  label: string;
+}
 
 @Component({
   selector: 'app-land',
@@ -227,11 +243,76 @@ export class LandComponent implements OnInit {
   vehicleSpeedsSideFilter = signal<string>('ALL');
   
   // Loading states
-  loading = true;
+  loading = false;
   error: string | null = null;
 
   // Dynamic filter options
   filterOptions: Record<string, string[]> = {};
+  columnFilters = signal<Record<string, string>>({});
+
+  readonly columnDefinitions: Record<LandDatasetKey, [string, string][]> = {
+    'land-units': [
+      ['side', 'Side'], ['formationUnitName', 'Formation Unit Name'], ['formationUnitType', 'Formation Unit Type'],
+      ['formationUnitParentName', 'Parent Formation'], ['standardUnitFormation', 'Standard Unit Formation'],
+      ['unitPotentialTroops', 'Unit Potential / Troops'], ['locationName', 'Location Name'],
+      ['latitude', 'Latitude'], ['longitude', 'Longitude']
+    ],
+    'arm-type': [
+      ['number', 'Number'], ['combatArmTypeChinese', 'Combat Arm Type (Chinese)'],
+      ['combatArmTypeEnglish', 'Combat Arm Type (English)'], ['primaryRole', 'Primary Role'],
+      ['classificationMobility', 'Classification Mobility'], ['classificationCombatRole', 'Classification Combat Role'],
+      ['trainingCategory', 'Training Category'], ['indianArmyEquivalent', 'Indian Army Equivalent'],
+      ['terrainSpecialisation', 'Terrain Specialisation']
+    ],
+    'weapon-category': [
+      ['side', 'Side'], ['armType', 'Arm Type'], ['weaponCategory', 'Weapon Category'], ['subCategory', 'Sub Category'],
+      ['weaponName', 'Weapon Name'], ['designation', 'Designation'], ['caliber', 'Caliber'], ['range', 'Range'],
+      ['typeGuidance', 'Type / Guidance'], ['roleCapability', 'Role / Capability'], ['weight', 'Weight'],
+      ['mainGunNotes', 'Main Gun / Notes']
+    ],
+    'weapon-sensor': [
+      ['side', 'Side'], ['type', 'Type'], ['weaponSensorName', 'Weapon / Sensor Name'], ['subType', 'Sub Type'],
+      ['detectionRange', 'Detection Range'], ['engagementRange', 'Engagement Range'],
+      ['altitudeDepth', 'Altitude / Depth'], ['guidanceSensor', 'Guidance / Sensor'],
+      ['latLocation', 'Latitude / Location'], ['nameLocation', 'Location Name'], ['oli', 'OLI']
+    ],
+    'resources-main': [
+      ['side', 'Side'], ['brigadeUnitType', 'Brigade Unit Type'], ['personnel', 'Personnel'], ['tanks', 'Tanks'],
+      ['ifvsApcs', 'IFVs / APCs'], ['sphArtillery', 'SPH / Artillery'], ['mlrs', 'MLRS'],
+      ['aaSamSystems', 'AA / SAM Systems'], ['helicopters', 'Helicopters'], ['atgms', 'ATGMs'],
+      ['trucksLogistics', 'Trucks / Logistics'], ['detectionRange', 'Detection Range'],
+      ['engagementRange', 'Engagement Range'], ['speedDay', 'Speed Day'], ['speedNight', 'Speed Night'],
+      ['frontageDefensive', 'Frontage Defensive'], ['frontageOffensive', 'Frontage Offensive'],
+      ['depth', 'Depth'], ['aVehicle', 'A Vehicle'], ['bVehicle', 'B Vehicle'], ['forcePotential', 'Force Potential']
+    ],
+    'vehicle-speeds': [
+      ['side', 'Side'], ['vehicleCategory', 'Vehicle Category'], ['vehicleSystem', 'Vehicle System'],
+      ['designation', 'Designation'], ['roadSpeedDay', 'Road Speed Day'], ['roadSpeedNight', 'Road Speed Night'],
+      ['crossCountryDay', 'Cross Country Day'], ['crossCountryNight', 'Cross Country Night'],
+      ['amphibiousWaterSpeed', 'Amphibious / Water Speed'], ['operationalRange', 'Operational Range'], ['notes', 'Notes']
+    ],
+    'frontage-depth': [
+      ['side', 'Side'], ['unitLevel', 'Unit Level'], ['operationType', 'Operation Type'], ['zone', 'Zone'],
+      ['frontage', 'Frontage'], ['depth', 'Depth'], ['brigadeDensity', 'Brigade Density'], ['keyWeaponsNotes', 'Key Weapons / Notes']
+    ],
+    'force-potential': [
+      ['side', 'Side'], ['category', 'Category'], ['metricSystem', 'Metric / System'], ['value', 'Value'],
+      ['globalRank', 'Global Rank'], ['comparisonNotes', 'Comparison / Notes']
+    ],
+    'vehicle-designations': [
+      ['side', 'Side'], ['family', 'Family'], ['designation', 'Designation'], ['fullChineseName', 'Full Chinese Name'],
+      ['aOrBType', 'A / B Type'], ['vehicleType', 'Vehicle Type'], ['role', 'Role'], ['weight', 'Weight'],
+      ['mainArmament', 'Main Armament'], ['roadSpeed', 'Road Speed'], ['range', 'Range'],
+      ['amphibious', 'Amphibious'], ['crew', 'Crew'], ['troops', 'Troops'], ['notes', 'Notes']
+    ]
+  };
+  readonly columnDefinitionViews: Record<LandDatasetKey, ColumnFilterDefinition[]> = Object.fromEntries(
+    Object.entries(this.columnDefinitions).map(([dataset, columns]) => [
+      dataset,
+      columns.map(([key, label]) => ({ key, label }))
+    ])
+  ) as Record<LandDatasetKey, ColumnFilterDefinition[]>;
+  private columnOptionCache: Record<string, string[]> = {};
 
   constructor(
     private excelDataService: ExcelDataService,
@@ -240,67 +321,28 @@ export class LandComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
-    this.loadFilterOptions();
   }
 
   loadData(): void {
-    this.loading = true;
+    // LAND is deliberately compiled with the application. It never waits for
+    // PostgreSQL, a proxy, internet access, or nine separate HTTP requests.
+    this.loading = false;
     this.error = null;
-    let loadedCount = 0;
-    const totalSheets = 9;
-
-    const checkComplete = () => {
-      loadedCount++;
-      if (loadedCount >= totalSheets) {
-        this.loading = false;
-      }
-    };
-
-    // Load all sheets in parallel
-    this.excelDataService.getSheet('assets/data/raw/1_Land_Units.json').subscribe({
-      next: (data: unknown) => { this.landUnits = this.parseLandUnits(data); checkComplete(); },
-      error: (err) => { console.error('Failed to load land units:', err); checkComplete(); }
-    });
-
-    this.excelDataService.getSheet('assets/data/raw/2_Arm_Types.json').subscribe({
-      next: (data: unknown) => { this.armTypes = this.parseArmTypes(data); checkComplete(); },
-      error: (err) => { console.error('Failed to load arm types:', err); checkComplete(); }
-    });
-
-    this.excelDataService.getSheet('assets/data/raw/3_Weapon_Categories.json').subscribe({
-      next: (data: unknown) => { this.weaponCategories = this.parseWeaponCategories(data); checkComplete(); },
-      error: (err) => { console.error('Failed to load weapon categories:', err); checkComplete(); }
-    });
-
-    this.excelDataService.getSheet('assets/data/raw/4_Weapon_Sensor.json').subscribe({
-      next: (data: unknown) => { this.weaponSensors = this.parseWeaponSensors(data); checkComplete(); },
-      error: (err) => { console.error('Failed to load weapon sensors:', err); checkComplete(); }
-    });
-
-    this.excelDataService.getSheet('assets/data/raw/5_Land_Unit_Resources.json').subscribe({
-      next: (data: unknown) => { this.landUnitResources = this.parseLandUnitResources(data); checkComplete(); },
-      error: (err) => { console.error('Failed to load land unit resources:', err); checkComplete(); }
-    });
-
-    this.excelDataService.getSheet('assets/data/raw/6_Vehicle_Speeds.json').subscribe({
-      next: (data: unknown) => { this.vehicleSpeeds = this.parseVehicleSpeeds(data); checkComplete(); },
-      error: (err) => { console.error('Failed to load vehicle speeds:', err); checkComplete(); }
-    });
-
-    this.excelDataService.getSheet('assets/data/raw/7_Frontage_Depth.json').subscribe({
-      next: (data: unknown) => { this.frontageDepths = this.parseFrontageDepths(data); checkComplete(); },
-      error: (err) => { console.error('Failed to load frontage depths:', err); checkComplete(); }
-    });
-
-    this.excelDataService.getSheet('assets/data/raw/8_Force_Potential.json').subscribe({
-      next: (data: unknown) => { this.forcePotentials = this.parseForcePotentials(data); checkComplete(); },
-      error: (err) => { console.error('Failed to load force potentials:', err); checkComplete(); }
-    });
-
-    this.excelDataService.getSheet('assets/data/raw/9_Vehicle_Designations.json').subscribe({
-      next: (data: unknown) => { this.vehicleDesignations = this.parseVehicleDesignations(data); checkComplete(); },
-      error: (err) => { console.error('Failed to load vehicle designations:', err); checkComplete(); }
-    });
+    try {
+      this.landUnits = this.parseLandUnits(landUnitsSheet);
+      this.armTypes = this.parseArmTypes(armTypesSheet);
+      this.weaponCategories = this.parseWeaponCategories(weaponCategoriesSheet);
+      this.weaponSensors = this.parseWeaponSensors(weaponSensorsSheet);
+      this.landUnitResources = this.parseLandUnitResources(landUnitResourcesSheet);
+      this.vehicleSpeeds = this.parseVehicleSpeeds(vehicleSpeedsSheet);
+      this.frontageDepths = this.parseFrontageDepths(frontageDepthSheet);
+      this.forcePotentials = this.parseForcePotentials(forcePotentialSheet);
+      this.vehicleDesignations = this.parseVehicleDesignations(vehicleDesignationsSheet);
+      this.rebuildColumnOptionCache();
+    } catch (error) {
+      console.error('Bundled LAND data could not be parsed:', error);
+      this.error = 'Bundled LAND data is invalid. Rebuild the application from the complete project folder.';
+    }
   }
 
   loadFilterOptions(): void {
@@ -647,6 +689,7 @@ export class LandComponent implements OnInit {
   }
 
   resetFilters(): void {
+    this.columnFilters.set({});
     this.searchQuery.set('');
     this.sideFilter.set('ALL');
     this.unitTypeFilter.set('ALL');
@@ -696,6 +739,68 @@ export class LandComponent implements OnInit {
 
   setResourceSubcategory(subcategory: ResourceSubcategoryType): void {
     this.activeResourceSubcategory.set(subcategory);
+    this.resetFilters();
+  }
+
+  activeDatasetKey(): LandDatasetKey {
+    if (this.activeSubcategory() === 'land-unit-resources') {
+      return this.activeResourceSubcategory();
+    }
+    return this.activeSubcategory() as Exclude<SubcategoryType, 'land-unit-resources'>;
+  }
+
+  activeColumnDefinitions(): ColumnFilterDefinition[] {
+    return this.columnDefinitionViews[this.activeDatasetKey()];
+  }
+
+  getColumnFilter(columnKey: string): string {
+    return this.columnFilters()[`${this.activeDatasetKey()}:${columnKey}`] || 'ALL';
+  }
+
+  setColumnFilter(columnKey: string, value: string): void {
+    const filterKey = `${this.activeDatasetKey()}:${columnKey}`;
+    this.columnFilters.update(filters => ({ ...filters, [filterKey]: value }));
+  }
+
+  getColumnOptions(columnKey: string): string[] {
+    return this.columnOptionCache[`${this.activeDatasetKey()}:${columnKey}`] || [];
+  }
+
+  private rebuildColumnOptionCache(): void {
+    const cache: Record<string, string[]> = {};
+    (Object.keys(this.columnDefinitions) as LandDatasetKey[]).forEach(dataset => {
+      const rows = this.rawRowsForDataset(dataset);
+      this.columnDefinitions[dataset].forEach(([columnKey]) => {
+        cache[`${dataset}:${columnKey}`] = [...new Set(rows
+          .map(row => String(row[columnKey] ?? '').trim())
+          .filter(value => value.length > 0))]
+          .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+      });
+    });
+    this.columnOptionCache = cache;
+  }
+
+  private rawRowsForDataset(dataset: LandDatasetKey): Record<string, unknown>[] {
+    switch (dataset) {
+      case 'land-units': return this.landUnits as unknown as Record<string, unknown>[];
+      case 'arm-type': return this.armTypes as unknown as Record<string, unknown>[];
+      case 'weapon-category': return this.weaponCategories as unknown as Record<string, unknown>[];
+      case 'weapon-sensor': return this.weaponSensors as unknown as Record<string, unknown>[];
+      case 'resources-main': return this.landUnitResources as unknown as Record<string, unknown>[];
+      case 'vehicle-speeds': return this.vehicleSpeeds as unknown as Record<string, unknown>[];
+      case 'frontage-depth': return this.frontageDepths as unknown as Record<string, unknown>[];
+      case 'force-potential': return this.forcePotentials as unknown as Record<string, unknown>[];
+      case 'vehicle-designations': return this.vehicleDesignations as unknown as Record<string, unknown>[];
+    }
+  }
+
+  private applyColumnFilters<T>(dataset: LandDatasetKey, rows: T[]): T[] {
+    const filters = this.columnFilters();
+    const definitions = this.columnDefinitions[dataset];
+    return rows.filter(row => definitions.every(([columnKey]) => {
+      const selected = filters[`${dataset}:${columnKey}`] || 'ALL';
+      return selected === 'ALL' || String((row as Record<string, unknown>)[columnKey] ?? '').trim() === selected;
+    }));
   }
 
   // Computed properties for filtered results
@@ -1006,18 +1111,18 @@ export class LandComponent implements OnInit {
   currentData = computed(() => {
     const subcategory = this.activeSubcategory();
     switch (subcategory) {
-      case 'land-units': return this.filteredLandUnits();
-      case 'arm-type': return this.filteredArmTypes();
-      case 'weapon-category': return this.filteredWeaponCategories();
-      case 'weapon-sensor': return this.filteredWeaponSensors();
+      case 'land-units': return this.applyColumnFilters('land-units', this.filteredLandUnits());
+      case 'arm-type': return this.applyColumnFilters('arm-type', this.filteredArmTypes());
+      case 'weapon-category': return this.applyColumnFilters('weapon-category', this.filteredWeaponCategories());
+      case 'weapon-sensor': return this.applyColumnFilters('weapon-sensor', this.filteredWeaponSensors());
       case 'land-unit-resources':
         const resourceSub = this.activeResourceSubcategory();
         switch (resourceSub) {
-          case 'resources-main': return this.filteredLandUnitResources();
-          case 'vehicle-speeds': return this.filteredVehicleSpeeds();
-          case 'frontage-depth': return this.filteredFrontageDepths();
-          case 'force-potential': return this.filteredForcePotentials();
-          case 'vehicle-designations': return this.filteredVehicleDesignations();
+          case 'resources-main': return this.applyColumnFilters('resources-main', this.filteredLandUnitResources());
+          case 'vehicle-speeds': return this.applyColumnFilters('vehicle-speeds', this.filteredVehicleSpeeds());
+          case 'frontage-depth': return this.applyColumnFilters('frontage-depth', this.filteredFrontageDepths());
+          case 'force-potential': return this.applyColumnFilters('force-potential', this.filteredForcePotentials());
+          case 'vehicle-designations': return this.applyColumnFilters('vehicle-designations', this.filteredVehicleDesignations());
           default: return [];
         }
       default: return [];
@@ -1260,11 +1365,11 @@ export class LandComponent implements OnInit {
 
   // Typed getters for each subcategory
   get landUnitsData(): LandUnit[] {
-    return this.filteredLandUnits();
+    return this.applyColumnFilters('land-units', this.filteredLandUnits());
   }
 
   get armTypesData(): ArmType[] {
-    return this.filteredArmTypes();
+    return this.applyColumnFilters('arm-type', this.filteredArmTypes());
   }
 
   // Add side property to ArmType for display
@@ -1273,31 +1378,31 @@ export class LandComponent implements OnInit {
   }
 
   get weaponCategoriesData(): WeaponCategory[] {
-    return this.filteredWeaponCategories();
+    return this.applyColumnFilters('weapon-category', this.filteredWeaponCategories());
   }
 
   get weaponSensorsData(): WeaponSensor[] {
-    return this.filteredWeaponSensors();
+    return this.applyColumnFilters('weapon-sensor', this.filteredWeaponSensors());
   }
 
   get landUnitResourcesData(): LandUnitResource[] {
-    return this.filteredLandUnitResources();
+    return this.applyColumnFilters('resources-main', this.filteredLandUnitResources());
   }
 
   get vehicleSpeedsData(): VehicleSpeed[] {
-    return this.filteredVehicleSpeeds();
+    return this.applyColumnFilters('vehicle-speeds', this.filteredVehicleSpeeds());
   }
 
   get frontageDepthsData(): FrontageDepth[] {
-    return this.filteredFrontageDepths();
+    return this.applyColumnFilters('frontage-depth', this.filteredFrontageDepths());
   }
 
   get forcePotentialsData(): ForcePotential[] {
-    return this.filteredForcePotentials();
+    return this.applyColumnFilters('force-potential', this.filteredForcePotentials());
   }
 
   get vehicleDesignationsData(): VehicleDesignation[] {
-    return this.filteredVehicleDesignations();
+    return this.applyColumnFilters('vehicle-designations', this.filteredVehicleDesignations());
   }
 
   retry(): void {

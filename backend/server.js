@@ -77,6 +77,18 @@ app.use('/api/aviation-detailed', aviationDetailedRoutes);
 app.use('/api/air-defence-detailed', airDefenceDetailedRoutes);
 app.use('/api/metadata', metadataRoutes);
 
+// Serve the prebuilt Angular application for portable/offline deployments.
+// API routes above remain available when PostgreSQL is configured, while the
+// frontend itself uses its bundled data and therefore works without it.
+const FRONTEND_DIST = path.join(__dirname, '../dist/pla-command-atlas');
+if (fs.existsSync(FRONTEND_DIST)) {
+  app.use(express.static(FRONTEND_DIST));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api/')) return next();
+    res.sendFile(path.join(FRONTEND_DIST, 'index.html'));
+  });
+}
+
 // Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -84,7 +96,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, '127.0.0.1', () => {
   console.log(`PLA Command Atlas API server running on port ${PORT}`);
   console.log(`Health check: http://localhost:${PORT}/api/health`);
 });

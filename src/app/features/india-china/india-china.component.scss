@@ -205,3 +205,18 @@
     font-weight: 700;
   }
 }
+.filter-deck {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid rgba(196, 226, 242, 0.22);
+  border-radius: 16px;
+  background: rgba(10, 32, 44, 0.48);
+  backdrop-filter: blur(18px);
+}
+
+.filter-control { display: flex; flex-direction: column; gap: 0.45rem; }
+.filter-control label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); }
+.filter-control select { min-height: 40px; padding: 0.55rem 0.7rem; border: 1px solid rgba(196, 226, 242, 0.22); border-radius: 8px; background: rgba(7, 25, 35, 0.78); color: var(--color-text-primary); }

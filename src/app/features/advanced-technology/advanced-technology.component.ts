@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ExcelDataService } from '../../services/excel-data.service';
+import technologySheet from '../../../assets/data/raw/14_Advanced_Technology.json';
+import { buildSheetColumnFilters, matchesSheetColumnFilters } from '../../shared/utils/sheet-column-filters';
 
 interface AdvancedTechnology {
   side: string;
@@ -23,32 +24,22 @@ interface AdvancedTechnology {
 })
 export class AdvancedTechnologyComponent implements OnInit {
   technologies: AdvancedTechnology[] = [];
-  loading = true;
+  loading = false;
   error: string | null = null;
   domainFilter = '';
   statusFilter = '';
   search = '';
-
-  constructor(private excelDataService: ExcelDataService) {}
+  readonly sheetFilters = buildSheetColumnFilters(technologySheet as unknown[][]);
+  columnFilters: Record<number, string> = {};
 
   ngOnInit(): void {
     this.loadData();
   }
 
   loadData(): void {
-    this.loading = true;
+    this.loading = false;
     this.error = null;
-
-    this.excelDataService.getSheet('assets/data/raw/14_Advanced_Technology.json').subscribe({
-      next: (data: unknown) => {
-        this.technologies = this.parseTechnologies(data);
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = `Failed to load advanced technology data: ${err.message}`;
-        this.loading = false;
-      }
-    });
+    this.technologies = this.parseTechnologies(technologySheet);
   }
 
   private parseTechnologies(data: unknown): AdvancedTechnology[] {
@@ -90,5 +81,5 @@ export class AdvancedTechnologyComponent implements OnInit {
   }
   get domains(): string[] { return [...new Set(this.technologies.map(x => x.technologyDomain).filter(Boolean))]; }
   get statuses(): string[] { return [...new Set(this.technologies.map(x => x.status2025).filter(Boolean))]; }
-  get filteredTechnologies(): AdvancedTechnology[] { const q=this.search.toLowerCase().trim(); return this.technologies.filter(x=>(!this.domainFilter||x.technologyDomain===this.domainFilter)&&(!this.statusFilter||x.status2025===this.statusFilter)&&(!q||[x.systemName,x.description,x.rangeCapability].some(v=>v.toLowerCase().includes(q)))); }
+  get filteredTechnologies(): AdvancedTechnology[] { const q=this.search.toLowerCase().trim(); return this.technologies.filter((x,index)=>matchesSheetColumnFilters(technologySheet as unknown[][],index,this.columnFilters)&&(!this.domainFilter||x.technologyDomain===this.domainFilter)&&(!this.statusFilter||x.status2025===this.statusFilter)&&(!q||[x.systemName,x.description,x.rangeCapability].some(v=>v.toLowerCase().includes(q)))); }
 }

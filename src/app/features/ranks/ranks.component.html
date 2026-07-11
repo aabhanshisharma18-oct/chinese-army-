@@ -13,15 +13,7 @@
     </div>
 
     <div class="filter-deck" *ngIf="!loading && !error">
-      <div class="filter-control"><label>Side</label><select [(ngModel)]="sideFilter"><option value="">All sides</option><option *ngFor="let value of sides" [value]="value">{{value}}</option></select></div>
-      <div class="filter-control"><label>Rank category</label><select [(ngModel)]="categoryFilter"><option value="">All categories</option><option *ngFor="let value of categories" [value]="value">{{value}}</option></select></div>
-      <div class="filter-control"><label>Search rank</label><input [(ngModel)]="search" placeholder="English, Chinese, pinyin or NATO"></div>
-    </div>
-
-    <!-- Loading State -->
-    <div *ngIf="loading" class="loading-state glass">
-      <div class="loading-spinner"></div>
-      <p class="loading-text font-mono text-uppercase">Loading rank data...</p>
+      <div class="filter-control" *ngFor="let filter of sheetFilters"><label>{{filter.label}}</label><select [ngModel]="columnFilters[filter.index] || ''" (ngModelChange)="columnFilters[filter.index] = $event"><option value="">All {{filter.label}}</option><option *ngFor="let value of filter.options" [value]="value">{{value}}</option></select></div>
     </div>
 
     <!-- Error State -->

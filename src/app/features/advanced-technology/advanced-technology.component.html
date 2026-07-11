@@ -7,14 +7,7 @@
       <h1 class="page-title text-uppercase">Strategic Capabilities & Systems</h1>
     </div>
     <div class="filter-deck" *ngIf="!loading && !error">
-      <div class="filter-control"><label>Technology domain</label><select [(ngModel)]="domainFilter"><option value="">All domains</option><option *ngFor="let value of domains" [value]="value">{{value}}</option></select></div>
-      <div class="filter-control"><label>Status</label><select [(ngModel)]="statusFilter"><option value="">All statuses</option><option *ngFor="let value of statuses" [value]="value">{{value}}</option></select></div>
-      <div class="filter-control"><label>Search system</label><input [(ngModel)]="search" placeholder="System or capability"></div>
-    </div>
-
-    <div *ngIf="loading" class="loading-state glass">
-      <div class="loading-spinner"></div>
-      <p class="loading-text font-mono text-uppercase">Loading technology data...</p>
+      <div class="filter-control" *ngFor="let filter of sheetFilters"><label>{{filter.label}}</label><select [ngModel]="columnFilters[filter.index] || ''" (ngModelChange)="columnFilters[filter.index] = $event"><option value="">All {{filter.label}}</option><option *ngFor="let value of filter.options" [value]="value">{{value}}</option></select></div>
     </div>
 
     <div *ngIf="error" class="error-state glass">

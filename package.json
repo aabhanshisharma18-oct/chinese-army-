@@ -6,6 +6,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:offline": "ng build --configuration production",
+    "offline": "node backend/server.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "excel:import": "node scripts/excel-to-json.js"
