@@ -2,6 +2,12 @@
 
 A comprehensive Chinese Army / PLA details platform built with Angular 20+, providing theater command analysis, formation indexing, equipment mapping, and strategic force structure data.
 
+## Live Deployment
+
+Open the deployed application: **[PLA Command Atlas](https://pla-command-atlas.vercel.app/)**
+
+The project also includes an offline build and local launchers for environments without continuous internet access. See [OFFLINE_DEPLOYMENT.md](OFFLINE_DEPLOYMENT.md) for setup instructions.
+
 ## Features
 
 - **Theater Command Analysis**: Detailed profiles of all five PLA theater commands
