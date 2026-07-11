@@ -26,6 +26,10 @@ export const appRoutes: Routes = [
     loadComponent: () => import('./features/india-china/india-china.component').then(m => m.IndiaChinaComponent)
   },
   {
+    path: 'theater-capabilities',
+    loadComponent: () => import('./features/theater-capabilities/theater-capabilities.component').then(m => m.TheaterCapabilitiesComponent)
+  },
+  {
     path: 'unit-categories',
     loadComponent: () => import('./features/unit-categories/unit-categories.component').then(m => m.UnitCategoriesComponent)
   },

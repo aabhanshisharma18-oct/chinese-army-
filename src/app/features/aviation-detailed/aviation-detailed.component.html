@@ -6,6 +6,11 @@
       <div class="system-path text-uppercase">PLA COMMAND ATLAS // AVIATION DETAILED</div>
       <h1 class="page-title text-uppercase">Helicopter Fleet Specifications</h1>
     </div>
+    <div class="filter-deck" *ngIf="!loading && !error">
+      <div class="filter-control"><label>Type / role</label><select [(ngModel)]="roleFilter"><option value="">All roles</option><option *ngFor="let value of roles" [value]="value">{{value}}</option></select></div>
+      <div class="filter-control"><label>Status</label><select [(ngModel)]="statusFilter"><option value="">All statuses</option><option *ngFor="let value of statuses" [value]="value">{{value}}</option></select></div>
+      <div class="filter-control"><label>Search helicopter</label><input [(ngModel)]="search" placeholder="Model, variant or manufacturer"></div>
+    </div>
 
     <div *ngIf="loading" class="loading-state glass">
       <div class="loading-spinner"></div>
@@ -20,12 +25,12 @@
 
     <div class="aviation-content" *ngIf="!loading && !error">
       <div class="results-telemetry font-mono text-uppercase">
-        <span>Aircraft Found: {{ aviation.length }}</span>
+        <span>Aircraft Found: {{ filteredAviation.length }}</span>
         <span>Status: DATA INTEGRITY SECURE</span>
       </div>
 
       <div class="data-grid">
-        <div class="dossier-card glass" *ngFor="let heli of aviation">
+        <div class="dossier-card glass" *ngFor="let heli of filteredAviation">
           <div class="card-borders">
             <span class="bracket top-left">[</span>
             <span class="bracket top-right">]</span>

@@ -2,8 +2,12 @@
   display: block;
   width: 100%;
   min-height: 100vh;
-  background-color: var(--color-bg-primary);
+  background: transparent;
 }
+
+.main-content { min-height:100vh; margin-left:272px; }
+
+@media (max-width:900px) { .main-content { margin-left:0; } }
 
 /* Fixed hero spacer for scroll behavior */
 .hero-spacer {

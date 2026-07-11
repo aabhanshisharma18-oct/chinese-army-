@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ExcelDataService } from '../../services/excel-data.service';
 
 interface AdvancedTechnology {
@@ -16,7 +17,7 @@ interface AdvancedTechnology {
 @Component({
   selector: 'app-advanced-technology',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './advanced-technology.component.html',
   styleUrls: ['./advanced-technology.component.scss']
 })
@@ -24,6 +25,9 @@ export class AdvancedTechnologyComponent implements OnInit {
   technologies: AdvancedTechnology[] = [];
   loading = true;
   error: string | null = null;
+  domainFilter = '';
+  statusFilter = '';
+  search = '';
 
   constructor(private excelDataService: ExcelDataService) {}
 
@@ -84,4 +88,7 @@ export class AdvancedTechnologyComponent implements OnInit {
   retry(): void {
     this.loadData();
   }
+  get domains(): string[] { return [...new Set(this.technologies.map(x => x.technologyDomain).filter(Boolean))]; }
+  get statuses(): string[] { return [...new Set(this.technologies.map(x => x.status2025).filter(Boolean))]; }
+  get filteredTechnologies(): AdvancedTechnology[] { const q=this.search.toLowerCase().trim(); return this.technologies.filter(x=>(!this.domainFilter||x.technologyDomain===this.domainFilter)&&(!this.statusFilter||x.status2025===this.statusFilter)&&(!q||[x.systemName,x.description,x.rangeCapability].some(v=>v.toLowerCase().includes(q)))); }
 }

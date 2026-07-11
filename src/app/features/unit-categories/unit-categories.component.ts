@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ExcelDataService } from '../../services/excel-data.service';
 
 interface UnitCategory {
@@ -19,7 +20,7 @@ interface UnitCategory {
 @Component({
   selector: 'app-unit-categories',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './unit-categories.component.html',
   styleUrls: ['./unit-categories.component.scss']
 })
@@ -27,6 +28,9 @@ export class UnitCategoriesComponent implements OnInit {
   categories: UnitCategory[] = [];
   loading = true;
   error: string | null = null;
+  sideFilter = '';
+  readinessFilter = '';
+  search = '';
 
   constructor(private excelDataService: ExcelDataService) {}
 
@@ -90,4 +94,7 @@ export class UnitCategoriesComponent implements OnInit {
   retry(): void {
     this.loadData();
   }
+  get sides(): string[] { return [...new Set(this.categories.map(x=>x.side).filter(Boolean))]; }
+  get readinessLevels(): string[] { return [...new Set(this.categories.map(x=>x.readiness).filter(Boolean))]; }
+  get filteredCategories(): UnitCategory[] { const q=this.search.toLowerCase().trim(); return this.categories.filter(x=>(!this.sideFilter||x.side===this.sideFilter)&&(!this.readinessFilter||x.readiness===this.readinessFilter)&&(!q||[x.category,x.description,x.trainingLevel].some(v=>v.toLowerCase().includes(q)))); }
 }

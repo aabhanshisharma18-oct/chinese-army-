@@ -6,6 +6,11 @@
       <div class="system-path text-uppercase">PLA COMMAND ATLAS // UNIT CATEGORIES</div>
       <h1 class="page-title text-uppercase">Force Classification & Readiness</h1>
     </div>
+    <div class="filter-deck" *ngIf="!loading && !error">
+      <div class="filter-control"><label>Side</label><select [(ngModel)]="sideFilter"><option value="">All sides</option><option *ngFor="let value of sides" [value]="value">{{value}}</option></select></div>
+      <div class="filter-control"><label>Readiness</label><select [(ngModel)]="readinessFilter"><option value="">All readiness levels</option><option *ngFor="let value of readinessLevels" [value]="value">{{value}}</option></select></div>
+      <div class="filter-control"><label>Search category</label><input [(ngModel)]="search" placeholder="Category, description or training"></div>
+    </div>
 
     <div *ngIf="loading" class="loading-state glass">
       <div class="loading-spinner"></div>
@@ -20,12 +25,12 @@
 
     <div class="categories-content" *ngIf="!loading && !error">
       <div class="results-telemetry font-mono text-uppercase">
-        <span>Categories Found: {{ categories.length }}</span>
+        <span>Categories Found: {{ filteredCategories.length }}</span>
         <span>Status: DATA INTEGRITY SECURE</span>
       </div>
 
       <div class="data-grid">
-        <div class="dossier-card glass" *ngFor="let category of categories">
+        <div class="dossier-card glass" *ngFor="let category of filteredCategories">
           <div class="card-borders">
             <span class="bracket top-left">[</span>
             <span class="bracket top-right">]</span>

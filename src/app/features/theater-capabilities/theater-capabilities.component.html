@@ -1,0 +1,25 @@
+<div class="theater-capabilities-page">
+  <div class="container-fluid">
+    <div class="page-header"><div class="system-path">MILITARY REFERENCE // SHEET 12</div><h1 class="page-title">Theater Command Capabilities</h1></div>
+    <div class="filter-deck" *ngIf="!loading && !error">
+      <div class="filter-control"><label>Side</label><select [(ngModel)]="side"><option value="">All sides</option><option *ngFor="let item of sides" [value]="item">{{item}}</option></select></div>
+      <div class="filter-control"><label>Search command, focus or capability</label><input [(ngModel)]="query" placeholder="Search theater intelligence"></div>
+    </div>
+    <div *ngIf="loading" class="loading-state glass">Loading theater capabilities…</div>
+    <div *ngIf="error" class="error-state glass">{{error}}</div>
+    <div class="results-telemetry" *ngIf="!loading && !error">{{filtered.length}} commands · PostgreSQL/API dataset</div>
+    <div class="data-grid" *ngIf="!loading && !error">
+      <article class="dossier-card" *ngFor="let theater of filtered">
+        <div class="card-header"><span class="readiness-tag">{{theater.side}}</span><span class="record-id">{{theater.headquarters}}</span></div>
+        <h2 class="card-title">{{theater.command}}</h2>
+        <p class="focus">{{theater.focus}}</p>
+        <dl>
+          <div><dt>Group Armies</dt><dd>{{theater.groupArmies}}</dd></div>
+          <div><dt>Key Capabilities</dt><dd>{{theater.capabilities}}</dd></div>
+          <div><dt>Area of Responsibility</dt><dd>{{theater.responsibility}}</dd></div>
+          <div><dt>Coordinates</dt><dd>{{theater.latitude}} · {{theater.longitude}}</dd></div>
+        </dl>
+      </article>
+    </div>
+  </div>
+</div>

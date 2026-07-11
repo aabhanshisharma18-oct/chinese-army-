@@ -6,6 +6,11 @@
       <div class="system-path text-uppercase">PLA COMMAND ATLAS // ADVANCED TECHNOLOGY</div>
       <h1 class="page-title text-uppercase">Strategic Capabilities & Systems</h1>
     </div>
+    <div class="filter-deck" *ngIf="!loading && !error">
+      <div class="filter-control"><label>Technology domain</label><select [(ngModel)]="domainFilter"><option value="">All domains</option><option *ngFor="let value of domains" [value]="value">{{value}}</option></select></div>
+      <div class="filter-control"><label>Status</label><select [(ngModel)]="statusFilter"><option value="">All statuses</option><option *ngFor="let value of statuses" [value]="value">{{value}}</option></select></div>
+      <div class="filter-control"><label>Search system</label><input [(ngModel)]="search" placeholder="System or capability"></div>
+    </div>
 
     <div *ngIf="loading" class="loading-state glass">
       <div class="loading-spinner"></div>
@@ -20,12 +25,12 @@
 
     <div class="technology-content" *ngIf="!loading && !error">
       <div class="results-telemetry font-mono text-uppercase">
-        <span>Systems Found: {{ technologies.length }}</span>
+        <span>Systems Found: {{ filteredTechnologies.length }}</span>
         <span>Status: DATA INTEGRITY SECURE</span>
       </div>
 
       <div class="data-grid">
-        <div class="dossier-card glass" *ngFor="let tech of technologies">
+        <div class="dossier-card glass" *ngFor="let tech of filteredTechnologies">
           <div class="card-borders">
             <span class="bracket top-left">[</span>
             <span class="bracket top-right">]</span>

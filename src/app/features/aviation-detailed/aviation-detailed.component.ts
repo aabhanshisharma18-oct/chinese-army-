@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ExcelDataService } from '../../services/excel-data.service';
 
 interface AviationDetailed {
@@ -32,7 +33,7 @@ interface AviationDetailed {
 @Component({
   selector: 'app-aviation-detailed',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './aviation-detailed.component.html',
   styleUrls: ['./aviation-detailed.component.scss']
 })
@@ -40,6 +41,9 @@ export class AviationDetailedComponent implements OnInit {
   aviation: AviationDetailed[] = [];
   loading = true;
   error: string | null = null;
+  roleFilter = '';
+  statusFilter = '';
+  search = '';
 
   constructor(private excelDataService: ExcelDataService) {}
 
@@ -92,12 +96,12 @@ export class AviationDetailedComponent implements OnInit {
         height: this.getCellValue(row, 15) || '',
         emptyWeight: this.getCellValue(row, 16) || '',
         maxWeight: this.getCellValue(row, 17) || '',
-        maxSpeed: this.getCellValue(row, 18) || '',
-        range: this.getCellValue(row, 19) || '',
-        serviceCeiling: this.getCellValue(row, 20) || '',
-        rateOfClimb: this.getCellValue(row, 21) || '',
-        armament: this.getCellValue(row, 22) || '',
-        notes: this.getCellValue(row, 23) || ''
+        maxSpeed: this.getCellValue(row, 19) || '',
+        range: this.getCellValue(row, 21) || '',
+        serviceCeiling: this.getCellValue(row, 23) || '',
+        rateOfClimb: this.getCellValue(row, 24) || '',
+        armament: [this.getCellValue(row, 26), this.getCellValue(row, 27)].filter(Boolean).join(' · '),
+        notes: this.getCellValue(row, 28) || ''
       };
 
       if (heli.helicopter) {
@@ -116,4 +120,7 @@ export class AviationDetailedComponent implements OnInit {
   retry(): void {
     this.loadData();
   }
+  get roles(): string[] { return [...new Set(this.aviation.map(x=>x.typeRole).filter(Boolean))]; }
+  get statuses(): string[] { return [...new Set(this.aviation.map(x=>x.status).filter(Boolean))]; }
+  get filteredAviation(): AviationDetailed[] { const q=this.search.toLowerCase().trim(); return this.aviation.filter(x=>(!this.roleFilter||x.typeRole===this.roleFilter)&&(!this.statusFilter||x.status===this.statusFilter)&&(!q||[x.helicopter,x.variant,x.manufacturer].some(v=>v.toLowerCase().includes(q)))); }
 }

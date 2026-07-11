@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ExcelDataService } from '../../services/excel-data.service';
 
 interface Rank {
@@ -15,7 +16,7 @@ interface Rank {
 @Component({
   selector: 'app-ranks',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './ranks.component.html',
   styleUrls: ['./ranks.component.scss']
 })
@@ -23,6 +24,9 @@ export class RanksComponent implements OnInit {
   ranks: Rank[] = [];
   loading = true;
   error: string | null = null;
+  sideFilter = '';
+  categoryFilter = '';
+  search = '';
 
   constructor(private excelDataService: ExcelDataService) {}
 
@@ -80,8 +84,15 @@ export class RanksComponent implements OnInit {
   }
 
   getRanksByCategory(category: string): Rank[] {
-    return this.ranks.filter(r => r.rankCategory === category);
+    const query = this.search.toLowerCase().trim();
+    return this.ranks.filter(r => r.rankCategory === category &&
+      (!this.sideFilter || r.side === this.sideFilter) &&
+      (!this.categoryFilter || r.rankCategory === this.categoryFilter) &&
+      (!query || [r.englishRank,r.chineseCharacters,r.chinesePinyin,r.natoEquivalent].some(v => v.toLowerCase().includes(query))));
   }
+
+  get sides(): string[] { return [...new Set(this.ranks.map(r => r.side).filter(Boolean))]; }
+  get categories(): string[] { return [...new Set(this.ranks.map(r => r.rankCategory).filter(Boolean))]; }
 
   retry(): void {
     this.loadRanks();

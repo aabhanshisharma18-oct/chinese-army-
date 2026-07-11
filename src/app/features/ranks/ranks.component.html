@@ -12,6 +12,12 @@
       <h1 class="page-title text-uppercase">Rank Structure Database</h1>
     </div>
 
+    <div class="filter-deck" *ngIf="!loading && !error">
+      <div class="filter-control"><label>Side</label><select [(ngModel)]="sideFilter"><option value="">All sides</option><option *ngFor="let value of sides" [value]="value">{{value}}</option></select></div>
+      <div class="filter-control"><label>Rank category</label><select [(ngModel)]="categoryFilter"><option value="">All categories</option><option *ngFor="let value of categories" [value]="value">{{value}}</option></select></div>
+      <div class="filter-control"><label>Search rank</label><input [(ngModel)]="search" placeholder="English, Chinese, pinyin or NATO"></div>
+    </div>
+
     <!-- Loading State -->
     <div *ngIf="loading" class="loading-state glass">
       <div class="loading-spinner"></div>
@@ -28,7 +34,7 @@
     <!-- Ranks Display -->
     <div class="ranks-content" *ngIf="!loading && !error">
       <!-- Enlisted Ranks -->
-      <div class="rank-category">
+      <div class="rank-category" *ngIf="!categoryFilter || categoryFilter === 'Enlisted'">
         <h3 class="category-title font-mono text-uppercase">Enlisted Personnel (士兵)</h3>
         <div class="ranks-grid">
           <div class="dossier-card glass" *ngFor="let rank of getRanksByCategory('Enlisted')">
@@ -55,7 +61,7 @@
       </div>
 
       <!-- Officer Ranks -->
-      <div class="rank-category">
+      <div class="rank-category" *ngIf="!categoryFilter || categoryFilter === 'Officer'">
         <h3 class="category-title font-mono text-uppercase">Commissioned Officers (军官)</h3>
         <div class="ranks-grid">
           <div class="dossier-card glass" *ngFor="let rank of getRanksByCategory('Officer')">

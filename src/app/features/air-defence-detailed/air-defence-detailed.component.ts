@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ExcelDataService } from '../../services/excel-data.service';
 
 interface AirDefenceDetailed {
@@ -28,7 +29,7 @@ interface AirDefenceDetailed {
 @Component({
   selector: 'app-air-defence-detailed',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './air-defence-detailed.component.html',
   styleUrls: ['./air-defence-detailed.component.scss']
 })
@@ -36,6 +37,9 @@ export class AirDefenceDetailedComponent implements OnInit {
   defences: AirDefenceDetailed[] = [];
   loading = true;
   error: string | null = null;
+  typeFilter = '';
+  statusFilter = '';
+  search = '';
 
   constructor(private excelDataService: ExcelDataService) {}
 
@@ -89,7 +93,7 @@ export class AirDefenceDetailedComponent implements OnInit {
         speed: this.getCellValue(row, 16) || '',
         gunCaliber: this.getCellValue(row, 17) || '',
         gunRate: this.getCellValue(row, 18) || '',
-        notes: this.getCellValue(row, 19) || ''
+        notes: [this.getCellValue(row,23),this.getCellValue(row,24),this.getCellValue(row,25),this.getCellValue(row,26)].filter(Boolean).join(' · ')
       };
 
       if (defence.system) {
@@ -108,4 +112,7 @@ export class AirDefenceDetailedComponent implements OnInit {
   retry(): void {
     this.loadData();
   }
+  get types(): string[] { return [...new Set(this.defences.map(x=>x.typeCategory).filter(Boolean))]; }
+  get statuses(): string[] { return [...new Set(this.defences.map(x=>x.status).filter(Boolean))]; }
+  get filteredDefences(): AirDefenceDetailed[] { const q=this.search.toLowerCase().trim(); return this.defences.filter(x=>(!this.typeFilter||x.typeCategory===this.typeFilter)&&(!this.statusFilter||x.status===this.statusFilter)&&(!q||[x.system,x.radar,x.exportName].some(v=>v.toLowerCase().includes(q)))); }
 }
