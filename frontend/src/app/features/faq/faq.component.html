@@ -1,0 +1,38 @@
+<!-- PLA Command Atlas - FAQ Component -->
+<!-- FAQ accordion section -->
+
+<section class="faq">
+  <div class="container">
+    <div class="faq-header">
+      <div class="faq-eyebrow text-uppercase">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">Help & Support</span>
+      </div>
+      
+      <h2 class="faq-title">
+        <span class="title-line">FREQUENTLY ASKED</span>
+        <span class="title-line">QUESTIONS</span>
+      </h2>
+      
+      <p class="faq-description">
+        Common questions about PLA Command Atlas data coverage, sources, update frequency, and access options.
+      </p>
+    </div>
+    
+    <!-- FAQ Accordion -->
+    <div class="faq-list">
+      <div class="faq-item" *ngFor="let faq of faqs; let i = index">
+        <button class="faq-question" (click)="toggleFaq(i)">
+          <span class="faq-question-text">{{ faq.question }}</span>
+          <svg class="faq-icon" [class.expanded]="expandedIndex === i" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 8 L10 12 L14 8"/>
+          </svg>
+        </button>
+        
+        <div class="faq-answer" *ngIf="expandedIndex === i">
+          <p>{{ faq.answer }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

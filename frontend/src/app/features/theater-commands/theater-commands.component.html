@@ -1,0 +1,46 @@
+<!-- PLA Command Atlas - Theater Commands Page Overlay -->
+<!-- Full-page overlay for theater commands details -->
+
+<div class="page-backdrop" (click)="onClose()"></div>
+
+<div class="page-content" @pageAnimation>
+  <div class="page-header">
+    <span class="page-title text-uppercase">Theater Commands</span>
+    <button class="page-close" (click)="onClose()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="page-body">
+    <div class="page-intro">
+      <h2 class="page-headline">Five Theater Commands</h2>
+      <p class="page-description">
+        The PLA is organized into five theater commands, each responsible for specific geographic areas and strategic priorities. This structure enables joint operational planning and execution across ground, naval, air, and rocket forces.
+      </p>
+    </div>
+    
+    <div class="theaters-grid">
+      <div class="theater-card card" *ngFor="let theater of theaters" [style.border-color]="theater.color">
+        <div class="theater-color-bar" [style.background-color]="theater.color"></div>
+        <h3 class="theater-name">{{ theater.name }}</h3>
+        <div class="theater-details">
+          <div class="theater-detail">
+            <span class="detail-label text-muted text-uppercase">Headquarters</span>
+            <span class="detail-value">{{ theater.headquarters }}</span>
+          </div>
+          <div class="theater-detail">
+            <span class="detail-label text-muted text-uppercase">Area</span>
+            <span class="detail-value">{{ theater.area }}</span>
+          </div>
+          <div class="theater-detail">
+            <span class="detail-label text-muted text-uppercase">Focus</span>
+            <span class="detail-value">{{ theater.focus }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

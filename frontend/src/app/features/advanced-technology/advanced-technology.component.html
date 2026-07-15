@@ -1,0 +1,51 @@
+<div class="advanced-technology-page">
+  <div class="tactical-grid"></div>
+
+  <div class="container-fluid">
+    <div class="page-header font-mono">
+      <div class="system-path text-uppercase">PLA COMMAND ATLAS // ADVANCED TECHNOLOGY</div>
+      <h1 class="page-title text-uppercase">Strategic Capabilities & Systems</h1>
+    </div>
+    <div class="filter-deck" *ngIf="!loading && !error">
+      <div class="filter-control" *ngFor="let filter of sheetFilters"><label>{{filter.label}}</label><select [ngModel]="columnFilters[filter.index] || ''" (ngModelChange)="columnFilters[filter.index] = $event"><option value="">All {{filter.label}}</option><option *ngFor="let value of filter.options" [value]="value">{{value}}</option></select></div>
+    </div>
+
+    <div *ngIf="error" class="error-state glass">
+      <div class="error-icon">⚠</div>
+      <p class="error-message font-mono">{{ error }}</p>
+      <button class="btn btn-primary font-mono text-uppercase" (click)="retry()">Retry</button>
+    </div>
+
+    <div class="technology-content" *ngIf="!loading && !error">
+      <div class="results-telemetry font-mono text-uppercase">
+        <span>Systems Found: {{ filteredTechnologies.length }}</span>
+        <span>Status: DATA INTEGRITY SECURE</span>
+      </div>
+
+      <div class="data-grid">
+        <div class="dossier-card glass" *ngFor="let tech of filteredTechnologies">
+          <div class="card-borders">
+            <span class="bracket top-left">[</span>
+            <span class="bracket top-right">]</span>
+            <span class="bracket bottom-left">[</span>
+            <span class="bracket bottom-right">]</span>
+          </div>
+          <div class="card-header font-mono">
+            <span class="readiness-tag">{{ tech.side }}</span>
+            <span class="record-id">{{ tech.technologyDomain }}</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title text-uppercase">{{ tech.systemName }}</h3>
+            <div class="card-details font-mono">
+              <div class="detail-row"><span class="lbl">Description:</span> <span class="val">{{ tech.description }}</span></div>
+              <div class="detail-row"><span class="lbl">Range/Capability:</span> <span class="val highlight-val">{{ tech.rangeCapability }}</span></div>
+              <div class="detail-row"><span class="lbl">Status (2025):</span> <span class="val highlight-val">{{ tech.status2025 }}</span></div>
+              <div class="detail-row"><span class="lbl">Strategic Impact:</span> <span class="val">{{ tech.strategicImpact }}</span></div>
+              <div class="detail-row"><span class="lbl">Notes:</span> <span class="val">{{ tech.notes }}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

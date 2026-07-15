@@ -1,0 +1,208 @@
+/* PLA Command Atlas - Ranks Component Styles */
+
+.land-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--color-bg);
+  padding: 6.5rem 2rem 2.5rem 2rem;
+  overflow: hidden;
+}
+
+.container-fluid {
+  position: relative;
+  z-index: 5;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+/* Page Header */
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.system-path {
+  font-size: 0.75rem;
+  color: var(--color-olive-2);
+  letter-spacing: 0.2em;
+  margin-bottom: 0.5rem;
+}
+
+.page-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.ranks-content {
+  position: relative;
+  z-index: 5;
+}
+
+.rank-category {
+  margin-bottom: 40px;
+}
+
+.category-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: var(--color-khaki);
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(111, 123, 90, 0.3);
+  letter-spacing: 1px;
+}
+
+.ranks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.dossier-card {
+  position: relative;
+  padding: 20px;
+  background: rgba(29, 31, 26, 0.6);
+  border: 1px solid rgba(111, 123, 90, 0.2);
+  transition: all var(--transition-fast);
+}
+
+.dossier-card:hover {
+  border-color: var(--color-khaki);
+  box-shadow: 0 0 20px rgba(184, 174, 141, 0.15);
+}
+
+.card-borders {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.bracket {
+  position: absolute;
+  font-size: 20px;
+  color: var(--color-olive-2);
+  opacity: 0.6;
+}
+
+.bracket.top-left {
+  top: 5px;
+  left: 5px;
+}
+
+.bracket.top-right {
+  top: 5px;
+  right: 5px;
+}
+
+.bracket.bottom-left {
+  bottom: 5px;
+  left: 5px;
+}
+
+.bracket.bottom-right {
+  bottom: 5px;
+  right: 5px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(111, 123, 90, 0.2);
+}
+
+.readiness-tag {
+  font-size: 11px;
+  padding: 4px 8px;
+  background: rgba(111, 123, 90, 0.15);
+  border: 1px solid var(--color-olive-2);
+  color: var(--color-olive);
+  letter-spacing: 1px;
+}
+
+.record-id {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+.card-body {
+  position: relative;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 16px 0;
+  letter-spacing: 0.5px;
+}
+
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.lbl {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.val {
+  color: var(--color-text-primary);
+  text-align: right;
+  flex: 1;
+}
+
+.loading-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  min-height: 400px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(111, 123, 90, 0.2);
+  border-top: 3px solid var(--color-olive);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text,
+.error-message {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+}
+
+.error-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}

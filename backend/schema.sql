@@ -307,3 +307,27 @@ CREATE INDEX IF NOT EXISTS idx_land_units_parent ON land_units(formation_unit_pa
 CREATE INDEX IF NOT EXISTS idx_weapon_categories_name ON weapon_categories(weapon_name);
 CREATE INDEX IF NOT EXISTS idx_theater_capabilities_command ON theater_capabilities(theater_command);
 CREATE INDEX IF NOT EXISTS idx_ranks_category ON ranks(rank_category);
+
+-- Workbook Index (Sheet 00)
+CREATE TABLE IF NOT EXISTS workbook_index (
+    id SERIAL PRIMARY KEY,
+    sheet_tab VARCHAR(100) NOT NULL,
+    sheet_name VARCHAR(255),
+    contents TEXT,
+    rows_of_data VARCHAR(100),
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- References (Sheet 15)
+CREATE TABLE IF NOT EXISTS reference_sources (
+    id SERIAL PRIMARY KEY,
+    reference_number INTEGER,
+    category VARCHAR(150),
+    source_title TEXT,
+    url TEXT,
+    source_type VARCHAR(150),
+    source_date VARCHAR(50),
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);

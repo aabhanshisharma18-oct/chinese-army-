@@ -1,0 +1,74 @@
+<!-- PLA Command Atlas - Readiness Academy Component -->
+<!-- Displays force potential metrics from 8_Force_Potential.json -->
+
+<section class="readiness-academy">
+  <!-- Video Background -->
+  <video 
+    class="academy-video"
+    [src]="videoSrc"
+    autoplay
+    loop
+    muted
+    playsinline
+  ></video>
+  
+  <!-- Video Overlay -->
+  <div class="academy-overlay"></div>
+  
+  <!-- Content -->
+  <div class="academy-content">
+    <div class="container">
+      <div class="academy-header">
+        <div class="academy-eyebrow text-uppercase fade-in stagger-1">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-text">Force Potential</span>
+        </div>
+        
+        <h2 class="academy-title fade-in stagger-2">
+          <span class="title-line">OPERATIONAL</span>
+          <span class="title-line">READINESS</span>
+        </h2>
+        
+        <p class="academy-description fade-in stagger-3">
+          PLA force potential metrics including manpower, equipment, budget, nuclear capabilities, global rankings, and strategic comparisons.
+        </p>
+      </div>
+      
+      <!-- Loading State -->
+      <div *ngIf="loading" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading force potential data...</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="error" class="error-state">
+        <div class="error-icon">⚠</div>
+        <p class="error-message">{{ error }}</p>
+        <button class="btn btn-primary" (click)="retry()">Retry</button>
+      </div>
+      
+      <!-- Force Metrics by Category -->
+      <div *ngIf="!loading && !error" class="academy-grid">
+        <div *ngFor="let category of getCategories()" class="category-section">
+          <h3 class="category-title">{{ category }}</h3>
+          <div class="metrics-grid">
+            <div class="metric-card glass-card fade-in" *ngFor="let metric of getMetricsByCategory(category)">
+              <div class="metric-header">
+                <h4 class="metric-name">{{ metric.metricSystem }}</h4>
+                <span class="metric-rank" *ngIf="metric.globalRank && metric.globalRank !== 'N/A'">
+                  Rank: {{ metric.globalRank }}
+                </span>
+              </div>
+              
+              <div class="metric-value">{{ metric.value }}</div>
+              
+              <p class="metric-notes text-muted" *ngIf="metric.comparisonNotes">
+                {{ metric.comparisonNotes }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

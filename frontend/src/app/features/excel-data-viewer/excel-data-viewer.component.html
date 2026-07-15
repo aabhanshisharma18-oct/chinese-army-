@@ -1,0 +1,67 @@
+<!-- Excel Data Viewer Component -->
+<!-- Displays all Excel sheets in raw array-of-arrays format -->
+
+<div class="excel-data-viewer">
+  <div class="container">
+    <!-- Header -->
+    <div class="viewer-header">
+      <h1 class="viewer-title">Excel Data Viewer</h1>
+      <p class="viewer-subtitle">Raw data from chinese database 2.xlsx</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="error-state">
+      <div class="error-icon">⚠</div>
+      <p class="error-message">{{ error }}</p>
+      <button class="btn btn-primary" (click)="retry()">Retry</button>
+    </div>
+
+    <!-- Data Display -->
+    <div *ngIf="!loading && !error && manifest" class="data-display">
+      <!-- Manifest Info -->
+      <div class="manifest-info">
+        <div class="info-item">
+          <span class="info-label">Workbook:</span>
+          <span class="info-value">{{ manifest.workbook }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Generated:</span>
+          <span class="info-value">{{ manifest.generatedAt | date:'medium' }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Total Sheets:</span>
+          <span class="info-value">{{ manifest.sheets.length }}</span>
+        </div>
+      </div>
+
+      <!-- Sheet List -->
+      <div class="sheet-list">
+        <div *ngFor="let sheet of manifest.sheets" class="sheet-section">
+          <div class="sheet-header">
+            <h2 class="sheet-name">{{ sheet.originalSheetName }}</h2>
+            <div class="sheet-meta">
+              <span class="sheet-rows">{{ sheet.rows }} rows</span>
+              <span class="sheet-format">{{ sheet.format }}</span>
+            </div>
+          </div>
+
+          <!-- Sheet Data Table -->
+          <div class="sheet-table-container">
+            <table class="sheet-table">
+              <tbody>
+                <tr *ngFor="let row of getSheetData(sheet.originalSheetName); let rowIndex = index">
+                  <td *ngFor="let cell of row; let colIndex = index" 
+                      class="table-cell"
+                      [class.null-cell]="isNullValue(cell)"
+                      [class.header-row]="rowIndex === 0">
+                    <span class="cell-content">{{ formatCellValue(cell) }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

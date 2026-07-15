@@ -1,0 +1,24 @@
+<section class="dashboard-page">
+  <div class="dashboard-topbar">
+    <div class="section-name"><strong>PLA</strong> <span>Ground Force</span></div>
+    <div class="section-state">Select a category</div>
+    <div class="live-state"><span>Chinese Army · Ground Force Intelligence · 2026</span><i></i></div>
+  </div>
+
+  <div class="dashboard-content">
+    <header class="dashboard-hero">
+      <p>DEFENCE RESEARCH & DEVELOPMENT ORGANISATION</p>
+      <h1>Chinese Army <span>Intelligence System</span></h1>
+      <div class="instruction">SELECT A CATEGORY FROM THE LEFT PANEL OR DASHBOARD TO BEGIN</div>
+    </header>
+
+    <div class="module-grid">
+      <a *ngFor="let module of modules" [routerLink]="module.route" class="module-card" [class]="'module-card ' + module.tone">
+        <div class="module-meta"><span>{{module.index}} / {{module.title}}</span><b>{{module.count}}</b></div>
+        <h2>{{module.title}}</h2>
+        <p>{{module.description}}</p>
+        <span class="module-arrow">Open intelligence module →</span>
+      </a>
+    </div>
+  </div>
+</section>

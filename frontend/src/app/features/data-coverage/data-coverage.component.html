@@ -1,0 +1,84 @@
+<!-- PLA Command Atlas - Data Coverage Component -->
+<!-- Displays Excel sheet index data from 00_INDEX.json -->
+
+<section class="data-coverage">
+  <div class="container">
+    <div class="coverage-layout">
+      <!-- Left Content - Sheet Index -->
+      <div class="coverage-left">
+        <div class="coverage-header">
+          <div class="coverage-eyebrow text-uppercase">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">Database Index</span>
+          </div>
+          
+          <h2 class="coverage-title">
+            <span class="title-line">DATA COVERAGE</span>
+            <span class="title-line">OVERVIEW</span>
+          </h2>
+          
+          <p class="coverage-description">
+            Complete database index showing all available data sheets, their contents, and data row counts from the Chinese Army (PLAGF) database.
+          </p>
+        </div>
+        
+        <!-- Loading State -->
+        <div *ngIf="loading" class="loading-state">
+          <div class="loading-spinner"></div>
+          <p class="loading-text">Loading database index...</p>
+        </div>
+
+        <!-- Error State -->
+        <div *ngIf="error" class="error-state">
+          <div class="error-icon">⚠</div>
+          <p class="error-message">{{ error }}</p>
+          <button class="btn btn-primary" (click)="retry()">Retry</button>
+        </div>
+        
+        <!-- Sheet Index Cards -->
+        <div *ngIf="!loading && !error" class="coverage-tiers">
+          <div class="tier-card card" *ngFor="let index of sheetIndices">
+            <div class="tier-header">
+              <h3 class="tier-title">{{ index.sheetName }}</h3>
+              <div class="tier-badge badge badge-secondary">
+                {{ index.sheetTab }}
+              </div>
+            </div>
+            
+            <p class="tier-description">{{ index.contents }}</p>
+            
+            <div class="tier-meta">
+              <span class="meta-item">
+                <span class="meta-label">Rows:</span>
+                <span class="meta-value">{{ index.rowsOfData }}</span>
+              </span>
+            </div>
+            
+            <button class="btn btn-secondary">View Data</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Content - Sticky Video Panel -->
+      <div class="coverage-right">
+        <div class="video-panel card-elevated">
+          <video 
+            class="panel-video"
+            [src]="videoSrc"
+            autoplay
+            loop
+            muted
+            playsinline
+          ></video>
+          <div class="panel-overlay"></div>
+          <div class="panel-content">
+            <div class="panel-eyebrow text-uppercase">Command Center</div>
+            <p class="panel-text">
+              Real-time command center footage and exercise operations demonstrating joint operational capabilities across theater commands.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

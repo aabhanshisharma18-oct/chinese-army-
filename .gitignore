@@ -9,3 +9,14 @@ npm-debug.log*
 .DS_Store
 .vscode/
 .idea/
+
+# Local migration and deployment artifacts
+migration-backups/
+database/.restored
+excel-source/*.xlsx
+*.backup.bat
+backend/scripts/*.backup.js
+
+# Temporary source backups
+*.backup
+*.backup.json

@@ -1,0 +1,116 @@
+.analyst-notes {
+  padding: var(--space-xl) 0;
+  background: var(--color-bg-primary);
+}
+
+.notes-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto var(--space-lg);
+}
+
+.notes-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--color-accent-red);
+}
+
+.eyebrow-line {
+  width: 40px;
+  height: 1px;
+  background: var(--color-accent-red);
+}
+
+.notes-title {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  color: var(--color-text-primary);
+  
+  .title-line {
+    display: block;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.notes-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.notes-rail {
+  padding: var(--space-sm) 0;
+}
+
+.note-card {
+  min-width: 350px;
+  max-width: 350px;
+  background: var(--color-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+  }
+}
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.note-category {
+  font-size: 0.625rem;
+}
+
+.note-date {
+  font-size: 0.75rem;
+}
+
+.note-author {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.author-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.author-role {
+  font-size: 0.75rem;
+}
+
+.note-organization {
+  font-size: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.note-content {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+  flex: 1;
+}

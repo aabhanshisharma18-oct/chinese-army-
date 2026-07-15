@@ -1,0 +1,98 @@
+name: Build Windows Offline Package
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build-windows-package:
+    runs-on: windows-latest
+
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v4
+
+      - name: Configure Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build Angular frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Create deployment environment
+        shell: pwsh
+        env:
+          PLA_DB_PASSWORD: ${{ secrets.PLA_DB_PASSWORD }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:PLA_DB_PASSWORD)) {
+            throw "GitHub secret PLA_DB_PASSWORD is not configured."
+          }
+
+          @"
+          DB_HOST=127.0.0.1
+          DB_PORT=5432
+          DB_USER=postgres
+          DB_PASSWORD=$env:PLA_DB_PASSWORD
+          DB_NAME=pla_command_atlas
+          PORT=3000
+          "@ | Set-Content "backend\.env"
+
+      - name: Assemble Windows offline package
+        shell: pwsh
+        run: |
+          $packageName = "PLA_Command_Atlas_Offline_Windows"
+          $packagePath = Join-Path $env:RUNNER_TEMP $packageName
+
+          if (Test-Path $packagePath) {
+            Remove-Item $packagePath -Recurse -Force
+          }
+
+          New-Item -ItemType Directory -Path $packagePath | Out-Null
+
+          robocopy $env:GITHUB_WORKSPACE $packagePath /E `
+            /XD .git .github migration-backups excel-source `
+            /XF .DS_Store START_OFFLINE_WINDOWS.backup.bat `
+                import-excel.backup.js
+
+          $copyExitCode = $LASTEXITCODE
+          if ($copyExitCode -ge 8) {
+            exit $copyExitCode
+          }
+
+          Remove-Item `
+            "$packagePath\frontend\.angular" `
+            -Recurse -Force -ErrorAction SilentlyContinue
+
+          $zipPath = Join-Path `
+            $env:GITHUB_WORKSPACE `
+            "$packageName.zip"
+
+          tar.exe -a -c -f $zipPath `
+            -C $env:RUNNER_TEMP `
+            $packageName
+
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+          }
+
+      - name: Upload Windows package
+        uses: actions/upload-artifact@v4
+        with:
+          name: PLA-Command-Atlas-Windows
+          path: PLA_Command_Atlas_Offline_Windows.zip
+          retention-days: 7
+          if-no-files-found: error

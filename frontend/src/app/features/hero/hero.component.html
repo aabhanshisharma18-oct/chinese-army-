@@ -1,0 +1,53 @@
+<!-- PLA Command Atlas - Hero Component -->
+<!-- Fixed full-screen video background with animated text -->
+
+<section class="hero">
+  <!-- Video Background -->
+  <video 
+    class="hero-video"
+    [src]="videoSrc"
+    autoplay
+    loop
+    muted
+    playsinline
+  ></video>
+  
+  <!-- Video Overlay -->
+  <div class="hero-overlay"></div>
+  
+  <!-- Hero Content -->
+  <div class="hero-content">
+    <div class="container">
+      <!-- Eyebrow -->
+      <div class="hero-eyebrow text-uppercase fade-in stagger-1">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">Strategic Force Structure Analysis</span>
+      </div>
+      
+      <!-- Headline -->
+      <h1 class="hero-headline fade-in stagger-2">
+        <span class="headline-line">COMPREHENSIVE</span>
+        <span class="headline-line">CHINESE ARMY</span>
+        <span class="headline-line">ORDER OF BATTLE</span>
+      </h1>
+      
+      <!-- Subtext -->
+      <p class="hero-subtext fade-in stagger-3">
+        Theater command analysis, formation indexing, equipment mapping, and strategic force structure data for the People's Liberation Army.
+      </p>
+      
+      <!-- Sticky CTA -->
+      <div class="hero-cta fade-in stagger-4">
+        <button class="btn btn-primary">
+          EXPLORE ORDER OF BATTLE
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Scroll Indicator -->
+  <div class="scroll-indicator fade-in stagger-5">
+    <div class="scroll-dot"></div>
+    <span class="scroll-text">SCROLL</span>
+  </div>
+</section>

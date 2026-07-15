@@ -1,0 +1,110 @@
+<!-- PLA Command Atlas - Ranks Component -->
+<!-- Displays PLA officer and enlisted rank structure -->
+
+<div class="land-page">
+  <!-- Tactical grid lines background -->
+  <div class="tactical-grid"></div>
+
+  <div class="container-fluid">
+    <!-- Page Header -->
+    <div class="page-header font-mono">
+      <div class="system-path text-uppercase">PLA COMMAND ATLAS // PERSONNEL STRUCTURE</div>
+      <h1 class="page-title text-uppercase">Rank Structure Database</h1>
+    </div>
+
+    <div class="filter-deck" *ngIf="!loading && !error">
+      <div class="filter-control" *ngFor="let filter of sheetFilters"><label>{{filter.label}}</label><select [ngModel]="columnFilters[filter.index] || ''" (ngModelChange)="columnFilters[filter.index] = $event"><option value="">All {{filter.label}}</option><option *ngFor="let value of filter.options" [value]="value">{{value}}</option></select></div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="error-state glass">
+      <div class="error-icon">⚠</div>
+      <p class="error-message font-mono">{{ error }}</p>
+      <button class="btn btn-primary font-mono text-uppercase" (click)="retry()">Retry</button>
+    </div>
+
+    <!-- Ranks Display -->
+    <div class="ranks-content" *ngIf="!loading && !error">
+      <!-- Enlisted Ranks -->
+      <div class="rank-category" *ngIf="!categoryFilter || categoryFilter === 'Enlisted'">
+        <h3 class="category-title font-mono text-uppercase">Enlisted Personnel (士兵)</h3>
+        <div class="ranks-grid">
+          <div class="dossier-card glass" *ngFor="let rank of getRanksByCategory('Enlisted')">
+            <div class="card-borders">
+              <span class="bracket top-left">[</span>
+              <span class="bracket top-right">]</span>
+              <span class="bracket bottom-left">[</span>
+              <span class="bracket bottom-right">]</span>
+            </div>
+            <div class="card-header font-mono">
+              <span class="readiness-tag">ENLISTED</span>
+              <span class="record-id">{{ rank.natoEquivalent }}</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title text-uppercase">{{ rank.englishRank }}</h3>
+              <div class="card-details font-mono">
+                <div class="detail-row"><span class="lbl">Chinese:</span> <span class="val">{{ rank.chineseCharacters }}</span></div>
+                <div class="detail-row"><span class="lbl">Pinyin:</span> <span class="val">{{ rank.chinesePinyin }}</span></div>
+                <div class="detail-row" *ngIf="rank.notes"><span class="lbl">Notes:</span> <span class="val">{{ rank.notes }}</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Officer Ranks -->
+      <div class="rank-category" *ngIf="!categoryFilter || categoryFilter === 'Officer'">
+        <h3 class="category-title font-mono text-uppercase">Commissioned Officers (军官)</h3>
+        <div class="ranks-grid">
+          <div class="dossier-card glass" *ngFor="let rank of getRanksByCategory('Officer')">
+            <div class="card-borders">
+              <span class="bracket top-left">[</span>
+              <span class="bracket top-right">]</span>
+              <span class="bracket bottom-left">[</span>
+              <span class="bracket bottom-right">]</span>
+            </div>
+            <div class="card-header font-mono">
+              <span class="readiness-tag">OFFICER</span>
+              <span class="record-id">{{ rank.natoEquivalent }}</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title text-uppercase">{{ rank.englishRank }}</h3>
+              <div class="card-details font-mono">
+                <div class="detail-row"><span class="lbl">Chinese:</span> <span class="val">{{ rank.chineseCharacters }}</span></div>
+                <div class="detail-row"><span class="lbl">Pinyin:</span> <span class="val">{{ rank.chinesePinyin }}</span></div>
+                <div class="detail-row" *ngIf="rank.notes"><span class="lbl">Notes:</span> <span class="val">{{ rank.notes }}</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Warrant Officers (if any) -->
+      <div class="rank-category" *ngIf="getRanksByCategory('Warrant Officer').length > 0">
+        <h3 class="category-title font-mono text-uppercase">Warrant Officers (准尉)</h3>
+        <div class="ranks-grid">
+          <div class="dossier-card glass" *ngFor="let rank of getRanksByCategory('Warrant Officer')">
+            <div class="card-borders">
+              <span class="bracket top-left">[</span>
+              <span class="bracket top-right">]</span>
+              <span class="bracket bottom-left">[</span>
+              <span class="bracket bottom-right">]</span>
+            </div>
+            <div class="card-header font-mono">
+              <span class="readiness-tag">WARRANT</span>
+              <span class="record-id">{{ rank.natoEquivalent }}</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title text-uppercase">{{ rank.englishRank }}</h3>
+              <div class="card-details font-mono">
+                <div class="detail-row"><span class="lbl">Chinese:</span> <span class="val">{{ rank.chineseCharacters }}</span></div>
+                <div class="detail-row"><span class="lbl">Pinyin:</span> <span class="val">{{ rank.chinesePinyin }}</span></div>
+                <div class="detail-row" *ngIf="rank.notes"><span class="lbl">Notes:</span> <span class="val">{{ rank.notes }}</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

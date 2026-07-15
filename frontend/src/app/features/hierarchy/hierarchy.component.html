@@ -1,0 +1,148 @@
+<div class="hierarchy-page">
+  <!-- Tactical background lines -->
+  <div class="tactical-grid"></div>
+  
+  <div class="container-fluid">
+    <div class="page-header font-mono">
+      <div class="system-path text-uppercase">PLA COMMAND ATLAS // HIERARCHY EXPLORER</div>
+      <h1 class="page-title text-uppercase">Operational Command Structure</h1>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Loading hierarchy data from Excel...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="error-state">
+      <div class="error-icon">⚠</div>
+      <p class="error-message">{{ error }}</p>
+      <button class="btn btn-primary" (click)="retry()">Retry</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="workspace-split" *ngIf="!loading && !error">
+      <!-- 1. HIERARCHY TREE VIEW -->
+      <div class="tree-panel glass">
+        <div class="hud-corners">
+          <span class="corner top-left"></span>
+          <span class="corner top-right"></span>
+          <span class="corner bottom-left"></span>
+          <span class="corner bottom-right"></span>
+        </div>
+        
+        <div class="panel-header font-mono text-uppercase">
+          <span>Active Command Nodes</span>
+          <span class="pulse-indicator">GRID SYSTEM ONLINE</span>
+        </div>
+        
+        <div class="tree-container">
+          <!-- Recursive Node Template -->
+          <ng-template #nodeTemplate let-node>
+            <div class="tree-node" [class.selected]="selectedNode?.id === node.id" (click)="selectNode(node)">
+              <!-- Indent Lines & Expand Button -->
+              <div class="node-controls">
+                <button *ngIf="hasChildren(node)" class="btn-expand" (click)="toggleNode(node.id, $event)">
+                  <span class="expand-icon font-mono">{{ isExpanded(node.id) ? '[-]' : '[+]' }}</span>
+                </button>
+                <span *ngIf="!hasChildren(node)" class="bullet-node">•</span>
+              </div>
+              
+              <!-- Node Info -->
+              <div class="node-content">
+                <span class="node-badge text-uppercase font-mono" [class]="node.type">{{ node.type }}</span>
+                <span class="node-label">{{ node.label }}</span>
+              </div>
+            </div>
+
+            <!-- Children Sub-tree -->
+            <div *ngIf="hasChildren(node) && isExpanded(node.id)" class="node-children">
+              <ng-container *ngFor="let child of node.children">
+                <ng-container *ngTemplateOutlet="nodeTemplate; context: { $implicit: child }"></ng-container>
+              </ng-container>
+            </div>
+          </ng-template>
+
+          <!-- Render root node -->
+          <div class="tree-root" *ngIf="hierarchyRoot as root">
+            <ng-container *ngTemplateOutlet="nodeTemplate; context: { $implicit: root }"></ng-container>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. OPERATIONAL BRIEFING HUD -->
+      <div class="briefing-panel glass">
+        <div class="hud-corners">
+          <span class="corner top-left"></span>
+          <span class="corner top-right"></span>
+          <span class="corner bottom-left"></span>
+          <span class="corner bottom-right"></span>
+        </div>
+        
+        <div class="panel-header font-mono text-uppercase">
+          <span>Operational Command Briefing</span>
+          <span class="telemetry-tag">RE: ORG-SEC9</span>
+        </div>
+
+        <div class="briefing-content" *ngIf="selectedNode as selected; else noSelection">
+          <div class="briefing-header">
+            <span class="briefing-tag text-uppercase font-mono">{{ selected.type }} ECHELON</span>
+            <h2 class="briefing-title text-uppercase">{{ selected.label }}</h2>
+          </div>
+
+          <div class="briefing-body">
+            <div class="briefing-grid font-mono" *ngIf="selected.details as details">
+              <div class="grid-row" *ngIf="details.headquarters">
+                <span class="grid-label">HEADQUARTERS</span>
+                <span class="grid-value">{{ details.headquarters }}</span>
+              </div>
+              <div class="grid-row" *ngIf="details.unitType">
+                <span class="grid-label">UNIT TYPE</span>
+                <span class="grid-value">{{ details.unitType }}</span>
+              </div>
+              <div class="grid-row" *ngIf="details.unitPotential">
+                <span class="grid-label">UNIT POTENTIAL</span>
+                <span class="grid-value">{{ details.unitPotential }}</span>
+              </div>
+              <div class="grid-row" *ngIf="details.location">
+                <span class="grid-label">LOCATION</span>
+                <span class="grid-value">{{ details.location }}</span>
+              </div>
+              <div class="grid-row" *ngIf="details.coordinates">
+                <span class="grid-label">COORDINATES</span>
+                <span class="grid-value">{{ details.coordinates }}</span>
+              </div>
+              <div class="grid-row" *ngIf="details.status">
+                <span class="grid-label">DEPLOY STATUS</span>
+                <span class="grid-value alert-status">{{ details.status }}</span>
+              </div>
+            </div>
+
+            <div class="briefing-description" *ngIf="selected.details?.role">
+              <div class="desc-title font-mono text-uppercase">STRATEGIC ROLE & OBJECTIVE</div>
+              <p>{{ selected.details?.role }}</p>
+            </div>
+            
+            <div class="briefing-subordinates" *ngIf="selected.children && selected.children.length > 0">
+              <div class="desc-title font-mono text-uppercase">DIRECT SUBORDINATE COMMANDS</div>
+              <ul class="subordinate-list font-mono">
+                <li *ngFor="let child of selected.children" (click)="selectNode(child)">
+                  <span class="list-bullet">></span> {{ child.label }} ({{ child.type }})
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fallback template -->
+        <ng-template #noSelection>
+          <div class="no-selection font-mono text-uppercase">
+            <span class="blink-warning">WARNING // BRIEFING FEED OFFLINE</span>
+            <p>SELECT A NODE IN THE COMMAND STRUCTURE ON THE LEFT TO INITIALIZE ENCRYPTION INTEGRATION</p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,124 @@
+[
+  [
+    "CHINESE ARMY (PLAGF) – COMPLETE DATABASE  |  INDEX & USER GUIDE",
+    null,
+    null,
+    null
+  ],
+  [
+    "Sheet Tab",
+    "Sheet Name",
+    "Contents",
+    "Rows of Data"
+  ],
+  [
+    "1_Land_Units",
+    "Land Units",
+    "All units: CMC → Theater → Group Army → Brigade → Special Districts → Bases | Lat/Long for every unit",
+    "57 units"
+  ],
+  [
+    "2_Arm_Types",
+    "Arm Types",
+    "14 combat branches (步兵 through 后勤); mobility class, combat role, terrain spec, Indian equiv",
+    "17 arm types"
+  ],
+  [
+    "3_Weapon_Categories",
+    "Weapon Categories",
+    "Full weapons catalogue: Small Arms, ATGM, Tanks, AFV, Artillery, Air Defence, Aviation, Missiles, EW",
+    "90+ weapons"
+  ],
+  [
+    "4_Weapon_Sensor",
+    "Weapon & Sensor Ranges",
+    "Detection vs Engagement ranges for every weapon & sensor system (80+ entries)",
+    "80+ systems"
+  ],
+  [
+    "5_Land_Unit_Resources",
+    "Land Unit Resources",
+    "Per brigade type: personnel, tanks, IFVs, SPH, MLRS, AA, helicopters, ATGMs, trucks, speed, frontage, depth, A&B vehicles, force potential",
+    "13 brigade types"
+  ],
+  [
+    "6_Vehicle_Speeds",
+    "Vehicle Speeds",
+    "Road/cross-country/water speeds (day & night) for 40+ vehicles, helicopters, and aircraft",
+    "42 vehicles"
+  ],
+  [
+    "7_Frontage_Depth",
+    "Frontage & Depth",
+    "Defensive & offensive frontage/depth from Squad → Platoon → Company → Battalion → Brigade → Group Army → Theater",
+    "40 entries"
+  ],
+  [
+    "8_Force_Potential",
+    "Force Potential",
+    "Manpower, equipment, budget, nuclear, global ranking, strategic capabilities, strengths/weaknesses, India vs China, China vs USA",
+    "65+ metrics"
+  ],
+  [
+    "9_Vehicle_Designations",
+    "Vehicle Designations",
+    "A/B/G type designation breakdown; ZTZ/ZBD/ZBL/PLZ/PHL families; letter meaning guide",
+    "32 vehicles"
+  ],
+  [
+    "10_Ranks",
+    "Ranks",
+    "Enlisted (Private → Master Sergeant 1st Class) & Officer (2nd Lt → General) with Chinese characters, Pinyin, NATO equiv",
+    "20 ranks"
+  ],
+  [
+    "11_India_China_Comparison",
+    "India-China Comparison",
+    "Side-by-side unit hierarchy: Squad → Group Army / Theater, with size and notes",
+    "8 levels"
+  ],
+  [
+    "12_Theater_Capabilities",
+    "Theater Capabilities",
+    "All 5 Theater Commands + all 13 Group Armies with location, combat power, key capabilities",
+    "5 TC + 13 GA"
+  ],
+  [
+    "13_Unit_Categories",
+    "Unit Categories",
+    "Category A (combat-ready) vs Category B (reserve); terrain/environment specialisation table",
+    "9 entries"
+  ],
+  [
+    "14_Advanced_Technology",
+    "Advanced Technology",
+    "Hypersonic, stealth, space, quantum, AI, active protection, EM, cyber, radar networks",
+    "20 tech entries"
+  ],
+  [
+    "15_References",
+    "References",
+    "All 89 sources: government, academic, military websites, forums, YouTube, news media",
+    "89 sources"
+  ],
+  [
+    "16_Aviation_Detailed",
+    "Aviation (Detailed)",
+    "Full specs for 12 helicopter models (Z-10, Z-19, Z-20, Z-8/Mi-171, Z-9 + all variants): dimensions, performance, armament",
+    "18 variant rows"
+  ],
+  [
+    "17_Air_Defence_Detailed",
+    "Air Defence (Detailed)",
+    "Full specs for 13 air defence systems (HQ-9B, HQ-16, HQ-17A, PGZ-09, Type 625, QW-2 + cross-refs): missile/gun data, radar, mobility, target priorities",
+    "13 systems"
+  ],
+  [],
+  [],
+  [
+    "DATA SOURCE: All data is based on publicly available open-source intelligence (OSINT), official government reports (DoD, DIA), and recognised military analysis organisations. No classified sources used.",
+    null,
+    null,
+    null
+  ]
+]

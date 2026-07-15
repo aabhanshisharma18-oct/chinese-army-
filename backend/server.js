@@ -40,23 +40,25 @@ app.get('/api/raw/:sheetName', (req, res) => {
 });
 
 // Import route handlers
-const landUnitsRoutes = require('./routes/land-units');
-const armTypesRoutes = require('./routes/arm-types');
-const weaponCategoriesRoutes = require('./routes/weapon-categories');
-const weaponSensorsRoutes = require('./routes/weapon-sensors');
-const landUnitResourcesRoutes = require('./routes/land-unit-resources');
-const vehicleSpeedsRoutes = require('./routes/vehicle-speeds');
-const frontageDepthRoutes = require('./routes/frontage-depth');
-const forcePotentialRoutes = require('./routes/force-potential');
-const vehicleDesignationsRoutes = require('./routes/vehicle-designations');
-const ranksRoutes = require('./routes/ranks');
-const indiaChinaComparisonRoutes = require('./routes/india-china-comparison');
-const theaterCapabilitiesRoutes = require('./routes/theater-capabilities');
-const unitCategoriesRoutes = require('./routes/unit-categories');
-const advancedTechnologyRoutes = require('./routes/advanced-technology');
-const aviationDetailedRoutes = require('./routes/aviation-detailed');
-const airDefenceDetailedRoutes = require('./routes/air-defence-detailed');
-const metadataRoutes = require('./routes/metadata');
+const landUnitsRoutes = require('./src/controller/land-unit.controller');
+const armTypesRoutes = require('./src/controller/arm-types.controller');
+const weaponCategoriesRoutes = require('./src/controller/weapon-categories.controller');
+const weaponSensorsRoutes = require('./src/controller/weapon-sensors.controller');
+const landUnitResourcesRoutes = require('./src/controller/land-unit-resources.controller');
+const vehicleSpeedsRoutes = require('./src/controller/vehicle-speeds.controller');
+const frontageDepthRoutes = require('./src/controller/frontage-depth.controller');
+const forcePotentialRoutes = require('./src/controller/force-potential.controller');
+const vehicleDesignationsRoutes = require('./src/controller/vehicle-designations.controller');
+const ranksRoutes = require('./src/controller/ranks.controller');
+const indiaChinaComparisonRoutes = require('./src/controller/india-china-comparison.controller');
+const theaterCapabilitiesRoutes = require('./src/controller/theater-capabilities.controller');
+const unitCategoriesRoutes = require('./src/controller/unit-categories.controller');
+const advancedTechnologyRoutes = require('./src/controller/advanced-technology.controller');
+const aviationDetailedRoutes = require('./src/controller/aviation-detailed.controller');
+const airDefenceDetailedRoutes = require('./src/controller/air-defence-detailed.controller');
+const metadataRoutes = require('./src/controller/metadata.controller');
+const workbookIndexRoutes = require('./src/controller/workbook-index.controller');
+const referenceSourcesRoutes = require('./src/controller/reference-sources.controller');
 
 // Mount routes
 app.use('/api/land-units', landUnitsRoutes);
@@ -76,11 +78,13 @@ app.use('/api/advanced-technology', advancedTechnologyRoutes);
 app.use('/api/aviation-detailed', aviationDetailedRoutes);
 app.use('/api/air-defence-detailed', airDefenceDetailedRoutes);
 app.use('/api/metadata', metadataRoutes);
+app.use('/api/workbook-index', workbookIndexRoutes);
+app.use('/api/reference-sources', referenceSourcesRoutes);
 
 // Serve the prebuilt Angular application for portable/offline deployments.
 // API routes above remain available when PostgreSQL is configured, while the
 // frontend itself uses its bundled data and therefore works without it.
-const FRONTEND_DIST = path.join(__dirname, '../dist/pla-command-atlas');
+const FRONTEND_DIST = path.join(__dirname, '../frontend/dist/pla-command-atlas');
 if (fs.existsSync(FRONTEND_DIST)) {
   app.use(express.static(FRONTEND_DIST));
   app.get('*', (req, res, next) => {
@@ -91,8 +95,20 @@ if (fs.existsSync(FRONTEND_DIST)) {
 
 // Error handling
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Internal server error' });
+  console.error(err.stack || err);
+
+  const statusCode = err.statusCode || 500;
+  const response = {
+    error: statusCode === 500
+      ? 'Internal server error'
+      : err.message
+  };
+
+  if (err.details) {
+    response.details = err.details;
+  }
+
+  res.status(statusCode).json(response);
 });
 
 // Start server

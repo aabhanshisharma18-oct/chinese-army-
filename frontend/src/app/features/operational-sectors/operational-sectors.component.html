@@ -1,0 +1,105 @@
+<!-- PLA Command Atlas - Operational Sectors Component -->
+<!-- Displays theater commands and group armies from 12_Theater_Capabilities.json -->
+
+<section class="operational-sectors">
+  <!-- Video Background -->
+  <video 
+    class="sectors-video"
+    [src]="videoSrc"
+    autoplay
+    loop
+    muted
+    playsinline
+  ></video>
+  
+  <!-- Video Overlay -->
+  <div class="sectors-overlay"></div>
+  
+  <!-- Content -->
+  <div class="sectors-content">
+    <div class="container">
+      <div class="sectors-header">
+        <div class="sectors-eyebrow text-uppercase fade-in stagger-1">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-text">Theater Commands</span>
+        </div>
+        
+        <h2 class="sectors-title fade-in stagger-2">
+          <span class="title-line">OPERATIONAL</span>
+          <span class="title-line">SECTORS</span>
+        </h2>
+        
+        <p class="sectors-description fade-in stagger-3">
+          PLA theater command structure with 5 theater commands and 13 group armies, showing combat power focus, key capabilities, and areas of responsibility.
+        </p>
+      </div>
+      
+      <!-- Loading State -->
+      <div *ngIf="loading" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading theater data...</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="error" class="error-state">
+        <div class="error-icon">⚠</div>
+        <p class="error-message">{{ error }}</p>
+        <button class="btn btn-primary" (click)="retry()">Retry</button>
+      </div>
+      
+      <!-- Theater Commands Grid -->
+      <div *ngIf="!loading && !error" class="sectors-grid">
+        <div class="sector-card glass-card fade-in stagger-1" *ngFor="let theater of theaterCommands">
+          <div class="sector-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="4" width="32" height="32" rx="8"/>
+              <path d="M12 20 L20 12 L28 20"/>
+              <path d="M20 12 L20 28"/>
+            </svg>
+          </div>
+          <h3 class="sector-title">{{ theater.theaterCommand }}</h3>
+          <p class="sector-location">{{ theater.hqLocation }}</p>
+          <p class="sector-description">{{ theater.combatPowerFocus }}</p>
+          <div class="sector-meta">
+            <span class="meta-item">
+              <span class="meta-label">Group Armies:</span>
+              <span class="meta-value">{{ theater.groupArmiesUnderIt }}</span>
+            </span>
+          </div>
+          <button class="sector-link btn-ghost">
+            View Details
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 3 L13 8 L6 13"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Group Armies Section -->
+      <div *ngIf="!loading && !error && groupArmies.length > 0" class="group-armies-section">
+        <h3 class="section-title">Group Armies Overview</h3>
+        <div class="group-armies-grid">
+          <div class="ga-card glass-card" *ngFor="let ga of groupArmies">
+            <h4 class="ga-title">{{ ga.groupArmy }}</h4>
+            <p class="ga-theater">{{ ga.parentTheater }} Theater</p>
+            <p class="ga-location">{{ ga.location }}</p>
+            <div class="ga-stats">
+              <div class="ga-stat">
+                <span class="stat-label">Troops:</span>
+                <span class="stat-value">{{ ga.troops }}</span>
+              </div>
+              <div class="ga-stat">
+                <span class="stat-label">MBTs:</span>
+                <span class="stat-value">{{ ga.mbts }}</span>
+              </div>
+              <div class="ga-stat">
+                <span class="stat-label">AFVs:</span>
+                <span class="stat-value">{{ ga.afvs }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

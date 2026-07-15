@@ -1,0 +1,57 @@
+<div class="air-defence-detailed-page">
+  <div class="tactical-grid"></div>
+
+  <div class="container-fluid">
+    <div class="page-header font-mono">
+      <div class="system-path text-uppercase">PLA COMMAND ATLAS // AIR DEFENCE DETAILED</div>
+      <h1 class="page-title text-uppercase">Air Defence Systems Specifications</h1>
+    </div>
+    <div class="filter-deck" *ngIf="!loading && !error">
+      <div class="filter-control" *ngFor="let filter of sheetFilters"><label>{{filter.label}}</label><select [ngModel]="columnFilters[filter.index] || ''" (ngModelChange)="columnFilters[filter.index] = $event"><option value="">All {{filter.label}}</option><option *ngFor="let value of filter.options" [value]="value">{{value}}</option></select></div>
+    </div>
+
+    <div *ngIf="error" class="error-state glass">
+      <div class="error-icon">⚠</div>
+      <p class="error-message font-mono">{{ error }}</p>
+      <button class="btn btn-primary font-mono text-uppercase" (click)="retry()">Retry</button>
+    </div>
+
+    <div class="defence-content" *ngIf="!loading && !error">
+      <div class="results-telemetry font-mono text-uppercase">
+        <span>Systems Found: {{ filteredDefences.length }}</span>
+        <span>Status: DATA INTEGRITY SECURE</span>
+      </div>
+
+      <div class="data-grid">
+        <div class="dossier-card glass" *ngFor="let defence of filteredDefences">
+          <div class="card-borders">
+            <span class="bracket top-left">[</span>
+            <span class="bracket top-right">]</span>
+            <span class="bracket bottom-left">[</span>
+            <span class="bracket bottom-right">]</span>
+          </div>
+          <div class="card-header font-mono">
+            <span class="readiness-tag">{{ defence.side }}</span>
+            <span class="record-id">{{ defence.typeCategory }}</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title text-uppercase">{{ defence.system }}</h3>
+            <div class="card-details font-mono">
+              <div class="detail-row"><span class="lbl">Based On:</span> <span class="val">{{ defence.basedOn }}</span></div>
+              <div class="detail-row"><span class="lbl">Service Entry:</span> <span class="val">{{ defence.serviceEntry }}</span></div>
+              <div class="detail-row"><span class="lbl">Status:</span> <span class="val highlight-val">{{ defence.status }}</span></div>
+              <div class="detail-row"><span class="lbl">Export Name:</span> <span class="val">{{ defence.exportName }}</span></div>
+              <div class="detail-row"><span class="lbl">Range:</span> <span class="val highlight-val">{{ defence.range }} km</span></div>
+              <div class="detail-row"><span class="lbl">Altitude:</span> <span class="val highlight-val">{{ defence.altitude }} m</span></div>
+              <div class="detail-row"><span class="lbl">Radar Range:</span> <span class="val">{{ defence.radarRange }} km</span></div>
+              <div class="detail-row"><span class="lbl">Speed:</span> <span class="val highlight-val">{{ defence.speed }} Mach</span></div>
+              <div class="detail-row"><span class="lbl">Gun Caliber:</span> <span class="val">{{ defence.gunCaliber }}</span></div>
+              <div class="detail-row"><span class="lbl">Gun Rate:</span> <span class="val">{{ defence.gunRate }}</span></div>
+              <div class="detail-row"><span class="lbl">Notes:</span> <span class="val">{{ defence.notes }}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

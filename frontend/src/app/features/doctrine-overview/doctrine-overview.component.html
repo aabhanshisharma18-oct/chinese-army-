@@ -1,0 +1,240 @@
+<!-- PLA Command Atlas - Doctrine Overview Component -->
+<!-- Displays arm types from 2_Arm_Types.json -->
+
+<section class="doctrine-overview">
+  <!-- Video Background -->
+  <video 
+    class="doctrine-video"
+    [src]="videoSrc"
+    autoplay
+    loop
+    muted
+    playsinline
+  ></video>
+  
+  <!-- Video Overlay -->
+  <div class="doctrine-overlay"></div>
+  
+  <!-- Content -->
+  <div class="doctrine-content">
+    <div class="container">
+      <div class="doctrine-layout">
+        <!-- Left Content -->
+        <div class="doctrine-left">
+          <div class="doctrine-eyebrow text-uppercase fade-in stagger-1">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">Combat Arms</span>
+          </div>
+          
+          <h2 class="doctrine-title fade-in stagger-2">
+            <span class="title-line">ARM TYPES</span>
+            <span class="title-line">& BRANCHES</span>
+          </h2>
+          
+          <p class="doctrine-description fade-in stagger-3">
+            PLA combat arms and branches of service (兵种) including infantry, armor, artillery, air defense, special forces, and support units with their primary roles, classifications, and terrain specializations.
+          </p>
+          
+          <!-- Loading State -->
+          <div *ngIf="loading" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Loading arm types data...</p>
+          </div>
+
+          <!-- Error State -->
+          <div *ngIf="error" class="error-state">
+            <div class="error-icon">⚠</div>
+            <p class="error-message">{{ error }}</p>
+            <button class="btn btn-primary" (click)="retry()">Retry</button>
+          </div>
+          
+          <div class="doctrine-stats fade-in stagger-4" *ngIf="!loading && !error">
+            <div class="stat-item">
+              <span class="stat-value">{{ armTypesCount }}</span>
+              <span class="stat-label text-uppercase">Arm Types</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ categoryACount }}</span>
+              <span class="stat-label text-uppercase">Category A</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ maneuverCount }}</span>
+              <span class="stat-label text-uppercase">Maneuver</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ weaponsCount }}</span>
+              <span class="stat-label text-uppercase">Weapons</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right Content - Tabs for Arm Types, Weapons, Sensors, Comparison, and Technology -->
+        <div class="doctrine-right" *ngIf="!loading && !error">
+          <div class="tabs-nav">
+            <button class="tab-btn" [class.active]="activeTab === 'armTypes'" (click)="activeTab = 'armTypes'">Arm Types</button>
+            <button class="tab-btn" [class.active]="activeTab === 'weapons'" (click)="activeTab = 'weapons'">Weapons</button>
+            <button class="tab-btn" [class.active]="activeTab === 'sensors'" (click)="activeTab = 'sensors'">Sensors</button>
+            <button class="tab-btn" [class.active]="activeTab === 'comparison'" (click)="activeTab = 'comparison'">India-China</button>
+            <button class="tab-btn" [class.active]="activeTab === 'technology'" (click)="activeTab = 'technology'">Technology</button>
+          </div>
+          
+          <!-- Arm Types Grid -->
+          <div class="arm-types-grid" *ngIf="activeTab === 'armTypes'">
+            <div class="arm-type-card glass-card fade-in" *ngFor="let armType of armTypes">
+              <div class="arm-type-header">
+                <span class="arm-type-number">{{ armType.number }}</span>
+                <h3 class="arm-type-title">{{ armType.combatArmTypeEnglish }}</h3>
+              </div>
+              
+              <p class="arm-type-chinese">{{ armType.combatArmTypeChinese }}</p>
+              
+              <p class="arm-type-role">{{ armType.primaryRole }}</p>
+              
+              <div class="arm-type-meta">
+                <span class="meta-badge badge badge-secondary">{{ armType.classificationMobility }}</span>
+                <span class="meta-badge badge">{{ armType.classificationCombatRole }}</span>
+              </div>
+              
+              <div class="arm-type-details">
+                <div class="detail-item">
+                  <span class="detail-label">Training:</span>
+                  <span class="detail-value">{{ armType.trainingCategory }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Indian Equivalent:</span>
+                  <span class="detail-value">{{ armType.indianArmyEquivalent }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Terrain:</span>
+                  <span class="detail-value">{{ armType.terrainSpecialisation }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Weapons Grid -->
+          <div class="weapons-grid" *ngIf="activeTab === 'weapons'">
+            <div class="weapon-card glass-card fade-in" *ngFor="let weapon of displayedWeapons">
+              <div class="weapon-header">
+                <h3 class="weapon-name">{{ weapon.weaponName }}</h3>
+                <span class="weapon-designation">{{ weapon.designation }}</span>
+              </div>
+              
+              <div class="weapon-meta">
+                <span class="meta-item">{{ weapon.weaponCategory }}</span>
+                <span class="meta-item">{{ weapon.subCategory }}</span>
+              </div>
+              
+              <div class="weapon-specs">
+                <div class="spec-item">
+                  <span class="spec-label">Caliber:</span>
+                  <span class="spec-value">{{ weapon.caliber }}</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">Range:</span>
+                  <span class="spec-value">{{ weapon.range }}</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">Type:</span>
+                  <span class="spec-value">{{ weapon.typeGuidance }}</span>
+                </div>
+              </div>
+              
+              <p class="weapon-role">{{ weapon.roleCapability }}</p>
+            </div>
+          </div>
+          
+          <!-- Sensors Grid -->
+          <div class="sensors-grid" *ngIf="activeTab === 'sensors'">
+            <div class="sensor-card glass-card fade-in" *ngFor="let sensor of displayedSensors">
+              <div class="sensor-header">
+                <h3 class="sensor-name">{{ sensor.weaponSensorName }}</h3>
+                <span class="sensor-type">{{ sensor.type }}</span>
+              </div>
+              
+              <div class="sensor-meta">
+                <span class="meta-item">{{ sensor.subType }}</span>
+              </div>
+              
+              <div class="sensor-ranges">
+                <div class="range-item">
+                  <span class="range-label">Detection:</span>
+                  <span class="range-value">{{ sensor.detectionRange }} km</span>
+                </div>
+                <div class="range-item" *ngIf="sensor.engagementRange && sensor.engagementRange !== 'N/A'">
+                  <span class="range-label">Engagement:</span>
+                  <span class="range-value">{{ sensor.engagementRange }} km</span>
+                </div>
+              </div>
+              
+              <div class="sensor-details">
+                <div class="detail-item">
+                  <span class="detail-label">Altitude/Depth:</span>
+                  <span class="detail-value">{{ sensor.altitudeDepth }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Guidance/Sensor:</span>
+                  <span class="detail-value">{{ sensor.guidanceSensor }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- India-China Comparison Grid -->
+          <div class="comparison-grid" *ngIf="activeTab === 'comparison'">
+            <div class="comparison-card glass-card fade-in" *ngFor="let comparison of indiaChinaComparisons">
+              <div class="comparison-header">
+                <span class="comparison-level">{{ comparison.level }}</span>
+                <h3 class="comparison-indian">{{ comparison.indianArmyUnit }}</h3>
+              </div>
+              
+              <div class="comparison-arrow">→</div>
+              
+              <div class="comparison-chinese">
+                <h4 class="comparison-equivalent">{{ comparison.chineseArmyEquivalent }}</h4>
+                <p class="comparison-name">{{ comparison.chineseName }}</p>
+              </div>
+              
+              <div class="comparison-size">
+                <span class="size-label">Size:</span>
+                <span class="size-value">{{ comparison.sizeTroops }}</span>
+              </div>
+              
+              <p class="comparison-notes" *ngIf="comparison.notes">{{ comparison.notes }}</p>
+            </div>
+          </div>
+          
+          <!-- Advanced Technology Grid -->
+          <div class="technology-grid" *ngIf="activeTab === 'technology'">
+            <div class="technology-card glass-card fade-in" *ngFor="let technology of advancedTechnologies">
+              <div class="technology-header">
+                <h3 class="technology-name">{{ technology.systemName }}</h3>
+                <span class="technology-domain">{{ technology.technologyDomain }}</span>
+              </div>
+              
+              <p class="technology-description">{{ technology.description }}</p>
+              
+              <div class="technology-specs">
+                <div class="spec-item">
+                  <span class="spec-label">Range/Capability:</span>
+                  <span class="spec-value">{{ technology.rangeCapability }}</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">Status (2025):</span>
+                  <span class="spec-value" [class.status-operational]="technology.status2025 === 'Operational'">{{ technology.status2025 }}</span>
+                </div>
+              </div>
+              
+              <div class="technology-impact">
+                <span class="impact-label">Strategic Impact:</span>
+                <span class="impact-value">{{ technology.strategicImpact }}</span>
+              </div>
+              
+              <p class="technology-notes" *ngIf="technology.notes">{{ technology.notes }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

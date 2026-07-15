@@ -6,6 +6,13 @@
 
 // Column order mappings for each table (must match Excel sheet column order)
 const COLUMN_ORDERS = {
+  workbook_index: [
+    'sheet_tab', 'sheet_name', 'contents', 'rows_of_data'
+  ],
+  reference_sources: [
+    'reference_number', 'category', 'source_title',
+    'url', 'source_type', 'source_date'
+  ],
   land_units: [
     'side', 'formation_unit_name', 'formation_unit_type', 
     'formation_unit_parent_name', 'standard_unit_formation', 

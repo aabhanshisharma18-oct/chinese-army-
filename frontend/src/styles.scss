@@ -1,0 +1,503 @@
+/* PLA Command Atlas - Global Styles */
+/* Military analysis theme with premium glass effects */
+
+:root {
+  /* Core palette - carbon black and deep charcoal surfaces */
+  --color-bg: #0c0d0b;
+  --color-bg-primary: #0c0d0b;
+  --color-bg-secondary: #121411;
+  --color-surface: #171915;
+  --color-surface-2: #1e211b;
+  --color-panel: #242821;
+  --color-bg-tertiary: #242821;
+  --color-surface-elevated: #242821;
+  
+  /* Military support tones - desaturated olives and green-grays */
+  --color-olive: #545c47;
+  --color-olive-2: #727b64;
+  --color-olive-dim: #3b4233;
+  --color-tactical-green: #6c785f;
+  --color-tactical-green-dim: #444b3c;
+  
+  /* Khaki neutrals */
+  --color-khaki: #9ea492;
+  --color-sand: #b2b8a7;
+  
+  /* Text colors - desaturated off-white / steel warm gray */
+  --color-text: #dcdfd8;
+  --color-text-primary: #dcdfd8;
+  --color-text-secondary: #a3a89c;
+  --color-text-muted: #7d8277;
+  
+  /* Border - subtle graphite */
+  --color-border: rgba(163, 168, 156, 0.08);
+  
+  /* Danger/warning accent - deep rusted oxide red */
+  --color-danger: #823830;
+  --color-accent-red: #823830;
+  --color-accent-red-dim: #542520;
+  
+  /* Smoked Glass overlays - dark and heavy */
+  --glass-bg: rgba(18, 20, 17, 0.9);
+  --glass-bg-light: rgba(23, 25, 21, 0.7);
+  --glass-border: rgba(163, 168, 156, 0.08);
+  --glass-blur: 20px;
+  
+  /* Shadows - heavy, matching graphite layers */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.6);
+  --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.7);
+  --shadow-strong: 0 16px 40px rgba(0, 0, 0, 0.8);
+  
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-medium: 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-slow: 0.55s cubic-bezier(0.25, 1, 0.5, 1);
+  
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 8rem;
+  
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* Claude reference theme: iOS frosted glass over a terrain-map atmosphere. */
+:root {
+  --sky:#c8e8f5; --water:#6bb8d4; --land-low:#a8c896; --land-mid:#c8a878; --land-high:#a06840;
+  --t1:rgba(10,30,50,.92); --t2:rgba(10,30,50,.66); --t3:rgba(10,30,50,.44); --t4:rgba(10,30,50,.25);
+  --blue:#1a6fa8; --blue-d:rgba(26,111,168,.20); --blue-g:rgba(26,111,168,.08);
+  --teal:#1a8c78; --amber:#b87020; --red:#a83028; --navy:#1a3050;
+  --glass-bg:rgba(244,251,255,.62); --glass-bg-light:rgba(255,255,255,.46); --glass-border:rgba(255,255,255,.76);
+  --color-bg:#315b70; --color-bg-primary:#315b70; --color-bg-secondary:#dcecf2;
+  --color-surface:rgba(255,255,255,.58); --color-surface-2:rgba(255,255,255,.45); --color-panel:rgba(255,255,255,.62);
+  --color-text:var(--t1); --color-text-primary:var(--t1); --color-text-secondary:var(--t2); --color-text-muted:var(--t3);
+  --color-olive:var(--blue); --color-olive-2:var(--blue); --color-khaki:var(--blue); --color-sand:var(--t2);
+  --color-accent-red:var(--red); --color-accent-red-dim:#7d2923;
+  --shadow-soft:0 4px 20px rgba(0,40,80,.10); --shadow-medium:0 9px 30px rgba(0,40,80,.15);
+  --font-display:Georgia,'Times New Roman',serif;
+  --font-sans:'Segoe UI',Arial,sans-serif;
+  --font-mono:'Cascadia Mono','Courier New',monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background:#152b3a;
+}
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:linear-gradient(rgba(6,18,32,.18),rgba(6,18,32,.18)),url('/assets/images/china-earth-background.jpg');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  filter:blur(3px) brightness(.73) saturate(1.08);
+  transform:scale(1.025);
+}
+body::after {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(ellipse 92% 72% at 50% 46%,transparent 42%,rgba(5,16,29,.31) 100%),linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:auto,48px 48px,48px 48px;
+}
+
+app-root { position:relative; z-index:1; display:block; min-height:100vh; }
+
+/* Normalize the existing feature pages to the shared Claude glass language. */
+.land-page,.india-china-page,.unit-categories-page,.advanced-technology-page,
+.aviation-detailed-page,.air-defence-detailed-page,.theater-capabilities-page {
+  background:transparent !important; color:var(--t1) !important;
+}
+
+/* The previous fixed top header was removed. Eliminate its reserved 6.5rem
+   space consistently on every routed workspace page. */
+.land-page,
+.hierarchy-page,
+.india-china-page,
+.unit-categories-page,
+.advanced-technology-page,
+.aviation-detailed-page,
+.air-defence-detailed-page,
+.theater-capabilities-page,
+.excel-data-viewer {
+  padding-top:1.25rem !important;
+}
+
+.excel-data-viewer {
+  background:transparent !important;
+}
+.tactical-grid { opacity:.32 !important; }
+.page-header { padding:10px 16px !important; border:1px solid rgba(255,255,255,.66); border-radius:18px; background:rgba(235,248,255,.55); backdrop-filter:blur(18px); box-shadow:var(--shadow-soft); }
+.page-title { color:var(--navy) !important; font-family:var(--font-display) !important; text-transform:none !important; }
+.system-path { color:var(--blue) !important; }
+.dossier-card,.results-telemetry,.loading-state,.error-state,.glass {
+  color:var(--t1) !important; background:rgba(245,251,255,.62) !important; border:1px solid rgba(255,255,255,.78) !important;
+  border-radius:18px !important; box-shadow:var(--shadow-soft) !important; backdrop-filter:blur(22px) saturate(175%) !important;
+}
+.dossier-card:hover { border-color:rgba(26,111,168,.42) !important; box-shadow:var(--shadow-medium) !important; transform:translateY(-2px); }
+.card-title,.category-title { color:var(--navy) !important; font-family:var(--font-display) !important; }
+.lbl { color:var(--t3) !important; } .val { color:var(--t2) !important; } .highlight-val,.record-id { color:var(--blue) !important; }
+.readiness-tag { color:var(--blue) !important; background:var(--blue-g) !important; border-color:var(--blue-d) !important; }
+
+.filter-deck { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; margin:0 0 18px; padding:12px; border:1px solid rgba(255,255,255,.75); border-radius:18px; background:rgba(235,248,255,.56); backdrop-filter:blur(18px); box-shadow:var(--shadow-soft); }
+.filter-control { display:flex; flex-direction:column; gap:5px; }
+.filter-control label { color:var(--t3); font:9px var(--font-mono); letter-spacing:.14em; text-transform:uppercase; }
+.filter-control select,.filter-control input { min-height:38px; width:100%; padding:8px 10px; color:var(--t1); background:rgba(255,255,255,.58); border:1px solid rgba(255,255,255,.82); border-radius:10px; outline:none; box-shadow:inset 0 1px rgba(255,255,255,.8),0 2px 7px rgba(0,40,80,.07); }
+.filter-control select:focus,.filter-control input:focus { border-color:rgba(26,111,168,.5); box-shadow:0 0 0 3px rgba(26,111,168,.1); }
+
+@media(max-width:900px){
+  .land-page,.hierarchy-page,.india-china-page,.unit-categories-page,.advanced-technology-page,.aviation-detailed-page,.air-defence-detailed-page,.theater-capabilities-page,.excel-data-viewer { padding-top:.75rem !important; }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-elevated);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Glass utility classes */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+
+.glass-light {
+  background: var(--glass-bg-light);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+
+/* Card classes */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium);
+}
+
+.card-elevated {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-medium);
+}
+
+/* Typography utilities */
+.text-uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.text-mono {
+  font-family: var(--font-mono);
+}
+
+.text-accent-red {
+  color: var(--color-accent-red);
+}
+
+.text-accent-olive {
+  color: var(--color-olive);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+/* Button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--color-accent-red);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-red-dim);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--glass-border);
+}
+
+.btn-secondary:hover {
+  background: var(--glass-bg-light);
+  border-color: var(--color-text-muted);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+
+.btn-ghost:hover {
+  color: var(--color-text-primary);
+  background: var(--glass-bg-light);
+}
+
+/* Video background utilities */
+.video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 12, 0.3) 0%,
+    rgba(10, 10, 12, 0.6) 50%,
+    rgba(10, 10, 12, 0.9) 100%
+  );
+  pointer-events: none;
+}
+
+/* Scroll indicator animation */
+@keyframes scroll-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 0.5;
+  }
+}
+
+.scroll-indicator {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+/* Fade in animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fade-in 0.6s ease forwards;
+}
+
+/* Stagger animation delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+
+/* Section spacing */
+section {
+  position: relative;
+  padding: var(--space-xl) 0;
+}
+
+.section-header {
+  margin-bottom: var(--space-lg);
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-sm);
+}
+
+.section-subtitle {
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+}
+
+/* Grid layouts */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+@media (max-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  section {
+    padding: var(--space-lg) 0;
+  }
+}
+
+/* Container */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.container-narrow {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+/* Badge styles */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 4px;
+  background: var(--color-accent-red);
+  color: white;
+}
+
+.badge-secondary {
+  background: var(--color-olive);
+}
+
+.badge-outline {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--color-text-secondary);
+}
+
+/* Progress bar */
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--color-bg-tertiary);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--color-accent-red);
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+
+/* Drawer/overlay backdrop */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+}
+
+/* Horizontal scroll rail */
+.scroll-rail {
+  display: flex;
+  gap: var(--space-md);
+  overflow-x: auto;
+  padding: var(--space-sm) 0;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-rail::-webkit-scrollbar {
+  height: 4px;
+}
+
+.scroll-rail > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}

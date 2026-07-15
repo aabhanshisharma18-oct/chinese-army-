@@ -1,0 +1,56 @@
+<div class="india-china-page">
+  <div class="tactical-grid"></div>
+
+  <div class="container-fluid">
+    <div class="page-header font-mono">
+      <div class="system-path text-uppercase">PLA COMMAND ATLAS // INDIA VS CHINA COMPARISON</div>
+      <h1 class="page-title text-uppercase">Force Structure Comparison</h1>
+    </div>
+
+    <div class="filter-deck" *ngIf="!loading && !error">
+      <div class="filter-control" *ngFor="let filter of sheetFilters">
+        <label>{{filter.label}}</label>
+        <select [ngModel]="columnFilters[filter.index] || ''" (ngModelChange)="columnFilters[filter.index] = $event">
+          <option value="">All {{filter.label}}</option>
+          <option *ngFor="let value of filter.options" [value]="value">{{value}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="error" class="error-state glass">
+      <div class="error-icon">⚠</div>
+      <p class="error-message font-mono">{{ error }}</p>
+      <button class="btn btn-primary font-mono text-uppercase" (click)="retry()">Retry</button>
+    </div>
+
+    <div class="comparison-content" *ngIf="!loading && !error">
+      <div class="results-telemetry font-mono text-uppercase">
+        <span>Comparisons Found: {{ filteredComparisons.length }}</span>
+        <span>Status: DATA INTEGRITY SECURE</span>
+      </div>
+
+      <div class="data-grid">
+        <div class="dossier-card glass" *ngFor="let comparison of filteredComparisons">
+          <div class="card-borders">
+            <span class="bracket top-left">[</span>
+            <span class="bracket top-right">]</span>
+            <span class="bracket bottom-left">[</span>
+            <span class="bracket bottom-right">]</span>
+          </div>
+          <div class="card-header font-mono">
+            <span class="record-id">LEVEL {{ comparison.level }}</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title text-uppercase">{{ comparison.indianArmyUnit }}</h3>
+            <div class="card-details font-mono">
+              <div class="detail-row"><span class="lbl">Chinese Equivalent:</span> <span class="val highlight-val">{{ comparison.chineseArmyEquivalent }}</span></div>
+              <div class="detail-row"><span class="lbl">Chinese Name:</span> <span class="val">{{ comparison.chineseName }}</span></div>
+              <div class="detail-row"><span class="lbl">Size:</span> <span class="val highlight-val">{{ comparison.sizeTroops }}</span></div>
+              <div class="detail-row"><span class="lbl">Notes:</span> <span class="val">{{ comparison.notes }}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

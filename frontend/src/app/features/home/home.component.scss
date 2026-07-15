@@ -1,0 +1,32 @@
+.dashboard-page { min-height:100vh; padding:0 !important; color:var(--t1); }
+.dashboard-topbar { position:sticky; top:0; z-index:20; min-height:68px; display:flex; align-items:center; gap:16px; padding:0 28px; background:rgba(235,248,255,.58); border-bottom:1px solid rgba(255,255,255,.74); box-shadow:0 2px 20px rgba(0,40,80,.10); backdrop-filter:blur(24px) saturate(175%); -webkit-backdrop-filter:blur(24px) saturate(175%); }
+.section-name { color:var(--navy); font-family:var(--font-display); font-size:28px; }
+.section-name span { color:var(--blue); }
+.section-state { padding:6px 15px; color:var(--blue); background:rgba(235,248,255,.78); border:1px solid rgba(26,111,168,.30); border-radius:22px; box-shadow:0 2px 8px rgba(0,40,80,.08); font:11px var(--font-mono); letter-spacing:.12em; }
+.live-state { margin-left:auto; display:flex; align-items:center; gap:10px; color:var(--t2); font:9px var(--font-mono); letter-spacing:.16em; }
+.live-state i { width:8px; height:8px; border-radius:50%; background:#28a060; box-shadow:0 0 9px rgba(40,160,96,.7); }
+
+.dashboard-content { min-height:calc(100vh - 68px); padding:clamp(42px,7vh,82px) clamp(20px,5vw,70px) 55px; }
+.dashboard-hero { text-align:center; max-width:1100px; margin:0 auto 34px; }
+.dashboard-hero > p { margin-bottom:12px; color:rgba(229,243,250,.78); text-shadow:0 2px 10px rgba(0,20,40,.75); font:9px var(--font-mono); letter-spacing:.28em; }
+.dashboard-hero h1 { margin:0 0 20px; color:#eaf5fb; font:clamp(35px,5vw,60px)/1.1 var(--font-display); text-shadow:0 4px 22px rgba(0,18,36,.70); }
+.dashboard-hero h1 span { color:#3ba1db; }
+.instruction { display:inline-block; padding:9px 22px; color:rgba(12,38,60,.72); background:rgba(235,248,255,.76); border:1px solid rgba(255,255,255,.82); border-radius:28px; box-shadow:0 5px 18px rgba(0,30,55,.18); backdrop-filter:blur(18px); font:10px var(--font-mono); letter-spacing:.20em; }
+
+.module-grid { max-width:1250px; margin:0 auto; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+.module-card { position:relative; min-height:178px; display:flex; flex-direction:column; padding:21px; overflow:hidden; color:var(--t1); text-decoration:none; border:1px solid rgba(255,255,255,.82); border-radius:22px; box-shadow:0 8px 26px rgba(0,25,48,.17),inset 0 1px rgba(255,255,255,.75); backdrop-filter:blur(24px) saturate(165%); -webkit-backdrop-filter:blur(24px) saturate(165%); transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease; }
+.module-card::after { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(135deg,rgba(255,255,255,.28),transparent 45%); }
+.module-card.red { background:rgba(224,137,145,.68); }
+.module-card.blue { background:rgba(190,218,232,.68); }
+.module-card.neutral { background:rgba(235,239,239,.64); }
+.module-card:hover { transform:translateY(-4px); border-color:rgba(255,255,255,.96); box-shadow:0 14px 38px rgba(0,25,48,.24),inset 0 1px white; }
+.module-meta { position:relative; z-index:1; display:flex; justify-content:space-between; gap:8px; color:var(--t3); font:8px var(--font-mono); letter-spacing:.16em; text-transform:uppercase; }
+.module-meta b { color:var(--blue); font-weight:500; white-space:nowrap; }
+.module-card h2 { position:relative; z-index:1; margin:22px 0 8px; color:var(--navy); font:21px var(--font-display); }
+.module-card p { position:relative; z-index:1; margin:0 0 15px; color:var(--t2); font-size:12px; line-height:1.55; }
+.module-arrow { position:relative; z-index:1; margin-top:auto; color:var(--blue); font:9px var(--font-mono); letter-spacing:.08em; opacity:0; transform:translateY(5px); transition:.18s ease; }
+.module-card:hover .module-arrow { opacity:1; transform:none; }
+
+@media(max-width:1180px){.module-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:820px){.dashboard-topbar{padding-left:62px}.live-state span{display:none}.module-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.dashboard-topbar{min-height:60px;padding-right:12px}.section-name{font-size:20px}.section-state{display:none}.dashboard-content{padding:38px 14px}.module-grid{grid-template-columns:1fr}.module-card{min-height:155px}}

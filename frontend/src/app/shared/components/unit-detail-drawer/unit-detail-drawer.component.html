@@ -1,0 +1,131 @@
+<!-- PLA Command Atlas - Unit Detail Drawer Component -->
+<!-- Right-side sliding panel for full formation details -->
+
+<div class="drawer-backdrop" (click)="onClose()"></div>
+
+<div class="drawer-panel" @drawerAnimation *ngIf="formation">
+  <div class="drawer-header">
+    <div class="drawer-header-content">
+      <span class="drawer-badge badge">{{ formation.category.designation }}</span>
+      <h2 class="drawer-title">{{ formation.name }}</h2>
+      <p class="drawer-subtitle">{{ formation.tagline }}</p>
+    </div>
+    <button class="drawer-close" (click)="onClose()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="drawer-body">
+    <!-- Quick Specs -->
+    <div class="drawer-section">
+      <h3 class="drawer-section-title text-uppercase">Quick Data</h3>
+      <div class="quick-specs-grid">
+        <div class="spec-item" *ngFor="let spec of formation.quickSpecs">
+          <span class="spec-label text-muted text-uppercase">{{ spec.label }}</span>
+          <span class="spec-value">{{ spec.value }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Command Structure -->
+    <div class="drawer-section">
+      <h3 class="drawer-section-title text-uppercase">Command Structure</h3>
+      <div class="command-structure">
+        <div class="command-item">
+          <span class="command-label text-muted">Headquarters</span>
+          <span class="command-value">{{ formation.fullSpecs.commandStructure.headquarters }}</span>
+        </div>
+        <div class="command-item">
+          <span class="command-label text-muted">Commander</span>
+          <span class="command-value">{{ formation.fullSpecs.commandStructure.commander }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Area of Responsibility -->
+    <div class="drawer-section">
+      <h3 class="drawer-section-title text-uppercase">Area of Responsibility</h3>
+      <div class="aor-details">
+        <p class="aor-region">{{ formation.fullSpecs.areaOfResponsibility.region }}</p>
+        <p class="aor-importance text-muted">{{ formation.fullSpecs.areaOfResponsibility.strategicImportance }}</p>
+      </div>
+    </div>
+    
+    <!-- Subordinate Units -->
+    <div class="drawer-section">
+      <h3 class="drawer-section-title text-uppercase">Subordinate Units</h3>
+      <div class="units-list">
+        <div class="unit-item" *ngFor="let unit of formation.fullSpecs.subordinateUnits">
+          <span class="unit-designation">{{ unit.designation }}</span>
+          <span class="unit-type text-muted">{{ unit.type }}</span>
+          <span class="unit-strength">{{ unit.strength }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Equipment Overview -->
+    <div class="drawer-section">
+      <h3 class="drawer-section-title text-uppercase">Equipment Overview</h3>
+      <div class="equipment-grid">
+        <div class="equipment-item">
+          <span class="equipment-label text-muted">Main Battle Tanks</span>
+          <span class="equipment-value">{{ formation.fullSpecs.equipmentOverview.mainBattleTanks }}</span>
+        </div>
+        <div class="equipment-item">
+          <span class="equipment-label text-muted">Armored Vehicles</span>
+          <span class="equipment-value">{{ formation.fullSpecs.equipmentOverview.armoredVehicles }}</span>
+        </div>
+        <div class="equipment-item">
+          <span class="equipment-label text-muted">Artillery</span>
+          <span class="equipment-value">{{ formation.fullSpecs.equipmentOverview.artillery }}</span>
+        </div>
+        <div class="equipment-item">
+          <span class="equipment-label text-muted">Air Defense</span>
+          <span class="equipment-value">{{ formation.fullSpecs.equipmentOverview.airDefense }}</span>
+        </div>
+        <div class="equipment-item">
+          <span class="equipment-label text-muted">Aircraft</span>
+          <span class="equipment-value">{{ formation.fullSpecs.equipmentOverview.aircraft }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Readiness Indicators -->
+    <div class="drawer-section">
+      <h3 class="drawer-section-title text-uppercase">Readiness Indicators</h3>
+      <div class="readiness-grid">
+        <div class="readiness-item">
+          <span class="readiness-label text-muted">Training Level</span>
+          <span class="readiness-value">{{ formation.fullSpecs.readiness.trainingLevel }}</span>
+        </div>
+        <div class="readiness-item">
+          <span class="readiness-label text-muted">Modernization</span>
+          <span class="readiness-value">{{ formation.fullSpecs.readiness.modernizationStatus }}</span>
+        </div>
+        <div class="readiness-item">
+          <span class="readiness-label text-muted">Deployment Readiness</span>
+          <span class="readiness-value">{{ formation.fullSpecs.readiness.deploymentReadiness }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Notes -->
+    <div class="drawer-section">
+      <h3 class="drawer-section-title text-uppercase">Notes</h3>
+      <p class="drawer-notes text-muted">{{ formation.fullSpecs.notes }}</p>
+    </div>
+    
+    <!-- Source References -->
+    <div class="drawer-section">
+      <h3 class="drawer-section-title text-uppercase">Source References</h3>
+      <ul class="sources-list">
+        <li class="source-item text-muted" *ngFor="let source of formation.fullSpecs.sourceReferences">
+          {{ source }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

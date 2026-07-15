@@ -1,0 +1,23 @@
+<div class="theater-capabilities-page">
+  <div class="container-fluid">
+    <div class="page-header"><div class="system-path">MILITARY REFERENCE // SHEET 12</div><h1 class="page-title">Theater Command Capabilities</h1></div>
+    <div class="filter-deck" *ngIf="!loading && !error">
+      <div class="filter-control" *ngFor="let filter of sheetFilters"><label>{{filter.label}}</label><select [ngModel]="columnFilters[filter.index] || ''" (ngModelChange)="columnFilters[filter.index] = $event"><option value="">All {{filter.label}}</option><option *ngFor="let value of filter.options" [value]="value">{{value}}</option></select></div>
+    </div>
+    <div *ngIf="error" class="error-state glass">{{error}}</div>
+    <div class="results-telemetry" *ngIf="!loading && !error">{{filtered.length}} commands · Embedded offline dataset</div>
+    <div class="data-grid" *ngIf="!loading && !error">
+      <article class="dossier-card" *ngFor="let theater of filtered">
+        <div class="card-header"><span class="readiness-tag">{{theater.side}}</span><span class="record-id">{{theater.headquarters}}</span></div>
+        <h2 class="card-title">{{theater.command}}</h2>
+        <p class="focus">{{theater.focus}}</p>
+        <dl>
+          <div><dt>Group Armies</dt><dd>{{theater.groupArmies}}</dd></div>
+          <div><dt>Key Capabilities</dt><dd>{{theater.capabilities}}</dd></div>
+          <div><dt>Area of Responsibility</dt><dd>{{theater.responsibility}}</dd></div>
+          <div><dt>Coordinates</dt><dd>{{theater.latitude}} · {{theater.longitude}}</dd></div>
+        </dl>
+      </article>
+    </div>
+  </div>
+</div>
